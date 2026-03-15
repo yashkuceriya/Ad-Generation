@@ -25,7 +25,7 @@ import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import Skeleton from '@mui/material/Skeleton';
 import PipelineProgress from '../components/PipelineProgress';
 import PipelineFlow from '../components/PipelineFlow';
-import { startPipeline, stopPipeline, getPipelineStatus, getPresets, getRunHistory } from '../api/endpoints';
+import { startPipeline, stopPipeline, getPipelineStatus, getPresets, getRunHistory, getConfig } from '../api/endpoints';
 import type { RunHistoryEntry } from '../api/endpoints';
 import { useSSE } from '../api/useSSE';
 import Alert from '@mui/material/Alert';
@@ -65,6 +65,15 @@ export default function RunPipeline() {
   const [customBrief, setCustomBrief] = useState<CustomBrief>({ audience: '', goal: '', offer: '', tone: '' });
   const [runHistory, setRunHistory] = useState<RunHistoryEntry[]>([]);
   const [snack, setSnack] = useState<{ message: string; severity: 'success' | 'info' | 'error' } | null>(null);
+  const [imageCostPerImage, setImageCostPerImage] = useState(0.07);
+  const [imageGenEnabled, setImageGenEnabled] = useState(true);
+
+  useEffect(() => {
+    getConfig().then(res => {
+      setImageCostPerImage(res.data.image_cost_per_image);
+      setImageGenEnabled(res.data.image_generation_enabled);
+    }).catch(() => {});
+  }, []);
 
   const refresh = useCallback(async () => {
     try {
@@ -143,8 +152,7 @@ export default function RunPipeline() {
     );
   }
 
-  const IMAGE_COST = 0.07;
-  const estimatedCost = count * 0.01 + (imageMode === 'eager' ? count * IMAGE_COST : imageMode === 'lazy' ? Math.min(3, count) * IMAGE_COST : 0);
+  const estimatedCost = count * 0.01 + (imageMode === 'eager' ? count * imageCostPerImage : imageMode === 'lazy' ? Math.min(3, count) * imageCostPerImage : 0);
 
   return (
     <Box>
@@ -317,7 +325,7 @@ export default function RunPipeline() {
                 onChange={(e) => setImageMode(e.target.value)}
                 fullWidth
                 helperText={
-                  imageMode === 'lazy' ? 'Images generated on-demand when clicked (~$0.07 each)'
+                  imageMode === 'lazy' ? `Images generated on-demand when clicked (~$${imageCostPerImage.toFixed(2)} each)`
                   : imageMode === 'eager' ? 'Images generated for every ad during pipeline'
                   : 'No images, text-only ads'
                 }
@@ -326,6 +334,12 @@ export default function RunPipeline() {
                 <MenuItem value="eager">Eager (all images)</MenuItem>
                 <MenuItem value="off">Off (text only)</MenuItem>
               </TextField>
+
+              {!imageGenEnabled && imageMode !== 'off' && (
+                <Alert severity="warning" variant="outlined" sx={{ borderRadius: '10px', fontSize: '0.82rem' }}>
+                  Image generation is currently paused. Images will not be generated even in {imageMode} mode. Select "Off" or wait until image generation is re-enabled.
+                </Alert>
+              )}
 
               {/* Cost Estimator */}
               <Paper
@@ -346,7 +360,7 @@ export default function RunPipeline() {
                 </Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontSize: '0.7rem' }}>
                   {count} ads × ~$0.01/ad text
-                  {imageMode !== 'off' && ` + ${imageMode === 'eager' ? count : `~${Math.min(3, count)}`} images × ~$0.07/image`}
+                  {imageMode !== 'off' && ` + ${imageMode === 'eager' ? count : `~${Math.min(3, count)}`} images × ~$${imageCostPerImage.toFixed(2)}/image`}
                 </Typography>
               </Paper>
 

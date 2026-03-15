@@ -246,7 +246,7 @@ export default function Dashboard() {
     return (
       <Box>
         <Skeleton variant="rounded" height={180} animation="wave" sx={{ mb: 4, borderRadius: '20px' }} />
-        <Grid container spacing={2} sx={{ mb: 3.5 }}>
+        <Grid container spacing={2} sx={{ mb: 3 }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Grid size={{ xs: 6, md: 3 }} key={i}>
               <Skeleton variant="rounded" height={100} animation="wave" sx={{ borderRadius: '12px' }} />
@@ -267,17 +267,19 @@ export default function Dashboard() {
   return (
     <Box>
       {fetchError && (
-        <Paper sx={{ p: 2, mb: 2, bgcolor: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="body2" sx={{ color: '#EF4444' }}>
-            Failed to load data. Make sure the backend is running.
-          </Typography>
-          <Button size="small" onClick={refresh} sx={{ color: '#EF4444', fontWeight: 600, fontSize: '0.75rem' }}>Retry</Button>
-        </Paper>
+        <Alert
+          severity="error"
+          variant="outlined"
+          action={<Button size="small" onClick={refresh} sx={{ fontWeight: 600, fontSize: '0.75rem' }}>Retry</Button>}
+          sx={{ mb: 2, borderRadius: '10px' }}
+        >
+          Failed to load data. Make sure the backend is running.
+        </Alert>
       )}
       {/* Hero */}
       <Box
         sx={{
-          mb: 4, p: 4, borderRadius: '20px', position: 'relative', overflow: 'hidden',
+          mb: 3, p: 4, borderRadius: '20px', position: 'relative', overflow: 'hidden',
           background: isDark
             ? 'linear-gradient(135deg, rgba(242,101,34,0.1) 0%, rgba(16,185,129,0.06) 50%, rgba(30,30,40,0.8) 100%)'
             : 'linear-gradient(135deg, rgba(242,101,34,0.06) 0%, rgba(16,185,129,0.04) 50%, rgba(255,255,255,0.8) 100%)',
@@ -294,29 +296,53 @@ export default function Dashboard() {
           <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, mb: 3, lineHeight: 1.6 }}>
             Generate, evaluate, and iterate high-performance Facebook & Instagram ads using AI-driven feedback loops.
           </Typography>
-          <Box sx={{ display: 'flex', gap: 1.5 }}>
-            <Button variant="contained" startIcon={<RocketLaunchRoundedIcon />} onClick={() => navigate('/run')} sx={{ px: 3, py: 1.25, background: 'linear-gradient(135deg, #F26522, #D4541A)', fontSize: '0.88rem', '&:hover': { background: 'linear-gradient(135deg, #FF8A50, #F26522)' } }}>
+          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<RocketLaunchRoundedIcon />}
+              onClick={() => navigate('/run')}
+              sx={{
+                px: 4, py: 1.5,
+                background: 'linear-gradient(135deg, #F26522, #D4541A)',
+                fontSize: '0.95rem', fontWeight: 700, borderRadius: '12px',
+                boxShadow: '0 4px 16px rgba(242,101,34,0.3)',
+                '&:hover': { background: 'linear-gradient(135deg, #FF8A50, #F26522)', boxShadow: '0 6px 24px rgba(242,101,34,0.4)' },
+              }}
+            >
               Launch Pipeline
-            </Button>
-            <Button variant="outlined" onClick={() => navigate('/ads')} sx={{ px: 3, py: 1.25, borderColor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)', color: 'text.primary', fontSize: '0.88rem', '&:hover': { borderColor: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.25)', bgcolor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)' } }}>
-              View Gallery
             </Button>
             <Button
               variant="outlined"
-              startIcon={<DownloadRoundedIcon />}
+              size="large"
+              onClick={() => navigate('/ads')}
+              sx={{
+                px: 4, py: 1.5, fontSize: '0.95rem', fontWeight: 700, borderRadius: '12px',
+                borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+                color: 'text.primary',
+                '&:hover': { borderColor: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)' },
+              }}
+            >
+              View Gallery
+            </Button>
+            <Button
+              variant="text"
+              size="small"
+              startIcon={<DownloadRoundedIcon sx={{ fontSize: 16 }} />}
               onClick={() => { exportAdsJSON(ads); setSnack({ message: `Exported ${ads.length} ads as JSON`, severity: 'success' }); }}
               disabled={ads.length === 0}
               sx={{
-                px: 3, py: 1.25, fontSize: '0.88rem', textTransform: 'none',
-                borderColor: 'rgba(242,101,34,0.3)', color: '#F26522',
-                '&:hover': { borderColor: '#F26522', bgcolor: 'rgba(242,101,34,0.06)' },
+                ml: 'auto', fontSize: '0.8rem', textTransform: 'none',
+                color: '#F26522', fontWeight: 600,
+                '&:hover': { bgcolor: 'rgba(242,101,34,0.06)' },
               }}
             >
               Export Data
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<DownloadRoundedIcon />}
+              variant="text"
+              size="small"
+              startIcon={<DownloadRoundedIcon sx={{ fontSize: 16 }} />}
               onClick={() => {
                 const topAds = [...ads]
                   .sort((a, b) => b.copy_iterations[b.best_copy_index].evaluation.weighted_average - a.copy_iterations[a.best_copy_index].evaluation.weighted_average)
@@ -347,9 +373,9 @@ export default function Dashboard() {
               }}
               disabled={ads.length === 0}
               sx={{
-                px: 3, py: 1.25, fontSize: '0.88rem', textTransform: 'none',
-                borderColor: 'rgba(16,185,129,0.3)', color: '#10B981',
-                '&:hover': { borderColor: '#10B981', bgcolor: 'rgba(16,185,129,0.06)' },
+                fontSize: '0.8rem', textTransform: 'none',
+                color: '#10B981', fontWeight: 600,
+                '&:hover': { bgcolor: 'rgba(16,185,129,0.06)' },
               }}
             >
               Review Package
@@ -366,7 +392,7 @@ export default function Dashboard() {
       )}
 
       {/* Stat Cards */}
-      <Grid container spacing={2} sx={{ mb: 3.5 }}>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid size={{ xs: 6, md: 3 }}>
           <StatCard title="Total Ads" value={<AnimatedNumber value={ads.length} />} subtitle="generated" icon={<AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #F26522, #D4541A)" pulsing={isRunning} />
         </Grid>
@@ -383,21 +409,10 @@ export default function Dashboard() {
 
       {/* Cost Overview */}
       {costSummary && costSummary.total_calls > 0 && (
-        <Box sx={{ mb: 3.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-            <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.1em' }}>
-              PIPELINE COSTS
-            </Typography>
-            <Chip
-              label="OpenRouter API"
-              size="small"
-              sx={{
-                fontWeight: 600, fontSize: '0.58rem', height: 18,
-                bgcolor: 'rgba(242,101,34,0.08)', color: '#F26522',
-                border: '1px solid rgba(242,101,34,0.15)',
-              }}
-            />
-          </Box>
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.1em', mb: 1.5, display: 'block' }}>
+            PIPELINE COSTS
+          </Typography>
           <Grid container spacing={2}>
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
@@ -446,9 +461,8 @@ export default function Dashboard() {
       {/* Pipeline Health Metrics */}
       {costSummary?.pipeline_metrics && costSummary.pipeline_metrics.total_briefs > 0 && (() => {
         const pm = costSummary.pipeline_metrics;
-        const metricChipSx = { fontWeight: 700, fontSize: '0.65rem', height: 22 };
         return (
-          <Box sx={{ mb: 3.5 }}>
+          <Box sx={{ mb: 3 }}>
             <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.1em', mb: 1.5, display: 'block' }}>
               PIPELINE HEALTH
             </Typography>
@@ -459,11 +473,9 @@ export default function Dashboard() {
                   <Typography variant="h4" fontWeight={800} sx={{ mt: 0.25, color: pm.early_stopping.early_stop_rate >= 50 ? '#10B981' : '#F59E0B' }}>
                     {pm.early_stopping.early_stop_rate}%
                   </Typography>
-                  <Box sx={{ display: 'flex', gap: 0.5, mt: 1, flexWrap: 'wrap' }}>
-                    <Chip label={`${pm.early_stopping.exceptional} exceptional`} size="small" sx={{ ...metricChipSx, bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981' }} />
-                    <Chip label={`${pm.early_stopping.threshold} threshold`} size="small" sx={{ ...metricChipSx, bgcolor: 'rgba(245,158,11,0.1)', color: '#F59E0B' }} />
-                    <Chip label={`${pm.early_stopping.full_iterations} full`} size="small" sx={{ ...metricChipSx, bgcolor: 'rgba(107,114,128,0.1)', color: '#6B7280' }} />
-                  </Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                    {pm.early_stopping.exceptional} exceptional · {pm.early_stopping.threshold} threshold · {pm.early_stopping.full_iterations} full
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid size={{ xs: 6, md: 3 }}>
@@ -523,7 +535,7 @@ export default function Dashboard() {
       {ads.length === 0 && (
         <Paper
           sx={{
-            p: 5, mb: 3.5, textAlign: 'center',
+            p: 5, mb: 3, textAlign: 'center',
             border: '1px dashed rgba(242,101,34,0.15)',
             background: 'linear-gradient(135deg, rgba(242,101,34,0.02) 0%, rgba(16,185,129,0.02) 100%)',
             borderRadius: '16px',
@@ -650,19 +662,9 @@ export default function Dashboard() {
                     <Box key={d.name}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
                         <Typography variant="body2" fontWeight={600} sx={{ fontSize: '0.82rem' }}>{d.name}</Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
-                            {d.count}/{ads.length} ads
-                          </Typography>
-                          <Chip
-                            label={`${pct.toFixed(0)}%`}
-                            size="small"
-                            sx={{
-                              fontWeight: 700, fontSize: '0.6rem', height: 18, minWidth: 40,
-                              bgcolor: `${d.color}15`, color: d.color, border: `1px solid ${d.color}30`,
-                            }}
-                          />
-                        </Box>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem', fontWeight: 600 }}>
+                          {pct.toFixed(0)}% ({d.count}/{ads.length})
+                        </Typography>
                       </Box>
                       <LinearProgress
                         variant="determinate"

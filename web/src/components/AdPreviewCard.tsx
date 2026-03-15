@@ -35,6 +35,7 @@ interface Props {
   briefId?: string;
   imageGenSteps?: ImageGenStep[];
   cacheHit?: boolean;
+  imageGenDisabled?: boolean;
 }
 
 /** Simple string hash to generate deterministic pseudo-random numbers per briefId */
@@ -57,7 +58,7 @@ const STEP_ICONS: Record<string, React.ReactNode> = {
   'Refining image': <AutorenewRoundedIcon sx={{ fontSize: 14 }} />,
 };
 
-export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegenerateImage, imageLoading, briefId, imageGenSteps, cacheHit }: Props) {
+export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegenerateImage, imageLoading, briefId, imageGenSteps, cacheHit, imageGenDisabled }: Props) {
   // Deterministic engagement numbers based on briefId
   const seed = hashCode(briefId || 'default');
   const likes = pseudoRandom(seed, 800, 2500);
@@ -167,7 +168,7 @@ export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegen
                 }}
               />
             )}
-            {onRegenerateImage && (
+            {onRegenerateImage && !imageGenDisabled && (
               <Button
                 size="small"
                 variant="contained"
@@ -343,7 +344,7 @@ export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegen
                   SAT Test Prep
                 </Typography>
 
-                {onGenerateImage && (
+                {onGenerateImage && !imageGenDisabled && (
                   <Button
                     variant="outlined"
                     size="small"

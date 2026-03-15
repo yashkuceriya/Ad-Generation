@@ -231,7 +231,16 @@ export default function AdGallery() {
   const filteredAds = useMemo(() => {
     if (!ads) return [];
     let result = ads;
-    if (statusFilter !== 'all') {
+    const PASSING_STATUSES = ['published', 'human_approved', 'experiment_ready', 'compliance_pass', 'evaluator_pass'];
+    const REVIEW_STATUSES = ['iterating', 'human_review', 'generated'];
+    const BELOW_STATUSES = ['below_threshold', 'rejected'];
+    if (statusFilter === 'group_passing') {
+      result = result.filter(a => PASSING_STATUSES.includes(a.status));
+    } else if (statusFilter === 'group_review') {
+      result = result.filter(a => REVIEW_STATUSES.includes(a.status));
+    } else if (statusFilter === 'group_below') {
+      result = result.filter(a => BELOW_STATUSES.includes(a.status));
+    } else if (statusFilter !== 'all') {
       result = result.filter(a => a.status === statusFilter);
     }
     if (searchText.trim()) {
@@ -272,18 +281,20 @@ export default function AdGallery() {
   return (
     <Box>
       {fetchError && (
-        <Paper sx={{ p: 2, mb: 2, bgcolor: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="body2" sx={{ color: '#EF4444' }}>
-            Failed to load ads. Make sure the backend is running.
-          </Typography>
-          <Button size="small" onClick={refresh} sx={{ color: '#EF4444', fontWeight: 600, fontSize: '0.75rem' }}>Retry</Button>
-        </Paper>
+        <Alert
+          severity="error"
+          variant="outlined"
+          action={<Button size="small" onClick={refresh} sx={{ fontWeight: 600, fontSize: '0.75rem' }}>Retry</Button>}
+          sx={{ mb: 2, borderRadius: '10px' }}
+        >
+          Failed to load ads. Make sure the backend is running.
+        </Alert>
       )}
       {/* Header */}
       <Box
         sx={{
-          mb: 3.5,
-          p: 3.5,
+          mb: 3,
+          p: 3,
           borderRadius: '20px',
           background: 'linear-gradient(135deg, rgba(242,101,34,0.06) 0%, rgba(16,185,129,0.03) 100%)',
           border: '1px solid rgba(242,101,34,0.1)',
@@ -313,17 +324,14 @@ export default function AdGallery() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 2, mt: 1.5, flexWrap: 'wrap', alignItems: 'center' }}>
-            <Chip
-              label={`${filteredAds.length} total`}
-              size="small"
-              sx={{
-                fontWeight: 700,
-                bgcolor: 'rgba(242,101,34,0.1)', color: '#F26522',
-                border: '1px solid rgba(242,101,34,0.2)',
-              }}
-            />
-            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.82rem' }}>
-              {readyCount} ready &middot; {inReviewCount} in review &middot; {needsWorkCount} needs work
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem', fontWeight: 600 }}>
+              <Box component="span" sx={{ color: '#F26522', fontWeight: 800 }}>{filteredAds.length}</Box> total
+              {' · '}
+              <Box component="span" sx={{ color: '#10B981' }}>{readyCount}</Box> ready
+              {' · '}
+              <Box component="span" sx={{ color: '#F59E0B' }}>{inReviewCount}</Box> in review
+              {' · '}
+              <Box component="span" sx={{ color: '#EF4444' }}>{needsWorkCount}</Box> needs work
             </Typography>
             <Box sx={{ ml: 'auto', display: 'flex', gap: 1 }}>
               <Button
@@ -376,10 +384,10 @@ export default function AdGallery() {
       {/* Filters */}
       <Paper
         sx={{
-          p: 2.5,
+          p: 2,
           mb: 3,
           display: 'flex',
-          gap: 2.5,
+          gap: 2,
           flexWrap: 'wrap',
           alignItems: 'center',
           border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
@@ -460,18 +468,22 @@ export default function AdGallery() {
           }}
         >
           <MenuItem value="all">All Statuses</MenuItem>
-          <ListSubheader>Ready</ListSubheader>
+          <MenuItem value="group_passing" sx={{ fontWeight: 700, color: '#10B981' }}>Passing (all)</MenuItem>
+          <ListSubheader sx={{ fontSize: '0.65rem', lineHeight: '24px' }}>Passing</ListSubheader>
+          <MenuItem value="published">Published</MenuItem>
           <MenuItem value="human_approved">Approved</MenuItem>
           <MenuItem value="experiment_ready">Experiment Ready</MenuItem>
-          <ListSubheader>In Review</ListSubheader>
           <MenuItem value="compliance_pass">Compliance Pass</MenuItem>
           <MenuItem value="evaluator_pass">Evaluator Pass</MenuItem>
-          <ListSubheader>Needs Work</ListSubheader>
+          <MenuItem value="group_review" sx={{ fontWeight: 700, color: '#F59E0B' }}>Needs Review (all)</MenuItem>
+          <ListSubheader sx={{ fontSize: '0.65rem', lineHeight: '24px' }}>Needs Review</ListSubheader>
+          <MenuItem value="iterating">Iterating</MenuItem>
+          <MenuItem value="human_review">Human Review</MenuItem>
+          <MenuItem value="generated">Generated</MenuItem>
+          <MenuItem value="group_below" sx={{ fontWeight: 700, color: '#EF4444' }}>Below (all)</MenuItem>
+          <ListSubheader sx={{ fontSize: '0.65rem', lineHeight: '24px' }}>Below</ListSubheader>
           <MenuItem value="below_threshold">Below Threshold</MenuItem>
           <MenuItem value="rejected">Rejected</MenuItem>
-          <ListSubheader>In Progress</ListSubheader>
-          <MenuItem value="iterating">Iterating</MenuItem>
-          <MenuItem value="generated">Generated</MenuItem>
         </TextField>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 220, flex: 1 }}>
@@ -625,13 +637,18 @@ export default function AdGallery() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <SearchRoundedIcon sx={{ fontSize: 28, color: '#F26522', opacity: 0.5 }} />
+            {ads.length > 0
+              ? <FilterListRoundedIcon sx={{ fontSize: 28, color: '#F26522', opacity: 0.5 }} />
+              : <SearchRoundedIcon sx={{ fontSize: 28, color: '#F26522', opacity: 0.5 }} />
+            }
           </Box>
           <Typography variant="h6" fontWeight={700} color="text.secondary" gutterBottom>
-            No ads yet
+            {ads.length > 0 ? 'No ads match your filters' : 'No ads yet'}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ opacity: 0.7 }}>
-            Run the pipeline to generate your first ads
+            {ads.length > 0
+              ? 'Try adjusting the criteria above to broaden your search.'
+              : 'Run the pipeline to generate your first ads.'}
           </Typography>
         </Paper>
       )}

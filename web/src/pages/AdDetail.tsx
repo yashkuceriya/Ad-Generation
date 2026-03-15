@@ -49,7 +49,8 @@ import DialogActions from '@mui/material/DialogActions';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { getAd, generateImage, refineAd, checkCompliance, generateVariants, approveAd, rejectAd, markExperimentReady } from '../api/endpoints';
+import { getAd, generateImage, refineAd, checkCompliance, generateVariants, approveAd, rejectAd, markExperimentReady, getConfig } from '../api/endpoints';
+import type { EngineConfig } from '../api/endpoints';
 import { getClientId } from '../api/clientId';
 import { useSSE } from '../api/useSSE';
 import type { AdResult, ImageIteration, SSEEvent } from '../types';
@@ -303,6 +304,15 @@ export default function AdDetail() {
   const [approvalNotes, setApprovalNotes] = useState('');
   const [rejectorName, setRejectorName] = useState('');
   const [rejectionReason, setRejectionReason] = useState('');
+
+  // Config — image generation enabled flag
+  const [imageGenEnabled, setImageGenEnabled] = useState(true);
+
+  useEffect(() => {
+    getConfig().then(res => {
+      setImageGenEnabled(res.data.image_generation_enabled);
+    }).catch(() => {});
+  }, []);
 
   // Live image scores from SSE (shown on Scores tab while images generate)
   const [liveImageScores, setLiveImageScores] = useState<{
@@ -1000,7 +1010,13 @@ export default function AdDetail() {
               briefId={ad.brief_id}
               imageGenSteps={imageGenSteps}
               cacheHit={cacheHit}
+              imageGenDisabled={!imageGenEnabled}
             />
+            {!imageGenEnabled && (
+              <Alert severity="info" variant="outlined" sx={{ mt: 1.5, borderRadius: '10px', fontSize: '0.82rem' }}>
+                Image generation is paused — existing images remain available
+              </Alert>
+            )}
             {imageError && (
               <Alert
                 severity="error"

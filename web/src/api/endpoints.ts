@@ -103,4 +103,6 @@ export interface EngineConfig {
     vision: string[];
     image: string[];
   };
+  image_generation_enabled: boolean;
+  image_cost_per_image: number;
 }
