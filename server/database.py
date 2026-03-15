@@ -174,31 +174,41 @@ def get_best_images_batch(client_id: str = "default") -> dict[str, dict]:
     if not session:
         return {}
     try:
-        from sqlalchemy import func
-        # Get one row per brief_id where iteration_number == best_index
-        subq = (
+        # Only select metadata columns, NOT image_data (which is huge)
+        rows = (
             session.query(
                 ImageRow.brief_id,
-                func.min(ImageRow.best_index).label("best_idx"),
+                ImageRow.iteration_number,
+                ImageRow.image_metadata,
+                ImageRow.best_index,
             )
             .filter_by(client_id=client_id)
-            .group_by(ImageRow.brief_id)
-            .subquery()
-        )
-        rows = (
-            session.query(ImageRow)
-            .join(subq, (ImageRow.brief_id == subq.c.brief_id) & (ImageRow.iteration_number == subq.c.best_idx))
-            .filter(ImageRow.client_id == client_id)
+            .order_by(ImageRow.brief_id, ImageRow.iteration_number)
             .all()
         )
-        return {
-            r.brief_id: {
-                "iteration_number": r.iteration_number,
-                "metadata": r.image_metadata,
-                "best_index": r.best_index,
+        # Group by brief_id, pick the best iteration
+        result: dict[str, dict] = {}
+        by_brief: dict[str, list] = {}
+        for r in rows:
+            by_brief.setdefault(r.brief_id, []).append(r)
+
+        for brief_id, brief_rows in by_brief.items():
+            best_idx = brief_rows[0].best_index  # 0-based
+            target_iter = best_idx + 1  # iteration_number is 1-based
+            chosen = None
+            for r in brief_rows:
+                if r.iteration_number == target_iter:
+                    chosen = r
+                    break
+            if not chosen:
+                chosen = brief_rows[0]
+
+            result[brief_id] = {
+                "iteration_number": chosen.iteration_number,
+                "metadata": chosen.image_metadata,
+                "best_index": chosen.best_index,
             }
-            for r in rows
-        }
+        return result
     except Exception as e:
         print(f"  DB batch image query error: {e}")
         return {}
