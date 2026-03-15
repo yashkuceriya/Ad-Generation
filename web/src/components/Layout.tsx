@@ -309,7 +309,7 @@ export default function Layout() {
           </Typography>
         </Box>
 
-        {/* Powered by */}
+        {/* Version */}
         <Box
           sx={{
             px: 1.5,
@@ -320,13 +320,10 @@ export default function Layout() {
           }}
         >
           <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>
-            Powered by
+            Nerdy Ad Engine
           </Typography>
           <Typography variant="body2" sx={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600, mt: 0.25 }}>
-            Gemini 2.5 Flash + 2.0 Flash Lite
-          </Typography>
-          <Typography variant="caption" sx={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.3)' }}>
-            via OpenRouter
+            v2.0 · Autonomous Pipeline
           </Typography>
         </Box>
       </Box>
@@ -469,7 +466,7 @@ export default function Layout() {
           }}
         >
           <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.62rem' }}>
-            Autonomous Ad Engine · Lab v2.0 · Powered by Gemini 2.5 Flash + 2.0 Flash Lite via OpenRouter
+            Nerdy Ad Engine · v2.0 · Autonomous Pipeline
           </Typography>
         </Box>
       </Box>

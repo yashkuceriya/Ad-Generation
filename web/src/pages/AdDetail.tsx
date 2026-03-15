@@ -50,7 +50,6 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { getAd, generateImage, refineAd, checkCompliance, generateVariants, approveAd, rejectAd, markExperimentReady, getConfig } from '../api/endpoints';
-import type { EngineConfig } from '../api/endpoints';
 import { getClientId } from '../api/clientId';
 import { useSSE } from '../api/useSSE';
 import type { AdResult, ImageIteration, SSEEvent } from '../types';

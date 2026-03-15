@@ -278,7 +278,7 @@ export default function CostDashboard() {
           <CostStatCard
             title="Total Cost"
             value={`$${summary?.total_cost_usd?.toFixed(4) || '0.00'}`}
-            subtitle={`${summary?.total_calls || 0} API calls`}
+            subtitle={`${summary?.total_calls || 0} API calls${summary?.image_costs?.count ? ` · incl. ${summary.image_costs.count} images` : ''}`}
             icon={<PaidRoundedIcon sx={{ fontSize: 18, color: 'white' }} />}
             gradient="linear-gradient(135deg, #F26522, #D4541A)"
           />
@@ -502,9 +502,9 @@ export default function CostDashboard() {
               </Box>
               {(() => {
                 const total = Object.values(parseTelemetry).reduce((a, b) => a + b, 0);
-                const successRate = total > 0 ? (parseTelemetry.json_ok / total * 100) : 0;
-                const healthColor = successRate >= 90 ? '#10B981' : successRate >= 70 ? '#F59E0B' : '#EF4444';
-                const healthLabel = successRate >= 90 ? 'Excellent' : successRate >= 70 ? 'Good' : 'Degraded';
+                const successRate = total > 0 ? (parseTelemetry.json_ok / total * 100) : 100;
+                const healthColor = total === 0 ? '#64748B' : successRate >= 90 ? '#10B981' : successRate >= 70 ? '#F59E0B' : '#EF4444';
+                const healthLabel = total === 0 ? 'No Data' : successRate >= 90 ? 'Excellent' : successRate >= 70 ? 'Good' : 'Degraded';
                 return (
                   <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2.5 }}>
@@ -582,7 +582,7 @@ export default function CostDashboard() {
                 All costs are calculated using OpenRouter published rates.
                 Gemini 2.5 Flash: $0.50/M input, $3.00/M output.
                 Gemini 2.0 Flash Lite: $0.25/M input, $1.50/M output.
-                Image generation: $0.07/image via Gemini Flash Image.
+                Image generation: $0.07/image via Gemini Flash Image (now included in total cost).
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', lineHeight: 1.6 }}>
                 Pipeline uses rate limiting (3s min delay between calls) to avoid 429 errors.
