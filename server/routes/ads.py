@@ -111,7 +111,7 @@ def list_ads(
     else:
         results.sort(key=lambda r: r.brief_id)
 
-    return [_serialize_result(r, client_id=client_id) for r in results]
+    return [_serialize_result_lite(r, client_id=client_id) for r in results]
 
 
 @router.get("/{brief_id}")
@@ -680,5 +680,22 @@ def _serialize_result(result, *, client_id: str | None = None) -> dict:
             data["image_iterations"] = user_iters
             data["best_image_index"] = best_idx
 
+    _add_image_urls(data, result.brief_id)
+    return data
+
+
+def _serialize_result_lite(result, *, client_id: str | None = None) -> dict:
+    """Fast serialization for list endpoints — skips per-ad DB image queries."""
+    data = result.model_dump()
+
+    if not result.copy_iterations:
+        return data
+
+    # Strip costs from iterations to reduce payload
+    for ci in data.get("copy_iterations", []):
+        ci["costs"] = []
+
+    # Don't resolve user images from DB for list view (expensive: 1 query per ad)
+    # Just keep whatever is already in the model (usually empty for list)
     _add_image_urls(data, result.brief_id)
     return data
