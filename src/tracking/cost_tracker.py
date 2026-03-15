@@ -39,6 +39,9 @@ class PipelineMetrics:
         inst.image_cache_hits: int = 0
         inst.image_cache_misses: int = 0
         inst.image_force_regenerates: int = 0
+        # Self-healing tracking
+        inst.llm_retries: int = 0
+        inst.llm_fallbacks: int = 0
         # Total briefs processed
         inst.total_briefs: int = 0
 
@@ -65,6 +68,12 @@ class PipelineMetrics:
             self.eval_batched_ok += 1
         else:
             self.eval_batched_fallback += 1
+
+    def record_retry(self) -> None:
+        self.llm_retries += 1
+
+    def record_fallback(self) -> None:
+        self.llm_fallbacks += 1
 
     def record_image_cache(self, hit: bool, force: bool = False) -> None:
         if force:
@@ -99,6 +108,10 @@ class PipelineMetrics:
                 "force_regenerates": self.image_force_regenerates,
                 "total": total_images,
                 "hit_rate": round(self.image_cache_hits / total_images * 100, 1) if total_images else 0,
+            },
+            "self_healing": {
+                "retries": self.llm_retries,
+                "fallbacks": self.llm_fallbacks,
             },
             "total_briefs": self.total_briefs,
         }

@@ -21,8 +21,10 @@ from config.settings import (
     OPENROUTER_API_KEY,
     OPENROUTER_BASE_URL,
     MODEL_EVAL,
+    MODEL_EVAL_FALLBACK,
     LLM_EVAL_TEMPERATURE,
 )
+from src.tracking.resilient_call import resilient_invoke
 from config.evaluation_rubrics import DIMENSION_RUBRICS, DIMENSION_WEIGHTS
 
 
@@ -112,7 +114,8 @@ class BatchedScorer:
         self.rate_limiter.wait_if_needed()
 
         start = time.perf_counter()
-        response = self.llm.invoke(
+        response = resilient_invoke(
+            self.llm,
             [HumanMessage(content=prompt_text)],
             config={
                 "callbacks": callbacks,
@@ -124,6 +127,7 @@ class BatchedScorer:
                 ),
                 "tags": [f"brief:{brief.brief_id}", "batched_eval"],
             },
+            fallback_model=MODEL_EVAL_FALLBACK,
         )
         elapsed_ms = (time.perf_counter() - start) * 1000
         input_tokens, output_tokens = extract_token_usage(response)

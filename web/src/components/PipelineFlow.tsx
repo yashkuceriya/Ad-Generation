@@ -3,21 +3,20 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import GradingRoundedIcon from '@mui/icons-material/GradingRounded';
-import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
+import LoopRoundedIcon from '@mui/icons-material/LoopRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
-import DoneAllRoundedIcon from '@mui/icons-material/DoneAllRounded';
 import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 
 const STAGES = [
   { key: 'brief', label: 'Brief', icon: <DescriptionRoundedIcon sx={{ fontSize: 18 }} /> },
-  { key: 'generating', label: 'Generate', icon: <EditRoundedIcon sx={{ fontSize: 18 }} /> },
-  { key: 'evaluating', label: 'Evaluate', icon: <GradingRoundedIcon sx={{ fontSize: 18 }} /> },
-  { key: 'iterating', label: 'Iterate', icon: <AutorenewRoundedIcon sx={{ fontSize: 18 }} /> },
-  { key: 'compliance', label: 'Comply', icon: <VerifiedUserRoundedIcon sx={{ fontSize: 18 }} /> },
+  { key: 'generating', label: 'Generate', icon: <AutoAwesomeRoundedIcon sx={{ fontSize: 18 }} /> },
+  { key: 'evaluating', label: 'Evaluate', icon: <AssessmentRoundedIcon sx={{ fontSize: 18 }} /> },
+  { key: 'iterating', label: 'Iterate', icon: <LoopRoundedIcon sx={{ fontSize: 18 }} /> },
+  { key: 'compliance', label: 'Compliance', icon: <VerifiedUserRoundedIcon sx={{ fontSize: 18 }} /> },
   { key: 'imaging', label: 'Image', icon: <ImageRoundedIcon sx={{ fontSize: 18 }} /> },
-  { key: 'done', label: 'Done', icon: <DoneAllRoundedIcon sx={{ fontSize: 18 }} /> },
+  { key: 'done', label: 'Done', icon: <CheckCircleRoundedIcon sx={{ fontSize: 18 }} /> },
 ];
 
 // Map pipeline phase strings to stage index

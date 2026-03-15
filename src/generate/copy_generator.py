@@ -17,10 +17,13 @@ from config.settings import (
     OPENROUTER_BASE_URL,
     MODEL_DRAFT,
     MODEL_REFINE,
+    MODEL_DRAFT_FALLBACK,
+    MODEL_REFINE_FALLBACK,
     LLM_TEMPERATURE,
     LLM_REFINE_TEMPERATURE,
     LLM_MAX_OUTPUT_TOKENS,
 )
+from src.tracking.resilient_call import resilient_invoke
 from config.brand_guidelines import (
     BRAND_VOICE,
     APPROVED_CTAS,
@@ -180,8 +183,11 @@ Generate compelling ad copy that will stop the scroll and drive {brief.campaign_
 
         self.rate_limiter.wait_if_needed()
 
+        fallback = MODEL_REFINE_FALLBACK if is_refinement else MODEL_DRAFT_FALLBACK
+
         start = time.perf_counter()
-        response = llm.invoke(
+        response = resilient_invoke(
+            llm,
             [SystemMessage(content=system_msg), HumanMessage(content=user_msg)],
             config={
                 "callbacks": callbacks,
@@ -193,6 +199,7 @@ Generate compelling ad copy that will stop the scroll and drive {brief.campaign_
                 ),
                 "tags": [f"brief:{brief.brief_id}", f"iter:{iteration}"],
             },
+            fallback_model=fallback,
         )
         elapsed_ms = (time.perf_counter() - start) * 1000
         input_tokens, output_tokens = extract_token_usage(response)

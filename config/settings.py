@@ -32,6 +32,15 @@ MODEL_VISION = os.getenv("MODEL_VISION", "google/gemini-3-flash-preview")
 # Image generation model (Gemini with native image output)
 MODEL_IMAGE = os.getenv("MODEL_IMAGE", "google/gemini-3.1-flash-image-preview")
 
+# --- Fallback Models (self-healing pipeline) ---
+MODEL_DRAFT_FALLBACK = os.getenv("MODEL_DRAFT_FALLBACK", "google/gemini-2.5-flash-preview")
+MODEL_REFINE_FALLBACK = os.getenv("MODEL_REFINE_FALLBACK", "google/gemini-2.5-flash-preview")
+MODEL_EVAL_FALLBACK = os.getenv("MODEL_EVAL_FALLBACK", "google/gemini-2.0-flash-exp:free")
+
+# --- Retry Settings (self-healing pipeline) ---
+LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "3"))
+LLM_RETRY_BASE_DELAY = float(os.getenv("LLM_RETRY_BASE_DELAY", "1.0"))
+
 # --- Available Models (curated list for UI selection) ---
 AVAILABLE_MODELS = {
     "text": [
