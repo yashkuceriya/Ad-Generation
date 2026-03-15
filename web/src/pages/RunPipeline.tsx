@@ -143,7 +143,8 @@ export default function RunPipeline() {
     );
   }
 
-  const estimatedCost = count * 0.01 + (imageMode === 'eager' ? count * 0.06 : imageMode === 'lazy' ? Math.min(3, count) * 0.06 : 0);
+  const IMAGE_COST = 0.07;
+  const estimatedCost = count * 0.01 + (imageMode === 'eager' ? count * IMAGE_COST : imageMode === 'lazy' ? Math.min(3, count) * IMAGE_COST : 0);
 
   return (
     <Box>
@@ -316,7 +317,7 @@ export default function RunPipeline() {
                 onChange={(e) => setImageMode(e.target.value)}
                 fullWidth
                 helperText={
-                  imageMode === 'lazy' ? 'Images generated on-demand when clicked (~$0.06 each)'
+                  imageMode === 'lazy' ? 'Images generated on-demand when clicked (~$0.07 each)'
                   : imageMode === 'eager' ? 'Images generated for every ad during pipeline'
                   : 'No images, text-only ads'
                 }
@@ -345,7 +346,7 @@ export default function RunPipeline() {
                 </Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontSize: '0.7rem' }}>
                   {count} ads × ~$0.01/ad text
-                  {imageMode !== 'off' && ` + ${imageMode === 'eager' ? count : `~${Math.min(3, count)}`} images × ~$0.06/image`}
+                  {imageMode !== 'off' && ` + ${imageMode === 'eager' ? count : `~${Math.min(3, count)}`} images × ~$0.07/image`}
                 </Typography>
               </Paper>
 

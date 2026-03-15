@@ -253,7 +253,8 @@ class AdPipeline:
         ads_without = len(results) - len(ads_with_images)
         if ads_without > 0:
             print(f"\n  Images: {len(ads_with_images)} generated, {ads_without} deferred (on-demand)")
-            print(f"  Estimated image cost if all generated: ~${ads_without * 0.18:.2f}")
+            from config.settings import IMAGE_COST_PER_IMAGE, MAX_IMAGE_ITERATIONS
+            print(f"  Estimated image cost if all generated: ~${ads_without * IMAGE_COST_PER_IMAGE * MAX_IMAGE_ITERATIONS:.2f}")
 
         # Show iteration effectiveness
         improved_count = 0

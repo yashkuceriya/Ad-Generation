@@ -131,6 +131,10 @@ def get_ad(brief_id: str, client_id: str | None = Query(None)):
 
 @router.post("/{brief_id}/generate-image")
 def generate_image(brief_id: str, req: GenerateImageRequest | None = None):
+    from config.settings import IMAGE_GENERATION_ENABLED
+    if not IMAGE_GENERATION_ENABLED:
+        raise HTTPException(403, "Image generation is currently disabled (IMAGE_GENERATION_ENABLED=false)")
+
     if req is None:
         req = GenerateImageRequest()
 

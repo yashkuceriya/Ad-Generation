@@ -72,8 +72,12 @@ AVAILABLE_MODELS = {
 COST_PER_TOKEN = {
     "google/gemini-3-flash-preview": {"input": 0.0000005, "output": 0.000003},
     "google/gemini-3.1-flash-lite-preview": {"input": 0.00000025, "output": 0.0000015},
-    "google/gemini-3.1-flash-image-preview": {"input": 0.0000005, "output": 0.000003, "per_image": 0.06},
+    "google/gemini-3.1-flash-image-preview": {"input": 0.0000005, "output": 0.000003, "per_image": 0.07},
 }
+
+# --- Image Budget ---
+IMAGE_GENERATION_ENABLED = os.getenv("IMAGE_GENERATION_ENABLED", "true").lower() == "true"
+IMAGE_COST_PER_IMAGE = float(os.getenv("IMAGE_COST_PER_IMAGE", "0.07"))
 
 # --- Pipeline Settings ---
 MAX_COPY_ITERATIONS = int(os.getenv("MAX_COPY_ITERATIONS", "3"))

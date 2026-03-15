@@ -582,7 +582,7 @@ export default function CostDashboard() {
                 All costs are calculated using OpenRouter published rates.
                 Gemini 2.5 Flash: $0.50/M input, $3.00/M output.
                 Gemini 2.0 Flash Lite: $0.25/M input, $1.50/M output.
-                Image generation: $0.06/image via Gemini Flash Image.
+                Image generation: $0.07/image via Gemini Flash Image.
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', lineHeight: 1.6 }}>
                 Pipeline uses rate limiting (3s min delay between calls) to avoid 429 errors.
