@@ -1,0 +1,108 @@
+[
+  {
+    "timestamp": "2026-03-13T18:26:28.230483",
+    "total_ads": 1,
+    "avg_score": 7.78,
+    "pass_rate": 100,
+    "total_cost": 0.013001,
+    "elapsed_seconds": 78.5,
+    "brief_ids": [
+      "demo_001"
+    ]
+  },
+  {
+    "timestamp": "2026-03-13T21:52:26.971155",
+    "total_ads": 10,
+    "avg_score": 7.72,
+    "pass_rate": 100,
+    "total_cost": 0.127905,
+    "elapsed_seconds": 816.4,
+    "brief_ids": [
+      "brief_001",
+      "brief_002",
+      "brief_003",
+      "brief_004",
+      "brief_005",
+      "brief_006",
+      "brief_007",
+      "brief_008",
+      "brief_009",
+      "brief_010"
+    ]
+  },
+  {
+    "timestamp": "2026-03-14T13:01:24.623656",
+    "total_ads": 10,
+    "avg_score": 7.76,
+    "pass_rate": 100,
+    "total_cost": 0.129745,
+    "elapsed_seconds": 861.7,
+    "brief_ids": [
+      "brief_001",
+      "brief_002",
+      "brief_003",
+      "brief_004",
+      "brief_005",
+      "brief_006",
+      "brief_007",
+      "brief_008",
+      "brief_009",
+      "brief_010"
+    ]
+  },
+  {
+    "timestamp": "2026-03-14T13:27:52.098065",
+    "total_ads": 10,
+    "avg_score": 7.74,
+    "pass_rate": 100,
+    "total_cost": 0.127554,
+    "elapsed_seconds": 808.0,
+    "brief_ids": [
+      "brief_001",
+      "brief_002",
+      "brief_003",
+      "brief_004",
+      "brief_005",
+      "brief_006",
+      "brief_007",
+      "brief_008",
+      "brief_009",
+      "brief_010"
+    ]
+  },
+  {
+    "timestamp": "2026-03-14T14:21:23.552061",
+    "total_ads": 5,
+    "avg_score": 7.87,
+    "pass_rate": 100,
+    "total_cost": 0.025891,
+    "elapsed_seconds": 73.8,
+    "brief_ids": [
+      "r16009_d01",
+      "r16009_d02",
+      "r16009_d03",
+      "r16009_d04",
+      "r16009_d05"
+    ]
+  },
+  {
+    "timestamp": "2026-03-14T14:40:40.886248",
+    "total_ads": 10,
+    "avg_score": 7.81,
+    "pass_rate": 100,
+    "total_cost": 0.052929,
+    "elapsed_seconds": 128.6,
+    "brief_ids": [
+      "r17112_001",
+      "r17112_002",
+      "r17112_003",
+      "r17112_004",
+      "r17112_005",
+      "r17112_006",
+      "r17112_007",
+      "r17112_008",
+      "r17112_009",
+      "r17112_010"
+    ]
+  }
+]

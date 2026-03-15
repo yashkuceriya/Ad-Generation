@@ -1,0 +1,13 @@
+{
+  "total_cost_usd": 0.135479,
+  "total_tokens": 179541,
+  "total_calls": 100,
+  "cost_by_model": {
+    "google/gemini-3-flash-preview": 0.072796,
+    "google/gemini-3.1-flash-lite-preview": 0.062684
+  },
+  "cost_by_stage": {
+    "copy_generation": 0.072796,
+    "evaluation": 0.062684
+  }
+}

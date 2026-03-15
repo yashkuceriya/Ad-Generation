@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from dotenv import load_dotenv
 load_dotenv()
 
-from src.tracking.langsmith_tracer import init_langsmith
+from src.tracking.langsmith_tracer import get_callbacks as _init_langsmith_check
 from src.tracking.cost_tracker import CostTracker
 from src.intelligence.brief_factory import BriefFactory
 from src.pipeline import AdPipeline
@@ -50,8 +50,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Initialize LangSmith tracing
-    init_langsmith()
+    # LangSmith tracing auto-initializes via get_callbacks()
 
     # Validate API key
     if not os.getenv("OPENROUTER_API_KEY"):

@@ -1,0 +1,87 @@
+[
+  {
+    "brief_id": "r38395_004",
+    "headline": "Average 200-Point SAT Score Improvement",
+    "primary_text": "What if your child misses their dream school by just 40 points? \n\nThe difference between an acceptance letter and a waitlist often comes down to one Saturday morning. We\u2019ve helped 50,000+ students bri",
+    "cta": "Book a Free Diagnostic",
+    "scores": {
+      "clarity": 8.5,
+      "value_proposition": 8.2,
+      "cta_strength": 7.5,
+      "brand_voice": 7.8,
+      "emotional_resonance": 8.8
+    },
+    "weighted_average": 8.18,
+    "iterations_used": 2,
+    "early_stopped": true,
+    "cost_usd": 0.005292
+  },
+  {
+    "brief_id": "r38395_029",
+    "headline": "Boost Your SAT Score 200+ Points",
+    "primary_text": "From \"I\u2019m not a good test-taker\" to a 1450 on my first try. \ud83c\udfc6\n\nStop wasting hours on boring prep books that don't explain the 'why' behind your mistakes. Our tutors give you the exact strategies to cr",
+    "cta": "Get Started Free",
+    "scores": {
+      "clarity": 9.2,
+      "value_proposition": 8.5,
+      "cta_strength": 6.8,
+      "brand_voice": 7.5,
+      "emotional_resonance": 8.2
+    },
+    "weighted_average": 8.09,
+    "iterations_used": 2,
+    "early_stopped": true,
+    "cost_usd": 0.005356
+  },
+  {
+    "brief_id": "r39182_017",
+    "headline": "Average 200-Point SAT Score Jump",
+    "primary_text": "From 'I\u2019m not a math person' to a 1450 on my SAT.\n\nStop staring at prep books that don't make sense. We\u2019ve helped 50,000+ students ditch the test anxiety with 1-on-1 tutors who actually explain the 'w",
+    "cta": "Start Your Free Trial",
+    "scores": {
+      "clarity": 9.2,
+      "value_proposition": 8.5,
+      "cta_strength": 6.8,
+      "brand_voice": 7.5,
+      "emotional_resonance": 8.2
+    },
+    "weighted_average": 8.09,
+    "iterations_used": 2,
+    "early_stopped": true,
+    "cost_usd": 0.005488
+  },
+  {
+    "brief_id": "r38395_006",
+    "headline": "Average 200-Point SAT Score Increase",
+    "primary_text": "Stop paying for $2,000 SAT bootcamps where your child is just another face in a crowded Zoom room.\n\nMost programs use a one-size-fits-all curriculum that ignores your student's specific gaps. We repla",
+    "cta": "Get Started Free",
+    "scores": {
+      "clarity": 8.5,
+      "value_proposition": 8.8,
+      "cta_strength": 7.5,
+      "brand_voice": 7.2,
+      "emotional_resonance": 8.0
+    },
+    "weighted_average": 8.08,
+    "iterations_used": 2,
+    "early_stopped": true,
+    "cost_usd": 0.005617
+  },
+  {
+    "brief_id": "r39182_018",
+    "headline": "Average 200-Point SAT Score Improvement",
+    "primary_text": "Stop paying $2,000 for 'one-size-fits-all' SAT classes that leave your child lost in the back of the room.\n\nMost prep programs treat every student the same, but a 100-point gap in Math requires a diff",
+    "cta": "Start Your Free Trial",
+    "scores": {
+      "clarity": 8.5,
+      "value_proposition": 8.8,
+      "cta_strength": 7.5,
+      "brand_voice": 7.2,
+      "emotional_resonance": 8.0
+    },
+    "weighted_average": 8.08,
+    "iterations_used": 2,
+    "early_stopped": true,
+    "cost_usd": 0.005604
+  }
+]
