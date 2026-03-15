@@ -13,3 +13,5 @@ fastapi>=0.115.0
 uvicorn[standard]>=0.30.0
 sse-starlette>=2.0.0
 requests>=2.31.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
