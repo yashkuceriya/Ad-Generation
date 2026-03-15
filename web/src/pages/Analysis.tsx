@@ -512,7 +512,7 @@ export default function Analysis() {
                   contentStyle={tooltipStyle}
                   formatter={((v: unknown, name: unknown) => { const n = Number(v); const s = String(name); return [s === 'Cost' ? `$${n.toFixed(5)}` : s === 'Score' ? n.toFixed(2) : n, s]; }) as never}
                   labelFormatter={() => ''}
-                  content={({ active, payload }: { active?: boolean; payload?: Array<{ payload: typeof scatterData[0] }> }) => {
+                  content={(({ active, payload }: { active?: boolean; payload?: readonly { payload: { score: number; cost: number; id: string; audience: string; iterations: number } }[] }) => {
                     if (!active || !payload?.length) return null;
                     const d = payload[0].payload;
                     return (
@@ -522,7 +522,7 @@ export default function Analysis() {
                         <Typography variant="caption" sx={{ fontSize: '0.72rem', color: 'text.secondary', display: 'block' }}>Audience: {d.audience} · Iterations: {d.iterations}</Typography>
                       </Box>
                     );
-                  }}
+                  }) as never}
                 />
                 <Scatter data={scatterData}>
                   {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.85} stroke={AUDIENCE_COLORS[d.audience] || '#F26522'} strokeWidth={1.5} strokeOpacity={0.3} />)}
