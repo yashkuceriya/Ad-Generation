@@ -17,6 +17,7 @@ import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import HtmlRoundedIcon from '@mui/icons-material/HtmlRounded';
 import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -59,6 +60,84 @@ function exportAdsCSV(ads: AdResult[]) {
     ].join(',');
   });
   downloadFile([headers.join(','), ...rows].join('\n'), 'ads-export.csv', 'text/csv');
+}
+
+function exportAdsHTMLReport(ads: AdResult[]) {
+  const scores = ads.map(a => a.copy_iterations[a.best_copy_index].evaluation.weighted_average);
+  const avgScore = scores.length ? scores.reduce((s, v) => s + v, 0) / scores.length : 0;
+  const passCount = scores.filter(s => s >= 7).length;
+  const passRate = scores.length ? ((passCount / scores.length) * 100).toFixed(1) : '0';
+  const dateGenerated = new Date().toLocaleString();
+
+  const statusLabel = (status: string) => {
+    const map: Record<string, string> = {
+      human_approved: 'Approved', experiment_ready: 'Experiment Ready',
+      compliance_pass: 'Compliance Pass', evaluator_pass: 'Evaluator Pass',
+      below_threshold: 'Below Threshold', rejected: 'Rejected',
+      iterating: 'Iterating', generated: 'Generated', published: 'Published',
+    };
+    return map[status] || status;
+  };
+
+  const cards = ads.map(ad => {
+    const best = ad.copy_iterations[ad.best_copy_index];
+    const score = best.evaluation.weighted_average;
+    const scoreColor = score >= 8 ? '#10B981' : score >= 6 ? '#F26522' : score >= 4 ? '#F59E0B' : '#EF4444';
+    const statusColor = ['human_approved', 'experiment_ready'].includes(ad.status) ? '#10B981'
+      : ['compliance_pass', 'evaluator_pass'].includes(ad.status) ? '#3B82F6'
+      : ['below_threshold', 'rejected'].includes(ad.status) ? '#EF4444' : '#F59E0B';
+    return `<div class="card">
+      <div class="card-score" style="background:${scoreColor}18;color:${scoreColor};border:1px solid ${scoreColor}40">${score.toFixed(1)}</div>
+      <h3 class="card-headline">${best.ad_copy.headline}</h3>
+      <p class="card-text">${best.ad_copy.primary_text}</p>
+      <div class="card-badges">
+        <span class="badge" style="background:rgba(242,101,34,0.08);color:#F26522;border:1px solid rgba(242,101,34,0.2)">${ad.brief.audience_segment}</span>
+        <span class="badge" style="background:${statusColor}14;color:${statusColor};border:1px solid ${statusColor}30">${statusLabel(ad.status)}</span>
+      </div>
+    </div>`;
+  }).join('\n');
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Gallery Report</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a1a; padding: 32px; }
+  .header { max-width: 1200px; margin: 0 auto 32px; padding: 28px 32px; background: linear-gradient(135deg, rgba(242,101,34,0.06), rgba(16,185,129,0.03)); border: 1px solid rgba(242,101,34,0.12); border-radius: 16px; }
+  .header h1 { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
+  .stats { display: flex; gap: 24px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-value { font-size: 28px; font-weight: 800; color: #F26522; }
+  .stat-label { font-size: 12px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #eee; position: relative; }
+  .card-score { position: absolute; top: 16px; right: 16px; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 800; }
+  .card-headline { font-size: 16px; font-weight: 700; margin-bottom: 8px; padding-right: 60px; }
+  .card-text { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  @media print { body { background: #fff; padding: 16px; } .card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Ad Gallery Report</h1>
+  <div class="stats">
+    <div class="stat"><div class="stat-value">${ads.length}</div><div class="stat-label">Total Ads</div></div>
+    <div class="stat"><div class="stat-value">${avgScore.toFixed(1)}</div><div class="stat-label">Avg Score</div></div>
+    <div class="stat"><div class="stat-value">${passRate}%</div><div class="stat-label">Pass Rate (&ge;7)</div></div>
+    <div class="stat"><div class="stat-value" style="font-size:14px;color:#888">${dateGenerated}</div><div class="stat-label">Generated</div></div>
+  </div>
+</div>
+<div class="grid">
+${cards}
+</div>
+</body>
+</html>`;
+  downloadFile(html, 'ads-report.html', 'text/html');
 }
 
 export default function AdGallery() {
@@ -274,6 +353,20 @@ export default function AdGallery() {
                 }}
               >
                 Export CSV
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<HtmlRoundedIcon sx={{ fontSize: 16 }} />}
+                onClick={() => { exportAdsHTMLReport(filteredAds); setSnack({ message: `Exported ${filteredAds.length} ads as HTML report`, severity: 'success' }); }}
+                disabled={filteredAds.length === 0}
+                sx={{
+                  fontSize: '0.7rem', fontWeight: 700, textTransform: 'none',
+                  borderColor: 'rgba(139,92,246,0.3)', color: '#8B5CF6',
+                  '&:hover': { borderColor: '#8B5CF6', bgcolor: 'rgba(139,92,246,0.06)' },
+                }}
+              >
+                Export HTML Report
               </Button>
             </Box>
           </Box>

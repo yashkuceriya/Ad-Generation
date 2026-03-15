@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { keyframes } from '@mui/system';
 import usePageTitle from '../hooks/usePageTitle';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -16,6 +17,7 @@ import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import PipelineProgress from '../components/PipelineProgress';
 import PipelineFlow from '../components/PipelineFlow';
 import ScoreChip from '../components/ScoreChip';
+import AnimatedNumber from '../components/AnimatedNumber';
 import { getAds, getPipelineStatus, getCostSummary } from '../api/endpoints';
 import { useSSE } from '../api/useSSE';
 import Skeleton from '@mui/material/Skeleton';
@@ -53,14 +55,21 @@ const DIM_COLORS: Record<string, string> = {
 };
 const PASSING_STATUSES = ['published', 'evaluator_pass', 'compliance_pass', 'human_approved', 'experiment_ready'];
 
-function StatCard({ title, value, subtitle, icon, gradient }: {
-  title: string; value: string; subtitle?: string;
-  icon: React.ReactNode; gradient: string;
+const pulseGlow = keyframes`
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 101, 34, 0); }
+  50% { box-shadow: 0 0 16px 2px rgba(242, 101, 34, 0.12); }
+`;
+
+function StatCard({ title, value, subtitle, icon, gradient, pulsing }: {
+  title: string; value: React.ReactNode; subtitle?: string;
+  icon: React.ReactNode; gradient: string; pulsing?: boolean;
 }) {
   return (
     <Paper
       sx={{
         p: 3, position: 'relative', overflow: 'hidden',
+        animation: pulsing ? `${pulseGlow} 2.5s ease-in-out infinite` : 'none',
+        transition: 'box-shadow 0.3s ease',
         '&::before': {
           content: '""', position: 'absolute', top: 0, right: 0,
           width: 120, height: 120, borderRadius: '50%',
@@ -148,6 +157,8 @@ export default function Dashboard() {
   }, [refresh, debouncedRefresh]);
 
   useSSE(handleEvent);
+
+  const isRunning = status?.status === 'running';
 
   // === Derived analytics ===
   const { validAds, scores, avgScore, passingCount, belowCount, passRate } = useMemo(() => {
@@ -357,16 +368,16 @@ export default function Dashboard() {
       {/* Stat Cards */}
       <Grid container spacing={2} sx={{ mb: 3.5 }}>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Total Ads" value={String(ads.length)} subtitle="generated" icon={<AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #F26522, #D4541A)" />
+          <StatCard title="Total Ads" value={<AnimatedNumber value={ads.length} />} subtitle="generated" icon={<AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #F26522, #D4541A)" pulsing={isRunning} />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Avg Score" value={avgScore ? avgScore.toFixed(1) : '—'} subtitle="out of 10" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient={`linear-gradient(135deg, ${avgScore >= 7 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} />
+          <StatCard title="Avg Score" value={avgScore ? <AnimatedNumber value={avgScore} decimals={1} /> : '—'} subtitle="out of 10" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient={`linear-gradient(135deg, ${avgScore >= 7 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} pulsing={isRunning} />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Pass Rate" value={ads.length ? `${passRate}%` : '—'} subtitle={ads.length ? `${passingCount} passing · ${belowCount} below threshold` : 'score >= 7.0'} icon={<Typography sx={{ fontSize: 18, fontWeight: 800, color: 'white' }}>%</Typography>} gradient={`linear-gradient(135deg, ${passRate >= 80 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} />
+          <StatCard title="Pass Rate" value={ads.length ? <AnimatedNumber value={passRate} suffix="%" /> : '—'} subtitle={ads.length ? `${passingCount} passing · ${belowCount} below threshold` : 'score >= 7.0'} icon={<Typography sx={{ fontSize: 18, fontWeight: 800, color: 'white' }}>%</Typography>} gradient={`linear-gradient(135deg, ${passRate >= 80 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} pulsing={isRunning} />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Avg Improvement" value={ads.length ? `+${avgImprovement.toFixed(2)}` : '—'} subtitle="from iteration 1 → best" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #10B981, #F26522)" />
+          <StatCard title="Avg Improvement" value={ads.length ? <AnimatedNumber value={avgImprovement} decimals={2} prefix="+" /> : '—'} subtitle="from iteration 1 → best" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #10B981, #F26522)" pulsing={isRunning} />
         </Grid>
       </Grid>
 
@@ -391,37 +402,41 @@ export default function Dashboard() {
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
                 title="Total Spend"
-                value={`$${costSummary.total_cost_usd.toFixed(4)}`}
+                value={<AnimatedNumber value={costSummary.total_cost_usd} decimals={4} prefix="$" />}
                 subtitle={`${costSummary.total_calls} API calls`}
                 icon={<Typography sx={{ fontSize: 16, fontWeight: 800, color: 'white' }}>$</Typography>}
                 gradient="linear-gradient(135deg, #EF4444, #DC2626)"
+                pulsing={isRunning}
               />
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
                 title="Total Tokens"
-                value={costSummary.total_tokens >= 1000 ? `${(costSummary.total_tokens / 1000).toFixed(1)}K` : String(costSummary.total_tokens)}
+                value={costSummary.total_tokens >= 1000 ? <AnimatedNumber value={costSummary.total_tokens / 1000} decimals={1} suffix="K" /> : <AnimatedNumber value={costSummary.total_tokens} />}
                 subtitle="input + output"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>Tk</Typography>}
                 gradient="linear-gradient(135deg, #F59E0B, #D97706)"
+                pulsing={isRunning}
               />
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
                 title="Avg Cost/Ad"
-                value={ads.length ? `$${(costSummary.total_cost_usd / ads.length).toFixed(4)}` : '—'}
+                value={ads.length ? <AnimatedNumber value={costSummary.total_cost_usd / ads.length} decimals={4} prefix="$" /> : '—'}
                 subtitle="per generated ad"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>/ad</Typography>}
                 gradient="linear-gradient(135deg, #F26522, #FF8A50)"
+                pulsing={isRunning}
               />
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
                 title="Avg Calls/Ad"
-                value={ads.length ? (costSummary.total_calls / ads.length).toFixed(1) : '—'}
+                value={ads.length ? <AnimatedNumber value={costSummary.total_calls / ads.length} decimals={1} /> : '—'}
                 subtitle="generate + eval + refine"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>#</Typography>}
                 gradient="linear-gradient(135deg, #10B981, #059669)"
+                pulsing={isRunning}
               />
             </Grid>
           </Grid>

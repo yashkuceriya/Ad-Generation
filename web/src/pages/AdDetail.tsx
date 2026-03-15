@@ -23,6 +23,8 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import HtmlRoundedIcon from '@mui/icons-material/HtmlRounded';
 import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
 import Button from '@mui/material/Button';
 import ScoreChip from '../components/ScoreChip';
@@ -64,6 +66,66 @@ function downloadFile(content: string, filename: string, type: string) {
 
 function exportAdJSON(ad: AdResult) {
   downloadFile(JSON.stringify(ad, null, 2), `ad-${ad.brief_id}.json`, 'application/json');
+}
+
+function copyAdText(ad: AdResult): string {
+  const best = ad.copy_iterations[ad.best_copy_index].ad_copy;
+  return `Headline: ${best.headline}\n\nPrimary Text: ${best.primary_text}\n\nDescription: ${best.description}\n\nCTA: ${best.cta_button}`;
+}
+
+function exportAdPreviewHTML(ad: AdResult) {
+  const best = ad.copy_iterations[ad.best_copy_index];
+  const score = best.evaluation.weighted_average;
+  const scoreColor = score >= 8 ? '#10B981' : score >= 6 ? '#F26522' : score >= 4 ? '#F59E0B' : '#EF4444';
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Preview - ${ad.brief_id}</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 24px; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 420px; width: 100%; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #F26522, #D4541A); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+  .card-header-text { flex: 1; }
+  .card-header-text .name { font-weight: 700; font-size: 14px; color: #1a1a1a; }
+  .card-header-text .meta { font-size: 12px; color: #888; }
+  .primary-text { padding: 16px 20px; font-size: 14px; line-height: 1.6; color: #333; }
+  .card-body { padding: 0 20px 16px; }
+  .headline { font-size: 18px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; }
+  .description { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 14px; }
+  .cta-btn { display: block; width: 100%; padding: 12px; background: #F26522; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
+  .badges { padding: 12px 20px; border-top: 1px solid #f0f0f0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-score { background: ${scoreColor}18; color: ${scoreColor}; border: 1px solid ${scoreColor}40; }
+  .badge-audience { background: rgba(242,101,34,0.08); color: #F26522; border: 1px solid rgba(242,101,34,0.2); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="avatar">N</div>
+    <div class="card-header-text">
+      <div class="name">Nerdy Ad Engine</div>
+      <div class="meta">Sponsored · ${ad.brief.audience_segment}</div>
+    </div>
+  </div>
+  <div class="primary-text">${best.ad_copy.primary_text}</div>
+  <div class="card-body">
+    <div class="headline">${best.ad_copy.headline}</div>
+    <div class="description">${best.ad_copy.description}</div>
+    <a class="cta-btn">${best.ad_copy.cta_button}</a>
+  </div>
+  <div class="badges">
+    <span class="badge badge-score">Score: ${score.toFixed(1)}/10</span>
+    <span class="badge badge-audience">${ad.brief.audience_segment}</span>
+  </div>
+</div>
+</body>
+</html>`;
+  downloadFile(html, `ad-${ad.brief_id}-preview.html`, 'text/html');
 }
 
 function ImageIterationCard({ iter, isBest }: { iter: ImageIteration; isBest: boolean; index: number }) {
@@ -596,6 +658,32 @@ export default function AdDetail() {
                 border: '1px solid', borderColor: 'divider',
               }}
             />
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<ContentCopyRoundedIcon sx={{ fontSize: 16 }} />}
+              onClick={() => { navigator.clipboard.writeText(copyAdText(ad)); setSnack({ message: 'Ad text copied to clipboard!', severity: 'success' }); }}
+              sx={{
+                fontSize: '0.7rem', fontWeight: 700, textTransform: 'none',
+                borderColor: 'rgba(139,92,246,0.3)', color: '#8B5CF6',
+                '&:hover': { borderColor: '#8B5CF6', bgcolor: 'rgba(139,92,246,0.06)' },
+              }}
+            >
+              Copy Ad Text
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<HtmlRoundedIcon sx={{ fontSize: 16 }} />}
+              onClick={() => { exportAdPreviewHTML(ad); setSnack({ message: 'HTML preview downloaded!', severity: 'success' }); }}
+              sx={{
+                fontSize: '0.7rem', fontWeight: 700, textTransform: 'none',
+                borderColor: 'rgba(16,185,129,0.3)', color: '#10B981',
+                '&:hover': { borderColor: '#10B981', bgcolor: 'rgba(16,185,129,0.06)' },
+              }}
+            >
+              Download Preview
+            </Button>
             <Button
               variant="outlined"
               size="small"
