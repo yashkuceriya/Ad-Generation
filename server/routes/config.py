@@ -66,6 +66,8 @@ def get_config():
             "principles": BRAND_VOICE["principles"],
         },
         "available_models": settings.AVAILABLE_MODELS,
+        "image_generation_enabled": settings.IMAGE_GENERATION_ENABLED,
+        "image_cost_per_image": settings.IMAGE_COST_PER_IMAGE,
     }
 
 
