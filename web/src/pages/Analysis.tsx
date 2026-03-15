@@ -9,17 +9,31 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import LinearProgress from '@mui/material/LinearProgress';
 import Skeleton from '@mui/material/Skeleton';
+import MuiTooltip from '@mui/material/Tooltip';
+import CircularProgress from '@mui/material/CircularProgress';
 import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
+import BalanceRoundedIcon from '@mui/icons-material/BalanceRounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import RadarRoundedIcon from '@mui/icons-material/RadarRounded';
+import BubbleChartRoundedIcon from '@mui/icons-material/BubbleChartRounded';
+import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded';
+import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
+import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   ResponsiveContainer, Tooltip, Legend,
   BarChart, Bar, XAxis, YAxis, Cell,
-  ScatterChart, Scatter, CartesianGrid, ZAxis,
+  ScatterChart, Scatter, CartesianGrid, ZAxis, ReferenceLine,
   LineChart, Line,
 } from 'recharts';
 import Button from '@mui/material/Button';
@@ -290,69 +304,173 @@ export default function Analysis() {
       </Box>
 
       {/* Key Insights Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={2.5} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper sx={{ p: 2.5, border: '1px solid rgba(16,185,129,0.15)', bgcolor: 'rgba(16,185,129,0.03)' }}>
-            <Typography variant="caption" fontWeight={700} sx={{ color: '#10B981', fontSize: '0.6rem', letterSpacing: '0.05em' }}>
-              BEST PERFORMING AD
-            </Typography>
-            <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#10B981' }}>
-              <AnimatedNumber value={bestScore} decimals={1} suffix="/10" />
-            </Typography>
-            <Typography variant="body2" color="text.secondary" noWrap sx={{ mt: 0.5, fontSize: '0.82rem' }}>
-              {bestAd!.copy_iterations[bestAd!.best_copy_index].ad_copy.headline}
-            </Typography>
-            <Chip label={bestAd!.brief.audience_segment} size="small" sx={{ mt: 1, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981' }} />
-          </Paper>
+          <MuiTooltip title="The highest-scoring ad based on weighted evaluation average" arrow placement="top">
+            <Paper sx={{
+              p: 0, overflow: 'hidden',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0.04) 100%)'
+                : 'linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(16,185,129,0.02) 100%)',
+              border: '1px solid rgba(16,185,129,0.2)',
+              borderLeft: '4px solid #10B981',
+              transition: 'all 0.25s ease',
+              cursor: 'default',
+              '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 8px 30px rgba(16,185,129,0.15)' },
+            }}>
+              <Box sx={{ p: 2.5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                  <Box sx={{
+                    width: 40, height: 40, borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #10B981, #059669)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 4px 12px rgba(16,185,129,0.3)',
+                  }}>
+                    <EmojiEventsRoundedIcon sx={{ fontSize: 22, color: 'white' }} />
+                  </Box>
+                  <Typography variant="caption" fontWeight={700} sx={{ color: '#10B981', fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+                    BEST PERFORMING AD
+                  </Typography>
+                </Box>
+                <Typography variant="h3" fontWeight={800} sx={{ color: '#10B981', lineHeight: 1.1 }}>
+                  <AnimatedNumber value={bestScore} decimals={1} suffix="/10" />
+                </Typography>
+                <Typography variant="body2" noWrap sx={{ mt: 1, fontSize: '0.88rem', fontWeight: 600, color: isDark ? '#E2E8F0' : '#1E293B' }}>
+                  {bestAd!.copy_iterations[bestAd!.best_copy_index].ad_copy.headline}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+                  <Chip label={bestAd!.brief.audience_segment} size="small" sx={{ fontSize: '0.65rem', fontWeight: 700, bgcolor: 'rgba(16,185,129,0.15)', color: '#10B981', textTransform: 'capitalize' }} />
+                  <Chip label={bestAd!.brief.campaign_goal} size="small" sx={{ fontSize: '0.65rem', fontWeight: 600, bgcolor: 'rgba(16,185,129,0.08)', color: '#10B981', textTransform: 'capitalize' }} />
+                </Box>
+              </Box>
+            </Paper>
+          </MuiTooltip>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper sx={{ p: 2.5, border: '1px solid rgba(239,68,68,0.15)', bgcolor: 'rgba(239,68,68,0.03)' }}>
-            <Typography variant="caption" fontWeight={700} sx={{ color: '#EF4444', fontSize: '0.6rem', letterSpacing: '0.05em' }}>
-              NEEDS MOST IMPROVEMENT
-            </Typography>
-            <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#EF4444' }}>
-              <AnimatedNumber value={worstScore} decimals={1} suffix="/10" />
-            </Typography>
-            <Typography variant="body2" color="text.secondary" noWrap sx={{ mt: 0.5, fontSize: '0.82rem' }}>
-              {worstAd!.copy_iterations[worstAd!.best_copy_index].ad_copy.headline}
-            </Typography>
-            <Chip label={worstAd!.brief.audience_segment} size="small" sx={{ mt: 1, fontSize: '0.65rem', bgcolor: 'rgba(239,68,68,0.1)', color: '#EF4444' }} />
-          </Paper>
+          <MuiTooltip title="The lowest-scoring ad that could benefit from iteration or revision" arrow placement="top">
+            <Paper sx={{
+              p: 0, overflow: 'hidden',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.04) 100%)'
+                : 'linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.02) 100%)',
+              border: '1px solid rgba(245,158,11,0.2)',
+              borderLeft: '4px solid #F59E0B',
+              transition: 'all 0.25s ease',
+              cursor: 'default',
+              '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 8px 30px rgba(245,158,11,0.15)' },
+            }}>
+              <Box sx={{ p: 2.5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                  <Box sx={{
+                    width: 40, height: 40, borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 4px 12px rgba(245,158,11,0.3)',
+                  }}>
+                    <TrendingUpRoundedIcon sx={{ fontSize: 22, color: 'white' }} />
+                  </Box>
+                  <Typography variant="caption" fontWeight={700} sx={{ color: '#F59E0B', fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+                    NEEDS IMPROVEMENT
+                  </Typography>
+                </Box>
+                <Typography variant="h3" fontWeight={800} sx={{ color: '#F59E0B', lineHeight: 1.1 }}>
+                  <AnimatedNumber value={worstScore} decimals={1} suffix="/10" />
+                </Typography>
+                <Typography variant="body2" noWrap sx={{ mt: 1, fontSize: '0.88rem', fontWeight: 600, color: isDark ? '#E2E8F0' : '#1E293B' }}>
+                  {worstAd!.copy_iterations[worstAd!.best_copy_index].ad_copy.headline}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+                  <Chip label={worstAd!.brief.audience_segment} size="small" sx={{ fontSize: '0.65rem', fontWeight: 700, bgcolor: 'rgba(245,158,11,0.15)', color: '#F59E0B', textTransform: 'capitalize' }} />
+                  <Chip label={worstAd!.brief.campaign_goal} size="small" sx={{ fontSize: '0.65rem', fontWeight: 600, bgcolor: 'rgba(245,158,11,0.08)', color: '#F59E0B', textTransform: 'capitalize' }} />
+                </Box>
+              </Box>
+            </Paper>
+          </MuiTooltip>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper sx={{ p: 2.5, border: '1px solid rgba(242,101,34,0.15)', bgcolor: 'rgba(242,101,34,0.03)' }}>
-            <Typography variant="caption" fontWeight={700} sx={{ color: '#F26522', fontSize: '0.6rem', letterSpacing: '0.05em' }}>
-              SCORE SPREAD
-            </Typography>
-            <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#F26522' }}>
-              <AnimatedNumber value={bestScore - worstScore} decimals={1} suffix=" pts" />
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: '0.82rem' }}>
-              Range: {worstScore.toFixed(1)} — {bestScore.toFixed(1)}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem' }}>
-              {bestScore - worstScore < 1 ? 'Very consistent quality' : bestScore - worstScore < 2 ? 'Good consistency' : 'High variance — review outliers'}
-            </Typography>
-          </Paper>
+          <MuiTooltip title="The difference between your best and worst ad scores — lower spread means more consistent quality" arrow placement="top">
+            <Paper sx={{
+              p: 0, overflow: 'hidden',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.04) 100%)'
+                : 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(99,102,241,0.02) 100%)',
+              border: '1px solid rgba(139,92,246,0.2)',
+              borderLeft: '4px solid #8B5CF6',
+              transition: 'all 0.25s ease',
+              cursor: 'default',
+              '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 8px 30px rgba(139,92,246,0.15)' },
+            }}>
+              <Box sx={{ p: 2.5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                  <Box sx={{
+                    width: 40, height: 40, borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 4px 12px rgba(139,92,246,0.3)',
+                  }}>
+                    <BalanceRoundedIcon sx={{ fontSize: 22, color: 'white' }} />
+                  </Box>
+                  <Typography variant="caption" fontWeight={700} sx={{ color: '#8B5CF6', fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+                    SCORE SPREAD
+                  </Typography>
+                </Box>
+                <Typography variant="h3" fontWeight={800} sx={{ color: '#8B5CF6', lineHeight: 1.1 }}>
+                  <AnimatedNumber value={bestScore - worstScore} decimals={1} suffix=" pts" />
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 1, fontSize: '0.88rem', fontWeight: 600, color: isDark ? '#E2E8F0' : '#1E293B' }}>
+                  Range: {worstScore.toFixed(1)} — {bestScore.toFixed(1)}
+                </Typography>
+                <Box sx={{ mt: 1.5 }}>
+                  <Chip
+                    label={bestScore - worstScore < 1 ? 'Very consistent quality' : bestScore - worstScore < 2 ? 'Good consistency' : 'High variance — review outliers'}
+                    size="small"
+                    sx={{
+                      fontSize: '0.65rem', fontWeight: 700,
+                      bgcolor: bestScore - worstScore < 1 ? 'rgba(16,185,129,0.15)' : bestScore - worstScore < 2 ? 'rgba(139,92,246,0.15)' : 'rgba(239,68,68,0.15)',
+                      color: bestScore - worstScore < 1 ? '#10B981' : bestScore - worstScore < 2 ? '#8B5CF6' : '#EF4444',
+                    }}
+                  />
+                </Box>
+              </Box>
+            </Paper>
+          </MuiTooltip>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2.5}>
+      <Grid container spacing={3}>
         {/* Audience Comparison Radar */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
-              Audience Dimension Comparison
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <RadarRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Audience Dimension Comparison
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontSize: '0.72rem' }}>
+              Average scores per dimension, broken down by audience segment
             </Typography>
-            <ResponsiveContainer width="100%" height={340}>
-              <RadarChart data={audienceRadarData} cx="50%" cy="50%" outerRadius="72%">
-                <PolarGrid stroke={faintBorder} />
-                <PolarAngleAxis dataKey="dimension" tick={{ fill: '#64748B', fontSize: 11, fontWeight: 600 }} />
-                <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{ fill: '#484F58', fontSize: 9 }} tickCount={6} axisLine={false} />
+            {/* Custom legend with colored dots */}
+            <Box sx={{ display: 'flex', gap: 2, mb: 1, justifyContent: 'center' }}>
+              {Object.entries(AUDIENCE_COLORS).map(([seg, color]) => (
+                <Box key={seg} sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                  <Box sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: color, boxShadow: `0 0 6px ${color}60` }} />
+                  <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'capitalize', color: isDark ? '#CBD5E1' : '#475569' }}>{seg}</Typography>
+                </Box>
+              ))}
+            </Box>
+            <ResponsiveContainer width="100%" height={370}>
+              <RadarChart data={audienceRadarData} cx="50%" cy="50%" outerRadius="78%">
+                <PolarGrid stroke={faintBorder} strokeWidth={1} />
+                <PolarAngleAxis dataKey="dimension" tick={{ fill: isDark ? '#94A3B8' : '#475569', fontSize: 12, fontWeight: 700 }} />
+                <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{ fill: '#64748B', fontSize: 9 }} tickCount={6} axisLine={false} />
                 {Object.entries(AUDIENCE_COLORS).map(([seg, color]) => (
-                  <Radar key={seg} name={seg} dataKey={seg} stroke={color} fill={color} fillOpacity={0.08} strokeWidth={2} dot={{ r: 3, fill: color, strokeWidth: 0 }} />
+                  <Radar key={seg} name={seg} dataKey={seg} stroke={color} fill={color} fillOpacity={0.12} strokeWidth={2.5} dot={{ r: 4, fill: color, strokeWidth: 2, stroke: isDark ? '#1E293B' : '#FFFFFF' }} />
                 ))}
-                <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
                 <Tooltip contentStyle={tooltipStyle} />
               </RadarChart>
             </ResponsiveContainer>
@@ -361,30 +479,53 @@ export default function Analysis() {
 
         {/* Quality vs Cost Scatter */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
-              Quality vs Cost
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.7rem' }}>
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <BubbleChartRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Quality vs Cost
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.72rem' }}>
               Each dot = one ad. Top-left is the sweet spot (high quality, low cost). Size = iterations.
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1.5, mb: 1.5, flexWrap: 'wrap' }}>
+            <Box sx={{ display: 'flex', gap: 2, mb: 1.5, flexWrap: 'wrap' }}>
               {Object.entries(AUDIENCE_COLORS).map(([seg, color]) => (
-                <Box key={seg} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: color }} />
-                  <Typography variant="caption" sx={{ fontSize: '0.68rem', textTransform: 'capitalize', color: 'text.secondary' }}>{seg}</Typography>
+                <Box key={seg} sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                  <Box sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: color, boxShadow: `0 0 6px ${color}60` }} />
+                  <Typography variant="caption" sx={{ fontSize: '0.72rem', fontWeight: 600, textTransform: 'capitalize', color: isDark ? '#CBD5E1' : '#475569' }}>{seg}</Typography>
                 </Box>
               ))}
             </Box>
-            <ResponsiveContainer width="100%" height={280}>
-              <ScatterChart>
-                <CartesianGrid stroke={gridStroke} />
-                <XAxis type="number" dataKey="cost" name="Cost" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} label={{ value: 'Cost ($)', position: 'insideBottom', offset: -5, style: { fill: '#64748B', fontSize: 11 } }} />
-                <YAxis type="number" dataKey="score" name="Score" domain={[5, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11 } }} />
-                <ZAxis type="number" dataKey="iterations" range={[50, 200]} name="Iterations" />
-                <Tooltip contentStyle={tooltipStyle} formatter={((v: unknown, name: unknown) => { const n = Number(v); const s = String(name); return [s === 'Cost' ? `$${n.toFixed(5)}` : s === 'Score' ? n.toFixed(2) : n, s]; }) as never} labelFormatter={() => ''} />
+            <ResponsiveContainer width="100%" height={330}>
+              <ScatterChart margin={{ top: 10, right: 10, bottom: 20, left: 5 }}>
+                <CartesianGrid stroke={gridStroke} strokeDasharray="3 3" />
+                <XAxis type="number" dataKey="cost" name="Cost" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} label={{ value: 'Cost ($)', position: 'insideBottom', offset: -10, style: { fill: '#64748B', fontSize: 11 } }} />
+                <YAxis type="number" dataKey="score" name="Score" domain={[4, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11 } }} />
+                <ZAxis type="number" dataKey="iterations" range={[80, 300]} name="Iterations" />
+                <ReferenceLine y={7} stroke={isDark ? 'rgba(16,185,129,0.4)' : 'rgba(16,185,129,0.5)'} strokeDasharray="6 4" strokeWidth={1.5} label={{ value: 'Pass (7.0)', position: 'right', fill: '#10B981', fontSize: 10, fontWeight: 600 } as never} />
+                <Tooltip
+                  contentStyle={tooltipStyle}
+                  formatter={((v: unknown, name: unknown) => { const n = Number(v); const s = String(name); return [s === 'Cost' ? `$${n.toFixed(5)}` : s === 'Score' ? n.toFixed(2) : n, s]; }) as never}
+                  labelFormatter={() => ''}
+                  content={({ active, payload }: { active?: boolean; payload?: Array<{ payload: typeof scatterData[0] }> }) => {
+                    if (!active || !payload?.length) return null;
+                    const d = payload[0].payload;
+                    return (
+                      <Box sx={{ ...tooltipStyle, p: 1.5 }}>
+                        <Typography variant="caption" fontWeight={700} sx={{ fontSize: '0.78rem', display: 'block' }}>{d.id}</Typography>
+                        <Typography variant="caption" sx={{ fontSize: '0.72rem', color: 'text.secondary', display: 'block' }}>Score: {d.score} · Cost: ${d.cost.toFixed(5)}</Typography>
+                        <Typography variant="caption" sx={{ fontSize: '0.72rem', color: 'text.secondary', display: 'block' }}>Audience: {d.audience} · Iterations: {d.iterations}</Typography>
+                      </Box>
+                    );
+                  }}
+                />
                 <Scatter data={scatterData}>
-                  {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.75} />)}
+                  {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.85} stroke={AUDIENCE_COLORS[d.audience] || '#F26522'} strokeWidth={1.5} strokeOpacity={0.3} />)}
                 </Scatter>
               </ScatterChart>
             </ResponsiveContainer>
@@ -393,57 +534,103 @@ export default function Analysis() {
 
         {/* Iteration Efficiency */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
-              Iteration Efficiency
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.7rem' }}>
-              Average score change per iteration step. Are later iterations worth the cost?
-            </Typography>
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <TimelineRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Iteration Efficiency
+              </Typography>
+            </Box>
+            <MuiTooltip title="Shows average score improvement when moving from one iteration to the next. Positive values mean later iterations are improving quality." arrow>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.72rem', cursor: 'help', borderBottom: `1px dashed ${faintBorder}`, pb: 0.25, width: 'fit-content' }}>
+                Average score change per iteration step. Are later iterations worth the cost?
+              </Typography>
+            </MuiTooltip>
             {iterDeltas.length === 0 ? (
               <Box sx={{ py: 5, textAlign: 'center' }}>
-                <SpeedRoundedIcon sx={{ fontSize: 40, color: 'rgba(242,101,34,0.15)', mb: 1.5 }} />
+                <Box sx={{
+                  width: 56, height: 56, borderRadius: '16px', mx: 'auto', mb: 2,
+                  background: isDark ? 'rgba(242,101,34,0.08)' : 'rgba(242,101,34,0.06)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <SpeedRoundedIcon sx={{ fontSize: 28, color: 'rgba(242,101,34,0.3)' }} />
+                </Box>
                 <Typography variant="body2" color="text.secondary" fontWeight={600}>Single-iteration ads</Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', mt: 0.5, display: 'block' }}>Run with multiple iterations to see efficiency data</Typography>
               </Box>
             ) : (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {iterDeltas.map(d => {
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                {iterDeltas.map((d, idx) => {
                   const positive = d.avgDelta >= 0;
                   const color = positive ? '#10B981' : '#EF4444';
+                  const matchingCost = marginalCostData.find(m => m.iter === `Iter ${idx + 2}`);
                   return (
                     <Box key={d.iter}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.75 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Chip
-                            label={`Iter ${d.iter}`}
-                            size="small"
-                            sx={{ fontWeight: 700, fontSize: '0.68rem', bgcolor: subtleBg, border: `1px solid ${subtleBorder}` }}
-                          />
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
-                            ({d.count} ads)
+                      {/* Before/After comparison boxes */}
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                        <Box sx={{
+                          flex: 1, p: 1.5, borderRadius: '10px', textAlign: 'center',
+                          bgcolor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)',
+                          border: `1px solid ${subtleBorder}`,
+                        }}>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.62rem', letterSpacing: '0.05em', fontWeight: 600 }}>
+                            ITER {d.iter.split(' → ')[0]}
+                          </Typography>
+                          <Typography variant="body2" fontWeight={700} sx={{ fontSize: '0.9rem', color: isDark ? '#CBD5E1' : '#475569' }}>
+                            Baseline
                           </Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          {positive ? (
-                            <TrendingUpRoundedIcon sx={{ fontSize: 16, color }} />
-                          ) : (
-                            <TrendingDownRoundedIcon sx={{ fontSize: 16, color }} />
-                          )}
-                          <Typography variant="subtitle2" fontWeight={800} sx={{ color, fontSize: '0.95rem' }}>
-                            {positive ? '+' : ''}{d.avgDelta.toFixed(3)}
+                        <Box sx={{
+                          width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
+                          background: positive ? 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05))' : 'linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                          <ArrowForwardRoundedIcon sx={{ fontSize: 16, color }} />
+                        </Box>
+                        <Box sx={{
+                          flex: 1, p: 1.5, borderRadius: '10px', textAlign: 'center',
+                          bgcolor: positive ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.06)',
+                          border: `1px solid ${positive ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'}`,
+                        }}>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.62rem', letterSpacing: '0.05em', fontWeight: 600 }}>
+                            ITER {d.iter.split(' → ')[1]}
                           </Typography>
+                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+                            {positive ? (
+                              <TrendingUpRoundedIcon sx={{ fontSize: 16, color }} />
+                            ) : (
+                              <TrendingDownRoundedIcon sx={{ fontSize: 16, color }} />
+                            )}
+                            <Typography variant="body2" fontWeight={800} sx={{ color, fontSize: '1rem' }}>
+                              {positive ? '+' : ''}{d.avgDelta.toFixed(3)}
+                            </Typography>
+                          </Box>
                         </Box>
                       </Box>
+                      {/* Progress bar and meta */}
                       <LinearProgress
                         variant="determinate"
                         value={Math.min(Math.abs(d.avgDelta) * 50, 100)}
                         sx={{
-                          height: 6, borderRadius: 3,
+                          height: 8, borderRadius: 4,
                           bgcolor: subtleBg,
-                          '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 3 },
+                          '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 4 },
                         }}
                       />
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.75 }}>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem' }}>
+                          {d.count} ad{d.count !== 1 ? 's' : ''} measured
+                        </Typography>
+                        {matchingCost && (
+                          <Typography variant="caption" sx={{ fontSize: '0.68rem', color: '#64748B' }}>
+                            Avg cost: ${(matchingCost.avgCost / 1000).toFixed(5)}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
                   );
                 })}
@@ -454,38 +641,78 @@ export default function Analysis() {
 
         {/* Dimension Impact / Correlation */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
-              Dimension Impact on Overall Score
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.7rem' }}>
-              Correlation between each dimension and the weighted average. Higher = more predictive of ad quality.
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <LeaderboardRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Dimension Impact on Overall Score
+              </Typography>
+            </Box>
+            <MuiTooltip title="Pearson correlation between each dimension score and the overall weighted average. Higher correlation means this dimension is more predictive of total ad quality." arrow>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.72rem', cursor: 'help', borderBottom: `1px dashed ${faintBorder}`, pb: 0.25, width: 'fit-content' }}>
+                Correlation between each dimension and the weighted average. Higher = more predictive.
+              </Typography>
+            </MuiTooltip>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {dimCorrelations.map((d, i) => {
-                const color = d.correlation >= 0.7 ? '#10B981' : d.correlation >= 0.4 ? '#F26522' : '#F59E0B';
+                const barColor = i === 0 ? '#10B981' : i === 1 ? '#34D399' : i === 2 ? '#6EE7B7' : i === 3 ? '#94A3B8' : '#CBD5E1';
+                const RankIcon = i === 0 ? WorkspacePremiumRoundedIcon : i === 1 ? MilitaryTechRoundedIcon : i === 2 ? StarRoundedIcon : null;
+                const rankBg = i === 0 ? 'linear-gradient(135deg, #FFD700, #FFA000)' : i === 1 ? 'linear-gradient(135deg, #C0C0C0, #9E9E9E)' : i === 2 ? 'linear-gradient(135deg, #CD7F32, #A0522D)' : '';
+                const DIM_DESCRIPTIONS: Record<string, string> = {
+                  clarity: 'How clear and understandable the ad message is',
+                  value_proposition: 'How well the ad communicates unique value',
+                  cta_strength: 'How compelling the call-to-action is',
+                  brand_voice: 'How well the ad matches the brand tone',
+                  emotional_resonance: 'How effectively the ad evokes emotion',
+                };
                 return (
                   <Box key={d.dim}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.75 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Box sx={{ width: 20, height: 20, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: `${color}15` }}>
-                          <Typography variant="caption" fontWeight={800} sx={{ fontSize: '0.6rem', color }}>{i + 1}</Typography>
+                        {RankIcon ? (
+                          <Box sx={{
+                            width: 26, height: 26, borderRadius: '8px', display: 'flex',
+                            alignItems: 'center', justifyContent: 'center', background: rankBg,
+                            boxShadow: i === 0 ? '0 2px 8px rgba(255,215,0,0.4)' : undefined,
+                          }}>
+                            <RankIcon sx={{ fontSize: 16, color: 'white' }} />
+                          </Box>
+                        ) : (
+                          <Box sx={{ width: 26, height: 26, borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: subtleBg, border: `1px solid ${subtleBorder}` }}>
+                            <Typography variant="caption" fontWeight={800} sx={{ fontSize: '0.65rem', color: '#64748B' }}>{i + 1}</Typography>
+                          </Box>
+                        )}
+                        <Box>
+                          <Typography variant="body2" fontWeight={700} sx={{ fontSize: '0.88rem', lineHeight: 1.2 }}>{d.label}</Typography>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem', lineHeight: 1.2 }}>
+                            {DIM_DESCRIPTIONS[d.dim] || ''}
+                          </Typography>
                         </Box>
-                        <Typography variant="body2" fontWeight={600} sx={{ fontSize: '0.85rem' }}>{d.label}</Typography>
                       </Box>
-                      <Chip
-                        label={`r = ${d.correlation.toFixed(2)}`}
-                        size="small"
-                        sx={{ fontWeight: 700, fontSize: '0.65rem', height: 20, bgcolor: `${color}15`, color, border: `1px solid ${color}30` }}
-                      />
+                      <Typography variant="subtitle1" fontWeight={800} sx={{ color: barColor, fontSize: '1.05rem', minWidth: 55, textAlign: 'right' }}>
+                        r={d.correlation.toFixed(2)}
+                      </Typography>
                     </Box>
                     <LinearProgress
                       variant="determinate"
                       value={Math.max(d.correlation * 100, 0)}
                       sx={{
-                        height: 6, borderRadius: 3,
+                        height: 10, borderRadius: 5,
                         bgcolor: subtleBg,
-                        '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 3 },
+                        '& .MuiLinearProgress-bar': {
+                          borderRadius: 5,
+                          background: i === 0
+                            ? 'linear-gradient(90deg, #10B981, #34D399)'
+                            : i === 1
+                            ? 'linear-gradient(90deg, #34D399, #6EE7B7)'
+                            : i === 2
+                            ? 'linear-gradient(90deg, #6EE7B7, #A7F3D0)'
+                            : `linear-gradient(90deg, ${barColor}, ${barColor}80)`,
+                        },
                       }}
                     />
                   </Box>
@@ -497,43 +724,106 @@ export default function Analysis() {
 
         {/* Campaign Goal Performance */}
         <Grid size={12}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
-              Performance by Campaign Goal
+          <Paper sx={{
+            p: 3,
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <CampaignRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Performance by Campaign Goal
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2.5, fontSize: '0.72rem' }}>
+              Compare average quality scores and cost efficiency across different campaign objectives
             </Typography>
-            <Grid container spacing={2}>
-              {Object.entries(goalStats).map(([goal, stats]) => {
-                const color = GOAL_COLORS[goal] || '#F26522';
-                return (
-                  <Grid size={{ xs: 6, md: 3 }} key={goal}>
-                    <Paper
-                      sx={{
-                        p: 2.5, textAlign: 'center',
-                        border: `1px solid ${color}20`, bgcolor: `${color}05`,
-                      }}
-                    >
-                      <Typography variant="caption" fontWeight={700} sx={{ color, fontSize: '0.6rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                        {goal}
-                      </Typography>
-                      <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color }}>
-                        {stats.avgScore.toFixed(1)}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem' }}>
-                        {stats.count} ads · ${stats.avgCost.toFixed(4)} avg
-                      </Typography>
-                      <LinearProgress
-                        variant="determinate"
-                        value={stats.avgScore * 10}
+            <Grid container spacing={2.5}>
+              {(() => {
+                const goalEntries = Object.entries(goalStats);
+                const maxScore = goalEntries.length ? Math.max(...goalEntries.map(([, s]) => s.avgScore)) : 0;
+                return goalEntries.map(([goal, stats]) => {
+                  const color = GOAL_COLORS[goal] || '#F26522';
+                  const isBest = stats.avgScore === maxScore && goalEntries.length > 1;
+                  const scorePerDollar = stats.avgCost > 0 ? stats.avgScore / stats.avgCost : 0;
+                  const progressPct = stats.avgScore * 10;
+                  return (
+                    <Grid size={{ xs: 6, md: 3 }} key={goal}>
+                      <Paper
                         sx={{
-                          mt: 1.5, height: 4, borderRadius: 2,
-                          bgcolor: subtleBg,
-                          '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 2 },
+                          p: 0, overflow: 'hidden',
+                          background: isDark
+                            ? `linear-gradient(160deg, ${color}18 0%, ${color}06 100%)`
+                            : `linear-gradient(160deg, ${color}10 0%, ${color}03 100%)`,
+                          border: isBest ? `2px solid ${color}40` : `1px solid ${color}20`,
+                          transition: 'all 0.25s ease',
+                          '&:hover': { transform: 'translateY(-3px)', boxShadow: `0 6px 24px ${color}18` },
                         }}
-                      />
-                    </Paper>
-                  </Grid>
-                );
-              })}
+                      >
+                        {isBest && (
+                          <Box sx={{ bgcolor: color, py: 0.3, textAlign: 'center' }}>
+                            <Typography variant="caption" fontWeight={800} sx={{ color: 'white', fontSize: '0.55rem', letterSpacing: '0.1em' }}>
+                              TOP PERFORMER
+                            </Typography>
+                          </Box>
+                        )}
+                        <Box sx={{ p: 2.5, textAlign: 'center' }}>
+                          <Typography variant="caption" fontWeight={700} sx={{ color, fontSize: '0.65rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                            {goal}
+                          </Typography>
+                          {/* Circular progress ring */}
+                          <Box sx={{ position: 'relative', display: 'inline-flex', mt: 1.5, mb: 1 }}>
+                            <CircularProgress
+                              variant="determinate"
+                              value={100}
+                              size={72}
+                              thickness={4}
+                              sx={{ color: subtleBg, position: 'absolute' }}
+                            />
+                            <CircularProgress
+                              variant="determinate"
+                              value={progressPct}
+                              size={72}
+                              thickness={4}
+                              sx={{ color, '& .MuiCircularProgress-circle': { strokeLinecap: 'round' } }}
+                            />
+                            <Box sx={{
+                              position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>
+                              <Typography variant="h5" fontWeight={800} sx={{ color, fontSize: '1.15rem' }}>
+                                <AnimatedNumber value={stats.avgScore} decimals={1} />
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box sx={{ mt: 1 }}>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', fontWeight: 600, display: 'block' }}>
+                              {stats.count} ad{stats.count !== 1 ? 's' : ''}
+                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5, mt: 0.5 }}>
+                              <AttachMoneyRoundedIcon sx={{ fontSize: 13, color: '#64748B' }} />
+                              <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem' }}>
+                                ${stats.avgCost.toFixed(4)} avg
+                              </Typography>
+                            </Box>
+                            <MuiTooltip title="Quality score points per dollar spent — higher is more efficient" arrow>
+                              <Chip
+                                label={`${scorePerDollar.toFixed(0)} pts/$`}
+                                size="small"
+                                sx={{
+                                  mt: 1, fontSize: '0.62rem', fontWeight: 700, height: 20,
+                                  bgcolor: `${color}12`, color, border: `1px solid ${color}25`,
+                                  cursor: 'help',
+                                }}
+                              />
+                            </MuiTooltip>
+                          </Box>
+                        </Box>
+                      </Paper>
+                    </Grid>
+                  );
+                });
+              })()}
             </Grid>
           </Paper>
         </Grid>
