@@ -25,7 +25,6 @@ COPY main.py .
 # Copy built frontend
 COPY --from=frontend-build /app/web/dist /app/static
 
-ENV PORT=8000
-EXPOSE 8000
+EXPOSE 8080
 
 CMD uvicorn server.app:app --host 0.0.0.0 --port $PORT
