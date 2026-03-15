@@ -19,6 +19,9 @@ from src.iterate.best_selector import BestSelector
 from src.models import AdStatus
 from src.tracking.cost_tracker import PipelineMetrics
 from config.settings import IMAGES_DIR
+from server.database import (
+    db_available, save_image_to_db, get_image_from_db, get_all_images_for_brief,
+)
 
 router = APIRouter()
 
@@ -213,6 +216,25 @@ def generate_image(brief_id: str, req: GenerateImageRequest | None = None):
                 "brief_id": brief_id,
             }
             _save_cache_manifest(cache_dir, manifest)
+
+            # Persist images to DB for production durability
+            if db_available():
+                for it in image_iterations:
+                    if it.image_path and os.path.exists(it.image_path):
+                        try:
+                            with open(it.image_path, "rb") as img_f:
+                                img_bytes = img_f.read()
+                            save_image_to_db(
+                                brief_id=brief_id,
+                                client_id=client_id,
+                                cache_key=cache_key,
+                                iteration_number=it.iteration_number,
+                                image_bytes=img_bytes,
+                                image_metadata=it.model_dump(exclude={"costs"}),
+                                best_index=best_idx,
+                            )
+                        except Exception as db_err:
+                            print(f"  [Image] DB persist failed for iter {it.iteration_number}: {db_err}")
 
             broadcaster.broadcast_sync("image_generated", {
                 "brief_id": brief_id,
@@ -535,14 +557,35 @@ def mark_experiment_ready(brief_id: str):
 
 
 @router.get("/{brief_id}/image/{filename:path}")
-def serve_image(brief_id: str, filename: str):
-    """Serve image files from IMAGES_DIR, supporting nested user-cache paths."""
+def serve_image(brief_id: str, filename: str, client_id: str = Query("default")):
+    """Serve image files from disk, falling back to DB if file is missing."""
+    from fastapi.responses import Response
+
+    # Try filesystem first
     path = os.path.realpath(os.path.join(IMAGES_DIR, filename))
-    if not path.startswith(os.path.realpath(IMAGES_DIR)):
-        raise HTTPException(403, "Invalid path")
-    if not os.path.exists(path):
-        raise HTTPException(404, "Image not found")
-    return FileResponse(path, media_type="image/png")
+    if path.startswith(os.path.realpath(IMAGES_DIR)) and os.path.exists(path):
+        return FileResponse(path, media_type="image/png")
+
+    # Fall back to DB — extract iteration number from filename (e.g. brief_001_v2.png → 2)
+    iteration = 0
+    try:
+        base = os.path.basename(filename).replace(".png", "")
+        if "_v" in base:
+            iteration = int(base.split("_v")[-1])
+    except (ValueError, IndexError):
+        pass
+
+    img_data = get_image_from_db(brief_id, client_id, iteration=iteration)
+    if img_data:
+        return Response(content=img_data, media_type="image/png")
+
+    # Try default client_id as fallback
+    if client_id != "default":
+        img_data = get_image_from_db(brief_id, "default", iteration=iteration)
+        if img_data:
+            return Response(content=img_data, media_type="image/png")
+
+    raise HTTPException(404, "Image not found")
 
 
 def _resolve_user_images(

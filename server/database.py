@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from datetime import datetime
 
-from sqlalchemy import create_engine, Column, String, Float, Boolean, DateTime, Integer, Text
+from sqlalchemy import create_engine, Column, String, Float, Boolean, DateTime, Integer, Text, LargeBinary
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -44,6 +44,20 @@ class RunHistoryRow(Base):
     total_cost = Column(Float, default=0.0)
     elapsed_seconds = Column(Float, default=0.0)
     brief_ids = Column(JSONB, default=list)
+
+
+class ImageRow(Base):
+    __tablename__ = "images"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    brief_id = Column(String, nullable=False, index=True)
+    client_id = Column(String, nullable=False, default="default")
+    cache_key = Column(String, nullable=False)
+    iteration_number = Column(Integer, nullable=False)
+    image_data = Column(LargeBinary, nullable=False)
+    image_metadata = Column("metadata", JSONB, default=dict)
+    best_index = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
 class CostLedgerRow(Base):
@@ -94,3 +108,89 @@ def init_db() -> bool:
 
 def db_available() -> bool:
     return bool(DATABASE_URL)
+
+
+def save_image_to_db(
+    brief_id: str,
+    client_id: str,
+    cache_key: str,
+    iteration_number: int,
+    image_bytes: bytes,
+    image_metadata: dict | None = None,
+    best_index: int = 0,
+) -> bool:
+    """Save an image to the database. Returns True on success."""
+    session = get_session()
+    if not session:
+        return False
+    try:
+        row = ImageRow(
+            brief_id=brief_id,
+            client_id=client_id,
+            cache_key=cache_key,
+            iteration_number=iteration_number,
+            image_data=image_bytes,
+            image_metadata=image_metadata or {},
+            best_index=best_index,
+        )
+        session.add(row)
+        session.commit()
+        return True
+    except Exception as e:
+        session.rollback()
+        print(f"  DB image save error: {e}")
+        return False
+    finally:
+        session.close()
+
+
+def get_image_from_db(brief_id: str, client_id: str, iteration: int = -1) -> bytes | None:
+    """Retrieve an image from DB. If iteration=-1, returns best image."""
+    session = get_session()
+    if not session:
+        return None
+    try:
+        query = session.query(ImageRow).filter_by(brief_id=brief_id, client_id=client_id)
+        if iteration >= 0:
+            row = query.filter_by(iteration_number=iteration).first()
+        else:
+            # Get the best image (any row has best_index)
+            first = query.first()
+            if first:
+                row = query.filter_by(iteration_number=first.best_index).first()
+            else:
+                row = None
+        return row.image_data if row else None
+    except Exception as e:
+        print(f"  DB image load error: {e}")
+        return None
+    finally:
+        session.close()
+
+
+def get_all_images_for_brief(brief_id: str, client_id: str) -> list[dict]:
+    """Get all image iterations for a brief from DB."""
+    session = get_session()
+    if not session:
+        return []
+    try:
+        rows = (
+            session.query(ImageRow)
+            .filter_by(brief_id=brief_id, client_id=client_id)
+            .order_by(ImageRow.iteration_number)
+            .all()
+        )
+        return [
+            {
+                "iteration_number": r.iteration_number,
+                "metadata": r.image_metadata,
+                "best_index": r.best_index,
+                "has_data": True,
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"  DB image query error: {e}")
+        return []
+    finally:
+        session.close()
