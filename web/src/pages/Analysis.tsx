@@ -382,7 +382,7 @@ export default function Analysis() {
                 <XAxis type="number" dataKey="cost" name="Cost" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} label={{ value: 'Cost ($)', position: 'insideBottom', offset: -5, style: { fill: '#64748B', fontSize: 11 } }} />
                 <YAxis type="number" dataKey="score" name="Score" domain={[5, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11 } }} />
                 <ZAxis type="number" dataKey="iterations" range={[50, 200]} name="Iterations" />
-                <Tooltip contentStyle={tooltipStyle} formatter={(v: unknown, name: string) => { const n = Number(v); return [name === 'Cost' ? `$${n.toFixed(5)}` : name === 'Score' ? n.toFixed(2) : n, name]; }} labelFormatter={() => ''} />
+                <Tooltip contentStyle={tooltipStyle} formatter={((v: unknown, name: unknown) => { const n = Number(v); const s = String(name); return [s === 'Cost' ? `$${n.toFixed(5)}` : s === 'Score' ? n.toFixed(2) : n, s]; }) as never} labelFormatter={() => ''} />
                 <Scatter data={scatterData}>
                   {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.75} />)}
                 </Scatter>

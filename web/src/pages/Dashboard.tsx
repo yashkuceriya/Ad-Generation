@@ -64,11 +64,6 @@ const pulseGlow = keyframes`
   50% { box-shadow: 0 0 16px 2px rgba(242, 101, 34, 0.12); }
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-`;
 
 /* ---------- Section Header ---------- */
 function SectionHeader({ children }: { children: React.ReactNode }) {
