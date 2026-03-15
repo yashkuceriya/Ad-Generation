@@ -20,7 +20,8 @@ from src.models import AdStatus
 from src.tracking.cost_tracker import PipelineMetrics
 from config.settings import IMAGES_DIR
 from server.database import (
-    db_available, save_image_to_db, get_image_from_db, get_all_images_for_brief,
+    db_available, save_image_to_db, get_image_from_db,
+    get_all_images_for_brief, get_best_images_batch,
 )
 
 router = APIRouter()
@@ -111,7 +112,12 @@ def list_ads(
     else:
         results.sort(key=lambda r: r.brief_id)
 
-    return [_serialize_result_lite(r, client_id=client_id) for r in results]
+    # Batch-load best images from DB in ONE query (not 55 individual queries)
+    image_map: dict[str, dict] = {}
+    if db_available():
+        image_map = get_best_images_batch("default")
+
+    return [_serialize_result_lite(r, client_id=client_id, image_map=image_map) for r in results]
 
 
 @router.get("/{brief_id}")
@@ -684,8 +690,8 @@ def _serialize_result(result, *, client_id: str | None = None) -> dict:
     return data
 
 
-def _serialize_result_lite(result, *, client_id: str | None = None) -> dict:
-    """Fast serialization for list endpoints — skips per-ad DB image queries."""
+def _serialize_result_lite(result, *, client_id: str | None = None, image_map: dict | None = None) -> dict:
+    """Fast serialization for list endpoints — uses pre-fetched image_map."""
     data = result.model_dump()
 
     if not result.copy_iterations:
@@ -695,7 +701,19 @@ def _serialize_result_lite(result, *, client_id: str | None = None) -> dict:
     for ci in data.get("copy_iterations", []):
         ci["costs"] = []
 
-    # Don't resolve user images from DB for list view (expensive: 1 query per ad)
-    # Just keep whatever is already in the model (usually empty for list)
+    # Inject best image thumbnail from batch-loaded map
+    if image_map and result.brief_id in image_map:
+        img_info = image_map[result.brief_id]
+        meta = img_info.get("metadata", {})
+        data["image_iterations"] = [{
+            "iteration_number": img_info["iteration_number"],
+            "image_path": f"db://{result.brief_id}_v{img_info['iteration_number']}.png",
+            "image_prompt": meta.get("image_prompt", ""),
+            "evaluation": meta.get("evaluation", {}),
+            "refinement_feedback": meta.get("refinement_feedback"),
+            "costs": [],
+        }]
+        data["best_image_index"] = 0
+
     _add_image_urls(data, result.brief_id)
     return data

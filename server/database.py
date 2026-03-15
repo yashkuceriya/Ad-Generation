@@ -168,6 +168,44 @@ def get_image_from_db(brief_id: str, client_id: str, iteration: int = -1) -> byt
         session.close()
 
 
+def get_best_images_batch(client_id: str = "default") -> dict[str, dict]:
+    """Get best image metadata for ALL briefs in one query. Returns {brief_id: {iteration_number, metadata}}."""
+    session = get_session()
+    if not session:
+        return {}
+    try:
+        from sqlalchemy import func
+        # Get one row per brief_id where iteration_number == best_index
+        subq = (
+            session.query(
+                ImageRow.brief_id,
+                func.min(ImageRow.best_index).label("best_idx"),
+            )
+            .filter_by(client_id=client_id)
+            .group_by(ImageRow.brief_id)
+            .subquery()
+        )
+        rows = (
+            session.query(ImageRow)
+            .join(subq, (ImageRow.brief_id == subq.c.brief_id) & (ImageRow.iteration_number == subq.c.best_idx))
+            .filter(ImageRow.client_id == client_id)
+            .all()
+        )
+        return {
+            r.brief_id: {
+                "iteration_number": r.iteration_number,
+                "metadata": r.image_metadata,
+                "best_index": r.best_index,
+            }
+            for r in rows
+        }
+    except Exception as e:
+        print(f"  DB batch image query error: {e}")
+        return {}
+    finally:
+        session.close()
+
+
 def get_all_images_for_brief(brief_id: str, client_id: str) -> list[dict]:
     """Get all image iterations for a brief from DB."""
     session = get_session()
