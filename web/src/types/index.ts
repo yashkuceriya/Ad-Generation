@@ -179,6 +179,7 @@ export interface CostSummary {
   total_calls: number;
   cost_by_model: Record<string, number>;
   cost_by_stage: Record<string, number>;
+  image_costs?: { count: number; cost_per_image: number; total_cost: number };
   parse_telemetry?: ParseTelemetry;
   pipeline_metrics?: PipelineMetricsData;
 }

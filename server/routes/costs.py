@@ -85,6 +85,28 @@ def cost_summary():
     data = tracker.summary()
     data["parse_telemetry"] = DimensionScorer.parse_telemetry()
     data["pipeline_metrics"] = PipelineMetrics().summary()
+
+    # Add image generation costs (not tracked in cost ledger)
+    from server.database import get_session, ImageRow
+    from sqlalchemy import func
+    from config.settings import IMAGE_COST_PER_IMAGE
+
+    session = get_session()
+    if session:
+        try:
+            img_count = session.query(func.count(ImageRow.id)).scalar() or 0
+            session.close()
+        except Exception:
+            img_count = 0
+            session.close()
+    else:
+        img_count = 0
+
+    image_total = round(img_count * IMAGE_COST_PER_IMAGE, 4)
+    data["image_costs"] = {"count": img_count, "cost_per_image": IMAGE_COST_PER_IMAGE, "total_cost": image_total}
+    data["total_cost_usd"] = round(data["total_cost_usd"] + image_total, 6)
+    data["cost_by_stage"]["Image Generation"] = image_total
+
     return data
 
 
