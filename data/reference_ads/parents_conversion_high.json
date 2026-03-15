@@ -1,0 +1,43 @@
+{
+  "brief_id": "ref-parents-conv-001",
+  "brief": {
+    "brief_id": "ref-parents-conv-001",
+    "audience_segment": "parents",
+    "product_offer": "SAT prep tutoring",
+    "campaign_goal": "conversion",
+    "tone": "urgent",
+    "competitor_context": ["Khan Academy SAT", "Princeton Review"],
+    "subject_focus": "SAT test prep"
+  },
+  "copy_iterations": [
+    {
+      "iteration_number": 1,
+      "ad_copy": {
+        "primary_text": "Your child's SAT score could determine their college future. Our expert tutors have helped 10,000+ students raise their scores by an average of 200 points. Don't leave their future to chance — personalized prep plans start this week.",
+        "headline": "Raise SAT Scores 200+ Points",
+        "description": "Expert 1-on-1 tutoring tailored to your child's strengths and weaknesses. Flexible scheduling, progress tracking, and a satisfaction guarantee.",
+        "cta_button": "Start Free Trial"
+      },
+      "evaluation": {
+        "scores": {},
+        "weighted_average": 0,
+        "weakest_dimension": "",
+        "passes_threshold": false
+      },
+      "refinement_feedback": null,
+      "costs": []
+    }
+  ],
+  "image_iterations": [],
+  "best_copy_index": 0,
+  "best_image_index": 0,
+  "total_cost_usd": 0,
+  "quality_per_dollar": 0,
+  "_expected_scores": {
+    "clarity": 8.5,
+    "value_proposition": 9.0,
+    "cta_strength": 8.0,
+    "brand_voice": 7.5,
+    "emotional_resonance": 8.0
+  }
+}

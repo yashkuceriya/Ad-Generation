@@ -1,0 +1,43 @@
+{
+  "brief_id": "ref-students-aware-001",
+  "brief": {
+    "brief_id": "ref-students-aware-001",
+    "audience_segment": "students",
+    "product_offer": "Free SAT practice test",
+    "campaign_goal": "awareness",
+    "tone": "encouraging",
+    "competitor_context": ["College Board practice"],
+    "subject_focus": "SAT test prep"
+  },
+  "copy_iterations": [
+    {
+      "iteration_number": 1,
+      "ad_copy": {
+        "primary_text": "Wondering where you stand on the SAT? Take our free practice test and get a detailed score breakdown in under an hour. No strings attached — just a clear picture of where to focus.",
+        "headline": "Free SAT Practice Test",
+        "description": "Full-length practice exam with instant scoring and personalized study recommendations. See exactly where you need to improve.",
+        "cta_button": "Take Free Test"
+      },
+      "evaluation": {
+        "scores": {},
+        "weighted_average": 0,
+        "weakest_dimension": "",
+        "passes_threshold": false
+      },
+      "refinement_feedback": null,
+      "costs": []
+    }
+  ],
+  "image_iterations": [],
+  "best_copy_index": 0,
+  "best_image_index": 0,
+  "total_cost_usd": 0,
+  "quality_per_dollar": 0,
+  "_expected_scores": {
+    "clarity": 8.0,
+    "value_proposition": 7.0,
+    "cta_strength": 7.5,
+    "brand_voice": 7.0,
+    "emotional_resonance": 6.5
+  }
+}
