@@ -591,28 +591,50 @@ def serve_image(brief_id: str, filename: str, client_id: str = Query("default"))
 def _resolve_user_images(
     brief_id: str, client_id: str, *, prompt_hash: str | None = None,
 ) -> tuple[list[dict], int]:
-    """Load image iterations from user-scoped cache.
+    """Load image iterations from user-scoped cache, then DB fallback.
 
     If *prompt_hash* is provided, returns the entry matching that specific copy
     variant. Falls back to the most-recent entry when no hash match is found.
     Returns (iterations, best_index).
     """
+    # Try filesystem cache first
     cache_dir = os.path.join(IMAGES_DIR, "users",
                              client_id.replace("/", "_").replace("..", "_")[:64],
                              brief_id)
     manifest = _load_cache_manifest(cache_dir)
-    if not manifest:
-        return [], 0
+    if manifest:
+        entry = None
+        if prompt_hash and prompt_hash in manifest:
+            entry = manifest[prompt_hash]
+        else:
+            entry = max(manifest.values(), key=lambda e: e.get("generated_at", ""))
 
-    entry = None
-    if prompt_hash and prompt_hash in manifest:
-        entry = manifest[prompt_hash]
-    else:
-        entry = max(manifest.values(), key=lambda e: e.get("generated_at", ""))
+        iterations = entry.get("iterations", [])
+        best_idx = entry.get("best_image_index", 0)
+        if iterations:
+            return iterations, best_idx
 
-    iterations = entry.get("iterations", [])
-    best_idx = entry.get("best_image_index", 0)
-    return iterations, best_idx
+    # Fall back to DB — try this client_id, then "default"
+    if db_available():
+        for cid in [client_id, "default"] if client_id != "default" else ["default"]:
+            db_images = get_all_images_for_brief(brief_id, cid)
+            if db_images:
+                iterations = []
+                best_idx = db_images[0].get("best_index", 0)
+                for img in db_images:
+                    meta = img.get("metadata", {})
+                    # Build a synthetic iteration dict with DB-backed URL
+                    iterations.append({
+                        "iteration_number": img["iteration_number"],
+                        "image_path": f"db://{brief_id}_v{img['iteration_number']}.png",
+                        "image_prompt": meta.get("image_prompt", ""),
+                        "evaluation": meta.get("evaluation", {}),
+                        "refinement_feedback": meta.get("refinement_feedback"),
+                        "costs": [],
+                    })
+                return iterations, best_idx
+
+    return [], 0
 
 
 def _add_image_urls(data: dict, brief_id: str) -> None:
@@ -621,6 +643,11 @@ def _add_image_urls(data: dict, brief_id: str) -> None:
     for img_iter in data.get("image_iterations", []):
         raw_path = img_iter.get("image_path") or ""
         if not raw_path:
+            continue
+        # DB-backed images use db:// prefix
+        if raw_path.startswith("db://"):
+            filename = raw_path.replace("db://", "")
+            img_iter["image_url"] = f"/api/ads/{brief_id}/image/{filename}?client_id=default"
             continue
         real = os.path.realpath(raw_path)
         if real.startswith(images_real):
