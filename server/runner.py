@@ -330,8 +330,22 @@ class BackgroundRunner:
                 json.dump(self.tracker.summary(), f, indent=2, default=str)
 
             cost_ledger_path = os.path.join(REPORTS_DIR, "cost_ledger.json")
+            ledger_data = self.tracker.export_json()
             with open(cost_ledger_path, "w") as f:
-                json.dump(self.tracker.export_json(), f, indent=2, default=str)
+                json.dump(ledger_data, f, indent=2, default=str)
+
+            # Persist cost ledger + parse telemetry to DB
+            try:
+                from server.database import save_cost_ledger_to_db, save_parse_telemetry_to_db
+                save_cost_ledger_to_db(ledger_data)
+                from src.evaluate.dimension_scorer import DimensionScorer
+                t = DimensionScorer.parse_telemetry()
+                save_parse_telemetry_to_db(
+                    t.get("json_ok", 0), t.get("json_extract_fallback", 0),
+                    t.get("regex_fallback", 0), t.get("default_fallback", 0),
+                )
+            except Exception as db_err:
+                print(f"  [Runner] DB cost persist warning: {db_err}")
 
             # Human-readable markdown summary
             from src.output.formatter import AdFormatter

@@ -76,6 +76,17 @@ class CostLedgerRow(Base):
     cost_usd = Column(Float, default=0.0)
 
 
+class ParseTelemetryRow(Base):
+    __tablename__ = "parse_telemetry"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    json_ok = Column(Integer, default=0)
+    json_extract = Column(Integer, default=0)
+    regex_fallback = Column(Integer, default=0)
+    default_fallback = Column(Integer, default=0)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
 _engine = None
 _SessionLocal = None
 
@@ -240,5 +251,113 @@ def get_all_images_for_brief(brief_id: str, client_id: str) -> list[dict]:
     except Exception as e:
         print(f"  DB image query error: {e}")
         return []
+    finally:
+        session.close()
+
+
+def save_cost_ledger_to_db(entries: list[dict]) -> bool:
+    """Bulk-save cost ledger entries to DB. Returns True on success."""
+    session = get_session()
+    if not session:
+        return False
+    try:
+        for e in entries:
+            row = CostLedgerRow(
+                model=e.get("model", ""),
+                step_name=e.get("step_name", ""),
+                pipeline_stage=e.get("pipeline_stage", ""),
+                brief_id=e.get("brief_id", ""),
+                iteration=e.get("iteration", 0),
+                input_tokens=e.get("input_tokens", 0),
+                output_tokens=e.get("output_tokens", 0),
+                latency_ms=e.get("latency_ms", 0.0),
+                cost_usd=e.get("cost_usd", 0.0),
+            )
+            session.add(row)
+        session.commit()
+        print(f"  DB: saved {len(entries)} cost ledger entries")
+        return True
+    except Exception as e:
+        session.rollback()
+        print(f"  DB cost ledger save error: {e}")
+        return False
+    finally:
+        session.close()
+
+
+def load_cost_ledger_from_db() -> list[dict]:
+    """Load all cost ledger entries from DB."""
+    session = get_session()
+    if not session:
+        return []
+    try:
+        rows = session.query(CostLedgerRow).order_by(CostLedgerRow.id).all()
+        return [
+            {
+                "model": r.model,
+                "step_name": r.step_name,
+                "pipeline_stage": r.pipeline_stage,
+                "brief_id": r.brief_id,
+                "iteration": r.iteration,
+                "input_tokens": r.input_tokens,
+                "output_tokens": r.output_tokens,
+                "latency_ms": r.latency_ms,
+                "cost_usd": r.cost_usd,
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"  DB cost ledger load error: {e}")
+        return []
+    finally:
+        session.close()
+
+
+def save_parse_telemetry_to_db(ok: int, extract: int, regex: int, default: int) -> bool:
+    """Save parse telemetry counters to DB."""
+    session = get_session()
+    if not session:
+        return False
+    try:
+        row = session.query(ParseTelemetryRow).first()
+        if row:
+            row.json_ok = ok
+            row.json_extract = extract
+            row.regex_fallback = regex
+            row.default_fallback = default
+        else:
+            row = ParseTelemetryRow(
+                json_ok=ok, json_extract=extract,
+                regex_fallback=regex, default_fallback=default,
+            )
+            session.add(row)
+        session.commit()
+        return True
+    except Exception as e:
+        session.rollback()
+        print(f"  DB parse telemetry save error: {e}")
+        return False
+    finally:
+        session.close()
+
+
+def load_parse_telemetry_from_db() -> dict | None:
+    """Load parse telemetry from DB."""
+    session = get_session()
+    if not session:
+        return None
+    try:
+        row = session.query(ParseTelemetryRow).first()
+        if not row:
+            return None
+        return {
+            "json_ok": row.json_ok,
+            "json_extract": row.json_extract,
+            "regex_fallback": row.regex_fallback,
+            "default_fallback": row.default_fallback,
+        }
+    except Exception as e:
+        print(f"  DB parse telemetry load error: {e}")
+        return None
     finally:
         session.close()
