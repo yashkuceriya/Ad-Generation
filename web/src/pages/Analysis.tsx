@@ -26,9 +26,13 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
+import PhotoLibraryRoundedIcon from '@mui/icons-material/PhotoLibraryRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import SpeedRoundedIcon from '@mui/icons-material/SpeedRounded';
 import { getAds, getCostSummary } from '../api/endpoints';
 import api from '../api/client';
 import { useSSE } from '../api/useSSE';
+import AnimatedNumber from '../components/AnimatedNumber';
 import type { AdResult, SSEEvent, ImageIteration } from '../types';
 
 const getTooltipStyle = (isDark: boolean) => ({
@@ -293,7 +297,7 @@ export default function Analysis() {
               BEST PERFORMING AD
             </Typography>
             <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#10B981' }}>
-              {bestScore.toFixed(1)}/10
+              <AnimatedNumber value={bestScore} decimals={1} suffix="/10" />
             </Typography>
             <Typography variant="body2" color="text.secondary" noWrap sx={{ mt: 0.5, fontSize: '0.82rem' }}>
               {bestAd!.copy_iterations[bestAd!.best_copy_index].ad_copy.headline}
@@ -307,7 +311,7 @@ export default function Analysis() {
               NEEDS MOST IMPROVEMENT
             </Typography>
             <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#EF4444' }}>
-              {worstScore.toFixed(1)}/10
+              <AnimatedNumber value={worstScore} decimals={1} suffix="/10" />
             </Typography>
             <Typography variant="body2" color="text.secondary" noWrap sx={{ mt: 0.5, fontSize: '0.82rem' }}>
               {worstAd!.copy_iterations[worstAd!.best_copy_index].ad_copy.headline}
@@ -321,7 +325,7 @@ export default function Analysis() {
               SCORE SPREAD
             </Typography>
             <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color: '#F26522' }}>
-              {(bestScore - worstScore).toFixed(1)} pts
+              <AnimatedNumber value={bestScore - worstScore} decimals={1} suffix=" pts" />
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: '0.82rem' }}>
               Range: {worstScore.toFixed(1)} — {bestScore.toFixed(1)}
@@ -340,8 +344,8 @@ export default function Analysis() {
             <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
               Audience Dimension Comparison
             </Typography>
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={audienceRadarData} cx="50%" cy="50%" outerRadius="68%">
+            <ResponsiveContainer width="100%" height={340}>
+              <RadarChart data={audienceRadarData} cx="50%" cy="50%" outerRadius="72%">
                 <PolarGrid stroke={faintBorder} />
                 <PolarAngleAxis dataKey="dimension" tick={{ fill: '#64748B', fontSize: 11, fontWeight: 600 }} />
                 <PolarRadiusAxis angle={90} domain={[0, 10]} tick={{ fill: '#484F58', fontSize: 9 }} tickCount={6} axisLine={false} />
@@ -361,18 +365,26 @@ export default function Analysis() {
             <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
               Quality vs Cost
             </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontSize: '0.7rem' }}>
-              Each dot = one ad. Top-left is the sweet spot (high quality, low cost).
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontSize: '0.7rem' }}>
+              Each dot = one ad. Top-left is the sweet spot (high quality, low cost). Size = iterations.
             </Typography>
+            <Box sx={{ display: 'flex', gap: 1.5, mb: 1.5, flexWrap: 'wrap' }}>
+              {Object.entries(AUDIENCE_COLORS).map(([seg, color]) => (
+                <Box key={seg} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: color }} />
+                  <Typography variant="caption" sx={{ fontSize: '0.68rem', textTransform: 'capitalize', color: 'text.secondary' }}>{seg}</Typography>
+                </Box>
+              ))}
+            </Box>
             <ResponsiveContainer width="100%" height={280}>
               <ScatterChart>
                 <CartesianGrid stroke={gridStroke} />
                 <XAxis type="number" dataKey="cost" name="Cost" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} label={{ value: 'Cost ($)', position: 'insideBottom', offset: -5, style: { fill: '#64748B', fontSize: 11 } }} />
                 <YAxis type="number" dataKey="score" name="Score" domain={[5, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11 } }} />
                 <ZAxis type="number" dataKey="iterations" range={[50, 200]} name="Iterations" />
-                <Tooltip contentStyle={tooltipStyle} formatter={(v, name) => [name === 'Cost' ? `$${Number(v)}` : v, name]} />
+                <Tooltip contentStyle={tooltipStyle} formatter={(v: number, name: string) => [name === 'Cost' ? `$${v.toFixed(5)}` : name === 'Score' ? v.toFixed(2) : v, name]} labelFormatter={() => ''} />
                 <Scatter data={scatterData}>
-                  {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.7} />)}
+                  {scatterData.map((d, i) => <Cell key={i} fill={AUDIENCE_COLORS[d.audience] || '#F26522'} fillOpacity={0.75} />)}
                 </Scatter>
               </ScatterChart>
             </ResponsiveContainer>
@@ -389,7 +401,11 @@ export default function Analysis() {
               Average score change per iteration step. Are later iterations worth the cost?
             </Typography>
             {iterDeltas.length === 0 ? (
-              <Box sx={{ py: 4, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">Need multi-iteration ads</Typography></Box>
+              <Box sx={{ py: 5, textAlign: 'center' }}>
+                <SpeedRoundedIcon sx={{ fontSize: 40, color: 'rgba(242,101,34,0.15)', mb: 1.5 }} />
+                <Typography variant="body2" color="text.secondary" fontWeight={600}>Single-iteration ads</Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', mt: 0.5, display: 'block' }}>Run with multiple iterations to see efficiency data</Typography>
+              </Box>
             ) : (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {iterDeltas.map(d => {
@@ -680,10 +696,10 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
   const faintIcon = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)';
   const faintBorder = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
 
-  const { adsWithImages, allImages, accepted, rejected, avgAccepted, avgRejected } = useMemo(() => {
-    const adsWithImages = ads.filter(a => a.image_iterations.length > 0);
+  const { adsWithImages, allImages, accepted, rejected, avgAccepted, avgRejected, onDemandCount, hasMultiIteration } = useMemo(() => {
+    const adsWithIterations = ads.filter(a => a.image_iterations.length > 0);
     const allImages: (ImageIteration & { briefId: string; isBest: boolean })[] = [];
-    adsWithImages.forEach(a => {
+    adsWithIterations.forEach(a => {
       a.image_iterations.forEach((img, idx) => {
         allImages.push({ ...img, briefId: a.brief_id, isBest: idx === a.best_image_index });
       });
@@ -692,7 +708,10 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
     const rejected = allImages.filter(i => !i.isBest);
     const avgAccepted = accepted.length ? accepted.reduce((s, i) => s + i.evaluation.average_score, 0) / accepted.length : 0;
     const avgRejected = rejected.length ? rejected.reduce((s, i) => s + i.evaluation.average_score, 0) / rejected.length : 0;
-    return { adsWithImages, allImages, accepted, rejected, avgAccepted, avgRejected };
+    // Count ads that have on-demand images but no iteration data
+    const onDemandCount = ads.filter(a => a.image_iterations.length === 0).length;
+    const hasMultiIteration = adsWithIterations.some(a => a.image_iterations.length > 1);
+    return { adsWithImages: adsWithIterations, allImages, accepted, rejected, avgAccepted, avgRejected, onDemandCount, hasMultiIteration };
   }, [ads]);
 
   // Score progression across image iterations (avg at each iteration number)
@@ -770,16 +789,33 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
             Image Iteration Analysis
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.82rem' }}>
-            {allImages.length} images across {adsWithImages.length} ads · {accepted.length} accepted · {rejected.length} rejected
+            {allImages.length > 0
+              ? `${allImages.length} image${allImages.length !== 1 ? 's' : ''} across ${adsWithImages.length} ads${rejected.length > 0 ? ` \u00B7 ${accepted.length} accepted \u00B7 ${rejected.length} rejected` : ''}`
+              : `${onDemandCount} ads with on-demand images`
+            }
+            {onDemandCount > 0 && allImages.length > 0 && ` \u00B7 ${onDemandCount} on-demand`}
           </Typography>
         </Box>
       </Box>
 
       {allImages.length === 0 ? (
         <Paper sx={{ py: 8, textAlign: 'center' }}>
-          <ImageRoundedIcon sx={{ fontSize: 48, color: 'rgba(242,101,34,0.12)', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary" fontWeight={600}>No images generated yet</Typography>
-          <Typography variant="body2" color="text.secondary">Generate images for ads to see iteration analysis</Typography>
+          <PhotoLibraryRoundedIcon sx={{ fontSize: 48, color: 'rgba(242,101,34,0.12)', mb: 2 }} />
+          {onDemandCount > 0 ? (
+            <>
+              <Typography variant="h6" color="text.secondary" fontWeight={600}>
+                {onDemandCount} image{onDemandCount !== 1 ? 's' : ''} generated on-demand
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, maxWidth: 420, mx: 'auto' }}>
+                Images were generated individually per ad. Run the pipeline with multi-iteration image mode to see detailed iteration analysis, score progressions, and dimension comparisons.
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography variant="h6" color="text.secondary" fontWeight={600}>No images generated yet</Typography>
+              <Typography variant="body2" color="text.secondary">Generate images for ads to see iteration analysis</Typography>
+            </>
+          )}
         </Paper>
       ) : (
         <>
@@ -788,33 +824,57 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
             <Grid size={{ xs: 6, md: 3 }}>
               <Paper sx={{ p: 2.5, textAlign: 'center', border: '1px solid rgba(242,101,34,0.12)' }}>
                 <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>TOTAL IMAGES</Typography>
-                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#F26522' }}>{allImages.length}</Typography>
+                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#F26522' }}><AnimatedNumber value={allImages.length} /></Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>across {adsWithImages.length} ads</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
               <Paper sx={{ p: 2.5, textAlign: 'center', border: '1px solid rgba(16,185,129,0.12)' }}>
-                <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>AVG ACCEPTED</Typography>
-                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#10B981' }}>{avgAccepted.toFixed(1)}</Typography>
+                <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>AVG SELECTED</Typography>
+                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#10B981' }}><AnimatedNumber value={avgAccepted} decimals={1} /></Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>{accepted.length} images selected</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
-              <Paper sx={{ p: 2.5, textAlign: 'center', border: '1px solid rgba(239,68,68,0.12)' }}>
-                <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>AVG REJECTED</Typography>
-                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#EF4444' }}>{avgRejected.toFixed(1)}</Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>{rejected.length} images discarded</Typography>
+              <Paper sx={{ p: 2.5, textAlign: 'center', border: rejected.length > 0 ? '1px solid rgba(239,68,68,0.12)' : '1px solid rgba(16,185,129,0.12)' }}>
+                {rejected.length > 0 ? (
+                  <>
+                    <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>AVG REJECTED</Typography>
+                    <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#EF4444' }}><AnimatedNumber value={avgRejected} decimals={1} /></Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>{rejected.length} images discarded</Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>ITERATIONS / AD</Typography>
+                    <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#10B981' }}>
+                      <AnimatedNumber value={adsWithImages.length > 0 ? allImages.length / adsWithImages.length : 0} decimals={1} />
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>avg per ad</Typography>
+                  </>
+                )}
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, md: 3 }}>
-              <Paper sx={{ p: 2.5, textAlign: 'center', border: '1px solid rgba(255,217,61,0.12)' }}>
-                <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>REJECTION RATE</Typography>
-                <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#F59E0B' }}>
-                  {allImages.length ? Math.round(rejected.length / allImages.length * 100) : 0}%
-                </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
-                  {rejected.length} of {allImages.length}
-                </Typography>
+              <Paper sx={{ p: 2.5, textAlign: 'center', border: rejected.length > 0 ? '1px solid rgba(255,217,61,0.12)' : '1px solid rgba(16,185,129,0.12)' }}>
+                {rejected.length > 0 ? (
+                  <>
+                    <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>REJECTION RATE</Typography>
+                    <Typography variant="h4" fontWeight={800} sx={{ mt: 0.5, color: '#F59E0B' }}>
+                      <AnimatedNumber value={allImages.length ? Math.round(rejected.length / allImages.length * 100) : 0} suffix="%" />
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                      {rejected.length} of {allImages.length}
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.05em' }}>STATUS</Typography>
+                    <Box sx={{ mt: 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+                      <CheckCircleRoundedIcon sx={{ fontSize: 28, color: '#10B981' }} />
+                    </Box>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem', mt: 0.5, display: 'block' }}>All images accepted</Typography>
+                  </>
+                )}
               </Paper>
             </Grid>
           </Grid>
@@ -827,35 +887,82 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontSize: '0.7rem' }}>
                   Average image score at each iteration across all ads
                 </Typography>
-                <ResponsiveContainer width="100%" height={220}>
-                  <LineChart data={imgProgressionData}>
-                    <CartesianGrid stroke={gridStroke} />
-                    <XAxis dataKey="iteration" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <YAxis domain={[5, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={tooltipStyle} />
-                    <Line type="monotone" dataKey="avgScore" stroke="#F26522" strokeWidth={2.5} dot={{ fill: '#F26522', r: 6, strokeWidth: 2, stroke: '#FFFFFF' }} name="Avg Score" />
-                  </LineChart>
-                </ResponsiveContainer>
+                {imgProgressionData.length <= 1 ? (
+                  <Box sx={{ py: 5, textAlign: 'center' }}>
+                    <AutoAwesomeRoundedIcon sx={{ fontSize: 40, color: 'rgba(242,101,34,0.15)', mb: 1.5 }} />
+                    <Typography variant="body2" color="text.secondary" fontWeight={600}>
+                      Single iteration per ad
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', mt: 0.5, display: 'block' }}>
+                      No progression data — enable multi-iteration image generation to track improvement
+                    </Typography>
+                    {imgProgressionData.length === 1 && (
+                      <Chip
+                        label={`Avg score: ${imgProgressionData[0].avgScore.toFixed(1)}/10`}
+                        size="small"
+                        sx={{ mt: 1.5, fontWeight: 700, fontSize: '0.72rem', bgcolor: 'rgba(242,101,34,0.08)', color: '#F26522', border: '1px solid rgba(242,101,34,0.2)' }}
+                      />
+                    )}
+                  </Box>
+                ) : (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={imgProgressionData}>
+                      <CartesianGrid stroke={gridStroke} />
+                      <XAxis dataKey="iteration" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <YAxis domain={[5, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={tooltipStyle} />
+                      <Line type="monotone" dataKey="avgScore" stroke="#F26522" strokeWidth={2.5} dot={{ fill: '#F26522', r: 6, strokeWidth: 2, stroke: '#FFFFFF' }} name="Avg Score" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                )}
               </Paper>
             </Grid>
 
             {/* Accepted vs Rejected Dimension Comparison */}
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper sx={{ p: 3, height: '100%' }}>
-                <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Accepted vs Rejected Dimensions</Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontSize: '0.7rem' }}>
-                  What separates selected images from rejected ones
+                <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>
+                  {rejected.length > 0 ? 'Accepted vs Rejected Dimensions' : 'Image Dimension Scores'}
                 </Typography>
-                <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={dimComparison} barGap={4}>
-                    <XAxis dataKey="dimension" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <YAxis domain={[0, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={tooltipStyle} />
-                    <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
-                    <Bar dataKey="accepted" fill="#10B981" fillOpacity={0.7} radius={[4, 4, 0, 0]} barSize={28} name="Accepted" />
-                    <Bar dataKey="rejected" fill="#EF4444" fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={28} name="Rejected" />
-                  </BarChart>
-                </ResponsiveContainer>
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontSize: '0.7rem' }}>
+                  {rejected.length > 0
+                    ? 'What separates selected images from rejected ones'
+                    : 'Average dimension scores across all selected images'}
+                </Typography>
+                {rejected.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <BarChart data={dimComparison} barGap={4}>
+                      <XAxis dataKey="dimension" tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <YAxis domain={[0, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={tooltipStyle} />
+                      <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
+                      <Bar dataKey="accepted" fill="#10B981" fillOpacity={0.7} radius={[4, 4, 0, 0]} barSize={28} name="Accepted" />
+                      <Bar dataKey="rejected" fill="#EF4444" fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={28} name="Rejected" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                    <Box sx={{ py: 1.5, px: 2, borderRadius: '10px', bgcolor: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.12)', display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                      <CheckCircleRoundedIcon sx={{ fontSize: 20, color: '#10B981' }} />
+                      <Typography variant="body2" sx={{ fontSize: '0.82rem', color: '#10B981', fontWeight: 600 }}>
+                        All images accepted on first iteration
+                      </Typography>
+                    </Box>
+                    {dimComparison.map(d => {
+                      const score = d.accepted;
+                      const color = score >= 8 ? '#10B981' : score >= 6 ? '#F26522' : '#F59E0B';
+                      return (
+                        <Box key={d.dimension}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                            <Typography variant="body2" fontWeight={600} sx={{ fontSize: '0.85rem' }}>{d.dimension}</Typography>
+                            <Typography variant="subtitle2" fontWeight={800} sx={{ color, fontSize: '0.9rem' }}>{score.toFixed(1)}</Typography>
+                          </Box>
+                          <LinearProgress variant="determinate" value={score * 10} sx={{ height: 6, borderRadius: 3, bgcolor: subtleBg, '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 3 } }} />
+                        </Box>
+                      );
+                    })}
+                  </Box>
+                )}
               </Paper>
             </Grid>
 
@@ -867,7 +974,15 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                   Average score change between image iterations
                 </Typography>
                 {imgIterDeltas.length === 0 ? (
-                  <Box sx={{ py: 4, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">Need multi-iteration images</Typography></Box>
+                  <Box sx={{ py: 5, textAlign: 'center' }}>
+                    <SpeedRoundedIcon sx={{ fontSize: 40, color: 'rgba(242,101,34,0.15)', mb: 1.5 }} />
+                    <Typography variant="body2" color="text.secondary" fontWeight={600}>
+                      {hasMultiIteration ? 'Not enough data' : 'Single iteration per image'}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.72rem', mt: 0.5, display: 'block' }}>
+                      {hasMultiIteration ? 'Need more multi-iteration ads for efficiency analysis' : 'Enable multi-iteration image generation to measure improvement between versions'}
+                    </Typography>
+                  </Box>
                 ) : (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {imgIterDeltas.map(d => {
@@ -936,8 +1051,15 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', gap: 1 }}>
-                    <Chip icon={<CheckCircleRoundedIcon sx={{ fontSize: '14px !important' }} />} label={`${accepted.length} accepted`} size="small" sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }} />
-                    <Chip icon={<CancelRoundedIcon sx={{ fontSize: '14px !important' }} />} label={`${rejected.length} rejected`} size="small" sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(239,68,68,0.08)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.15)' }} />
+                    <Chip
+                      icon={<CheckCircleRoundedIcon sx={{ fontSize: '14px !important' }} />}
+                      label={rejected.length > 0 ? `${accepted.length} accepted` : `${allImages.length} images`}
+                      size="small"
+                      sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}
+                    />
+                    {rejected.length > 0 && (
+                      <Chip icon={<CancelRoundedIcon sx={{ fontSize: '14px !important' }} />} label={`${rejected.length} rejected`} size="small" sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(239,68,68,0.08)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.15)' }} />
+                    )}
                   </Box>
                 </Box>
 
@@ -946,7 +1068,7 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                     const { average_score, brand_consistency, engagement_potential, text_image_alignment } = img.evaluation;
                     const scoreColor = average_score >= 8 ? '#10B981' : average_score >= 6 ? '#F26522' : average_score >= 4 ? '#F59E0B' : '#EF4444';
                     return (
-                      <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`${img.briefId}-${img.iteration_number}`}>
+                      <Grid size={{ xs: 6, sm: 4, md: 3 }} key={`${img.briefId}-${img.iteration_number}`}>
                         <Paper
                           onClick={() => navigate(`/ads/${img.briefId}`)}
                           sx={{
@@ -954,35 +1076,50 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                             border: img.isBest ? '2px solid rgba(16,185,129,0.3)' : `1px solid ${faintBorder}`,
                             bgcolor: img.isBest ? 'rgba(16,185,129,0.02)' : undefined,
                             transition: 'all 0.2s',
-                            '&:hover': { borderColor: img.isBest ? 'rgba(16,185,129,0.5)' : 'rgba(242,101,34,0.25)', transform: 'translateY(-2px)' },
+                            '&:hover': { borderColor: img.isBest ? 'rgba(16,185,129,0.5)' : 'rgba(242,101,34,0.25)', transform: 'translateY(-2px)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' },
                           }}
                         >
-                          {/* Image */}
-                          {img.image_url ? (
-                            <Box component="img" src={img.image_url} alt={`${img.briefId} V${img.iteration_number}`}
-                              sx={{ width: '100%', height: 180, objectFit: 'cover', display: 'block' }} />
-                          ) : (
-                            <Box sx={{ width: '100%', height: 180, bgcolor: faintBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                              <ImageRoundedIcon sx={{ fontSize: 36, color: faintIcon }} />
-                            </Box>
-                          )}
-
-                          <Box sx={{ p: 2 }}>
-                            {/* Header row */}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 1.25, flexWrap: 'wrap' }}>
-                              <Chip label={img.briefId} size="small" sx={{ fontWeight: 700, fontSize: '0.6rem', height: 20, bgcolor: subtleBg, border: `1px solid ${subtleBorder}` }} />
-                              <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: '0.65rem' }}>V{img.iteration_number}</Typography>
-                              {img.isBest ? (
-                                <Chip icon={<CheckCircleRoundedIcon sx={{ fontSize: '12px !important' }} />} label="SELECTED" size="small"
-                                  sx={{ fontWeight: 700, fontSize: '0.55rem', height: 18, bgcolor: 'rgba(16,185,129,0.12)', color: '#10B981', border: '1px solid rgba(16,185,129,0.25)' }} />
-                              ) : (
-                                <Chip icon={<CancelRoundedIcon sx={{ fontSize: '12px !important' }} />} label="REJECTED" size="small"
-                                  sx={{ fontWeight: 700, fontSize: '0.55rem', height: 18, bgcolor: 'rgba(239,68,68,0.08)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.15)' }} />
-                              )}
-                              <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: scoreColor, boxShadow: `0 0 6px ${scoreColor}60` }} />
-                                <Typography variant="subtitle2" fontWeight={800} sx={{ color: scoreColor, fontSize: '0.88rem' }}>{average_score.toFixed(1)}</Typography>
+                          {/* Image with score overlay */}
+                          <Box sx={{ position: 'relative' }}>
+                            {img.image_url ? (
+                              <Box component="img" src={img.image_url} alt={`${img.briefId} V${img.iteration_number}`}
+                                sx={{ width: '100%', height: 180, objectFit: 'cover', display: 'block' }} />
+                            ) : (
+                              <Box sx={{ width: '100%', height: 180, bgcolor: faintBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <ImageRoundedIcon sx={{ fontSize: 36, color: faintIcon }} />
                               </Box>
+                            )}
+                            {/* Score overlay badge */}
+                            <Box sx={{
+                              position: 'absolute', top: 8, right: 8,
+                              bgcolor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)',
+                              borderRadius: '8px', px: 1, py: 0.25,
+                              display: 'flex', alignItems: 'center', gap: 0.5,
+                            }}>
+                              <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: scoreColor, boxShadow: `0 0 6px ${scoreColor}80` }} />
+                              <Typography variant="caption" fontWeight={800} sx={{ color: '#FFFFFF', fontSize: '0.75rem' }}>{average_score.toFixed(1)}</Typography>
+                            </Box>
+                            {/* Status badge */}
+                            {rejected.length > 0 && (
+                              <Box sx={{
+                                position: 'absolute', top: 8, left: 8,
+                                bgcolor: img.isBest ? 'rgba(16,185,129,0.85)' : 'rgba(239,68,68,0.75)',
+                                backdropFilter: 'blur(4px)', borderRadius: '6px', px: 0.75, py: 0.15,
+                              }}>
+                                <Typography variant="caption" fontWeight={700} sx={{ color: '#FFFFFF', fontSize: '0.55rem', letterSpacing: '0.04em' }}>
+                                  {img.isBest ? 'SELECTED' : 'REJECTED'}
+                                </Typography>
+                              </Box>
+                            )}
+                          </Box>
+
+                          <Box sx={{ p: 1.5 }}>
+                            {/* Brief ID label */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                              <Typography variant="caption" fontWeight={700} sx={{ fontSize: '0.68rem', color: 'text.secondary' }}>
+                                {img.briefId.replace('brief_', '#')}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: '0.62rem' }}>V{img.iteration_number}</Typography>
                             </Box>
 
                             {/* Dimension bars */}
@@ -993,10 +1130,10 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                             ].map(({ label, score }) => {
                               const c = score >= 8 ? '#10B981' : score >= 6 ? '#F26522' : score >= 4 ? '#F59E0B' : '#EF4444';
                               return (
-                                <Box key={label} sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 0.5 }}>
-                                  <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.62rem', minWidth: 44 }}>{label}</Typography>
-                                  <LinearProgress variant="determinate" value={score * 10} sx={{ flex: 1, height: 3.5, borderRadius: 2, bgcolor: subtleBg, '& .MuiLinearProgress-bar': { bgcolor: c, borderRadius: 2 } }} />
-                                  <Typography variant="caption" fontWeight={700} sx={{ fontSize: '0.62rem', color: c, minWidth: 22, textAlign: 'right' }}>{score.toFixed(1)}</Typography>
+                                <Box key={label} sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 0.4 }}>
+                                  <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem', minWidth: 40 }}>{label}</Typography>
+                                  <LinearProgress variant="determinate" value={score * 10} sx={{ flex: 1, height: 3, borderRadius: 2, bgcolor: subtleBg, '& .MuiLinearProgress-bar': { bgcolor: c, borderRadius: 2 } }} />
+                                  <Typography variant="caption" fontWeight={700} sx={{ fontSize: '0.6rem', color: c, minWidth: 20, textAlign: 'right' }}>{score.toFixed(1)}</Typography>
                                 </Box>
                               );
                             })}

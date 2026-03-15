@@ -14,6 +14,10 @@ import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import SpeedRoundedIcon from '@mui/icons-material/SpeedRounded';
+import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import PipelineProgress from '../components/PipelineProgress';
 import PipelineFlow from '../components/PipelineFlow';
 import ScoreChip from '../components/ScoreChip';
@@ -26,7 +30,7 @@ import Alert from '@mui/material/Alert';
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-  LineChart, Line, CartesianGrid, Legend,
+  LineChart, Line, CartesianGrid, Legend, ReferenceLine, ReferenceArea,
 } from 'recharts';
 import type { AdResult, PipelineStatus, CostSummary, SSEEvent } from '../types';
 
@@ -60,33 +64,132 @@ const pulseGlow = keyframes`
   50% { box-shadow: 0 0 16px 2px rgba(242, 101, 34, 0.12); }
 `;
 
-function StatCard({ title, value, subtitle, icon, gradient, pulsing }: {
+const shimmer = keyframes`
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+`;
+
+/* ---------- Section Header ---------- */
+function SectionHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <Typography
+      variant="overline"
+      color="text.secondary"
+      sx={{
+        fontSize: '0.6rem',
+        letterSpacing: '0.1em',
+        mb: 1.5,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        '&::before': {
+          content: '""',
+          width: 3,
+          height: 14,
+          borderRadius: 2,
+          background: 'linear-gradient(180deg, #F26522, #10B981)',
+          flexShrink: 0,
+        },
+      }}
+    >
+      {children}
+    </Typography>
+  );
+}
+
+/* ---------- Stat Card ---------- */
+function StatCard({ title, value, subtitle, icon, gradient, pulsing, accentColor }: {
   title: string; value: React.ReactNode; subtitle?: string;
   icon: React.ReactNode; gradient: string; pulsing?: boolean;
+  accentColor?: string;
 }) {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
   return (
     <Paper
       sx={{
-        p: 3, position: 'relative', overflow: 'hidden',
+        p: 3, position: 'relative', overflow: 'hidden', borderRadius: '16px',
         animation: pulsing ? `${pulseGlow} 2.5s ease-in-out infinite` : 'none',
-        transition: 'box-shadow 0.3s ease',
+        transition: 'transform 0.25s ease, box-shadow 0.3s ease',
+        background: isDark
+          ? `linear-gradient(135deg, ${accentColor || '#F26522'}12 0%, transparent 60%)`
+          : `linear-gradient(135deg, ${accentColor || '#F26522'}08 0%, transparent 60%)`,
+        border: `1px solid ${isDark ? `${accentColor || '#F26522'}20` : `${accentColor || '#F26522'}12`}`,
+        '&:hover': {
+          transform: 'translateY(-2px)',
+          boxShadow: isDark
+            ? `0 8px 32px ${accentColor || '#F26522'}15`
+            : `0 8px 32px ${accentColor || '#F26522'}12`,
+        },
         '&::before': {
           content: '""', position: 'absolute', top: 0, right: 0,
-          width: 120, height: 120, borderRadius: '50%',
-          background: gradient, opacity: 0.06, transform: 'translate(30%, -30%)',
+          width: 140, height: 140, borderRadius: '50%',
+          background: gradient, opacity: 0.07, transform: 'translate(30%, -30%)',
+        },
+        '&::after': {
+          content: '""', position: 'absolute', bottom: 0, left: 0, right: 0,
+          height: 3, background: gradient, opacity: 0.6,
+          borderRadius: '0 0 16px 16px',
         },
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-        <Box>
-          <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem' }}>{title}</Typography>
-          <Typography variant="h3" fontWeight={800} sx={{ mt: 0.25, fontSize: '2rem', lineHeight: 1 }}>{value}</Typography>
-          {subtitle && <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>{subtitle}</Typography>}
+        <Box sx={{ position: 'relative', zIndex: 1 }}>
+          <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.08em', fontWeight: 700 }}>{title}</Typography>
+          <Typography variant="h3" fontWeight={800} sx={{ mt: 0.25, fontSize: '2.2rem', lineHeight: 1, letterSpacing: '-0.02em' }}>{value}</Typography>
+          {subtitle && (
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.75, display: 'block', fontSize: '0.72rem', lineHeight: 1.4 }}>
+              {subtitle}
+            </Typography>
+          )}
         </Box>
-        <Box sx={{ width: 40, height: 40, borderRadius: '12px', background: gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.8 }}>
+        <Box
+          sx={{
+            width: 48, height: 48, borderRadius: '14px',
+            background: gradient,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: `0 4px 12px ${accentColor || '#F26522'}30`,
+            flexShrink: 0,
+          }}
+        >
           {icon}
         </Box>
       </Box>
+    </Paper>
+  );
+}
+
+/* ---------- Chart Wrapper ---------- */
+function ChartCard({ title, subtitle, children, headerRight }: {
+  title: string; subtitle?: string; children: React.ReactNode; headerRight?: React.ReactNode;
+}) {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  return (
+    <Paper
+      sx={{
+        p: 3, height: '100%', borderRadius: '16px',
+        border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}`,
+        transition: 'box-shadow 0.3s ease',
+        '&:hover': {
+          boxShadow: isDark
+            ? '0 8px 32px rgba(0,0,0,0.3)'
+            : '0 8px 32px rgba(0,0,0,0.06)',
+        },
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+        <Box>
+          <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem', letterSpacing: '-0.01em' }}>{title}</Typography>
+          {subtitle && (
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontSize: '0.72rem', mt: 0.25 }}>
+              {subtitle}
+            </Typography>
+          )}
+        </Box>
+        {headerRight}
+      </Box>
+      {children}
     </Paper>
   );
 }
@@ -161,14 +264,20 @@ export default function Dashboard() {
   const isRunning = status?.status === 'running';
 
   // === Derived analytics ===
-  const { validAds, scores, avgScore, passingCount, belowCount, passRate } = useMemo(() => {
+  const { validAds, scores, avgScore, passingCount, belowCount, passRate, medianScore } = useMemo(() => {
     const validAds = ads.filter(a => a.copy_iterations.length > 0);
     const scores = validAds.map(a => a.copy_iterations[a.best_copy_index].evaluation.weighted_average);
     const avgScore = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
     const passingCount = ads.filter(a => PASSING_STATUSES.includes(a.status ?? '')).length;
     const belowCount = ads.filter(a => a.status === 'below_threshold').length;
     const passRate = ads.length ? Math.round(passingCount / ads.length * 100) : 0;
-    return { validAds, scores, avgScore, passingCount, belowCount, passRate };
+    const sorted = [...scores].sort((a, b) => a - b);
+    const medianScore = sorted.length
+      ? sorted.length % 2 === 0
+        ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
+        : sorted[Math.floor(sorted.length / 2)]
+      : 0;
+    return { validAds, scores, avgScore, passingCount, belowCount, passRate, medianScore };
   }, [ads]);
 
   // Score histogram
@@ -201,13 +310,20 @@ export default function Dashboard() {
   }, [validAds]);
 
   // Score improvement across iterations (how much did iterating help?)
-  const avgImprovement = useMemo(() => {
+  const { avgImprovement, improvedPct } = useMemo(() => {
     const deltas = validAds.map(a => {
       const iters = a.copy_iterations;
       if (iters.length <= 1) return 0;
       return iters[iters.length - 1].evaluation.weighted_average - iters[0].evaluation.weighted_average;
     });
-    return deltas.length ? deltas.reduce((a, b) => a + b, 0) / deltas.length : 0;
+    const avgImprovement = deltas.length ? deltas.reduce((a, b) => a + b, 0) / deltas.length : 0;
+    const multiIterAds = validAds.filter(a => a.copy_iterations.length > 1);
+    const improvedCount = multiIterAds.filter(a => {
+      const iters = a.copy_iterations;
+      return iters[iters.length - 1].evaluation.weighted_average > iters[0].evaluation.weighted_average;
+    }).length;
+    const improvedPct = multiIterAds.length > 0 ? Math.round((improvedCount / multiIterAds.length) * 100) : 0;
+    return { avgImprovement, improvedPct };
   }, [validAds]);
 
   // Iteration progression data (avg score at each iteration number)
@@ -249,14 +365,14 @@ export default function Dashboard() {
         <Grid container spacing={2} sx={{ mb: 3 }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Grid size={{ xs: 6, md: 3 }} key={i}>
-              <Skeleton variant="rounded" height={100} animation="wave" sx={{ borderRadius: '12px' }} />
+              <Skeleton variant="rounded" height={120} animation="wave" sx={{ borderRadius: '16px' }} />
             </Grid>
           ))}
         </Grid>
         <Grid container spacing={2.5}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Grid size={{ xs: 12, md: 6 }} key={i}>
-              <Skeleton variant="rounded" height={300} animation="wave" sx={{ borderRadius: '12px' }} />
+              <Skeleton variant="rounded" height={300} animation="wave" sx={{ borderRadius: '16px' }} />
             </Grid>
           ))}
         </Grid>
@@ -271,7 +387,7 @@ export default function Dashboard() {
           severity="error"
           variant="outlined"
           action={<Button size="small" onClick={refresh} sx={{ fontWeight: 600, fontSize: '0.75rem' }}>Retry</Button>}
-          sx={{ mb: 2, borderRadius: '10px' }}
+          sx={{ mb: 2, borderRadius: '12px' }}
         >
           Failed to load data. Make sure the backend is running.
         </Alert>
@@ -279,24 +395,96 @@ export default function Dashboard() {
       {/* Hero */}
       <Box
         sx={{
-          mb: 3, p: 4, borderRadius: '20px', position: 'relative', overflow: 'hidden',
+          mb: 3, p: { xs: 3, md: 4 }, borderRadius: '20px', position: 'relative', overflow: 'hidden',
           background: isDark
-            ? 'linear-gradient(135deg, rgba(242,101,34,0.1) 0%, rgba(16,185,129,0.06) 50%, rgba(30,30,40,0.8) 100%)'
+            ? 'linear-gradient(135deg, rgba(242,101,34,0.12) 0%, rgba(16,185,129,0.06) 50%, rgba(30,30,40,0.8) 100%)'
             : 'linear-gradient(135deg, rgba(242,101,34,0.06) 0%, rgba(16,185,129,0.04) 50%, rgba(255,255,255,0.8) 100%)',
           border: `1px solid ${isDark ? 'rgba(242,101,34,0.2)' : 'rgba(242,101,34,0.12)'}`,
         }}
       >
-        <Box sx={{ position: 'absolute', top: -50, right: -50, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(242,101,34,0.06), transparent 70%)' }} />
+        <Box sx={{ position: 'absolute', top: -50, right: -50, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(242,101,34,0.08), transparent 70%)' }} />
+        <Box sx={{ position: 'absolute', bottom: -80, left: -40, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,185,129,0.06), transparent 70%)' }} />
         <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography variant="overline" sx={{ color: '#F26522', fontSize: '0.65rem' }}>AUTONOMOUS AD ENGINE</Typography>
-          <Typography variant="h3" fontWeight={800} sx={{ mt: 0.5, mb: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+            <Typography variant="overline" sx={{ color: '#F26522', fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.12em' }}>AUTONOMOUS AD ENGINE</Typography>
+            {isRunning && (
+              <Chip
+                label="LIVE"
+                size="small"
+                sx={{
+                  height: 18, fontSize: '0.55rem', fontWeight: 800,
+                  bgcolor: 'rgba(16,185,129,0.15)', color: '#10B981',
+                  animation: `${pulseGlow} 2s ease-in-out infinite`,
+                  '& .MuiChip-label': { px: 1 },
+                }}
+              />
+            )}
+          </Box>
+          <Typography variant="h3" fontWeight={800} sx={{ mt: 0.5, mb: 1, letterSpacing: '-0.02em' }}>
             Varsity Tutors
             <Box component="span" sx={{ background: 'linear-gradient(135deg, #F26522, #10B981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', ml: 1.5 }}>SAT Prep</Box>
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, mb: 3, lineHeight: 1.6 }}>
-            Generate, evaluate, and iterate high-performance Facebook & Instagram ads using AI-driven feedback loops.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+
+          {/* Quick summary stats line */}
+          {ads.length > 0 && (
+            <Box
+              sx={{
+                display: 'flex', alignItems: 'center', gap: 1, mb: 2.5, flexWrap: 'wrap',
+              }}
+            >
+              <Chip
+                label={`${ads.length} ads generated`}
+                size="small"
+                sx={{
+                  fontWeight: 700, fontSize: '0.75rem', height: 26,
+                  bgcolor: isDark ? 'rgba(242,101,34,0.12)' : 'rgba(242,101,34,0.08)',
+                  color: '#F26522',
+                  border: '1px solid rgba(242,101,34,0.2)',
+                }}
+              />
+              <Chip
+                label={`${passRate}% pass rate`}
+                size="small"
+                sx={{
+                  fontWeight: 700, fontSize: '0.75rem', height: 26,
+                  bgcolor: passRate >= 80 ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
+                  color: passRate >= 80 ? '#10B981' : '#F59E0B',
+                  border: `1px solid ${passRate >= 80 ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}`,
+                }}
+              />
+              {costSummary && costSummary.total_cost_usd > 0 && (
+                <Chip
+                  label={`$${costSummary.total_cost_usd.toFixed(2)} total cost`}
+                  size="small"
+                  sx={{
+                    fontWeight: 700, fontSize: '0.75rem', height: 26,
+                    bgcolor: isDark ? 'rgba(139,92,246,0.1)' : 'rgba(139,92,246,0.06)',
+                    color: '#8B5CF6',
+                    border: '1px solid rgba(139,92,246,0.2)',
+                  }}
+                />
+              )}
+              {medianScore > 0 && (
+                <Chip
+                  label={`${medianScore.toFixed(1)} median score`}
+                  size="small"
+                  sx={{
+                    fontWeight: 700, fontSize: '0.75rem', height: 26,
+                    bgcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                    color: 'text.secondary',
+                  }}
+                />
+              )}
+            </Box>
+          )}
+
+          {ads.length === 0 && (
+            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, mb: 2.5, lineHeight: 1.6 }}>
+              Generate, evaluate, and iterate high-performance Facebook & Instagram ads using AI-driven feedback loops.
+            </Typography>
+          )}
+
+          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', alignItems: 'center' }}>
             <Button
               variant="contained"
               size="large"
@@ -305,9 +493,10 @@ export default function Dashboard() {
               sx={{
                 px: 4, py: 1.5,
                 background: 'linear-gradient(135deg, #F26522, #D4541A)',
-                fontSize: '0.95rem', fontWeight: 700, borderRadius: '12px',
-                boxShadow: '0 4px 16px rgba(242,101,34,0.3)',
-                '&:hover': { background: 'linear-gradient(135deg, #FF8A50, #F26522)', boxShadow: '0 6px 24px rgba(242,101,34,0.4)' },
+                fontSize: '0.95rem', fontWeight: 700, borderRadius: '14px',
+                boxShadow: '0 4px 20px rgba(242,101,34,0.35)',
+                '&:hover': { background: 'linear-gradient(135deg, #FF8A50, #F26522)', boxShadow: '0 6px 28px rgba(242,101,34,0.45)', transform: 'translateY(-1px)' },
+                transition: 'all 0.25s ease',
               }}
             >
               Launch Pipeline
@@ -315,12 +504,14 @@ export default function Dashboard() {
             <Button
               variant="outlined"
               size="large"
+              startIcon={<AutoAwesomeRoundedIcon />}
               onClick={() => navigate('/ads')}
               sx={{
-                px: 4, py: 1.5, fontSize: '0.95rem', fontWeight: 700, borderRadius: '12px',
+                px: 4, py: 1.5, fontSize: '0.95rem', fontWeight: 700, borderRadius: '14px',
                 borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
                 color: 'text.primary',
-                '&:hover': { borderColor: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)' },
+                '&:hover': { borderColor: '#F26522', bgcolor: 'rgba(242,101,34,0.04)', transform: 'translateY(-1px)' },
+                transition: 'all 0.25s ease',
               }}
             >
               View Gallery
@@ -394,33 +585,76 @@ export default function Dashboard() {
       {/* Stat Cards */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Total Ads" value={<AnimatedNumber value={ads.length} />} subtitle="generated" icon={<AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #F26522, #D4541A)" pulsing={isRunning} />
+          <StatCard
+            title="Total Ads"
+            value={<AnimatedNumber value={ads.length} />}
+            subtitle={ads.length === 1 ? '1 ad generated' : `${ads.length} ads generated`}
+            icon={<AutoAwesomeRoundedIcon sx={{ fontSize: 22, color: 'white' }} />}
+            gradient="linear-gradient(135deg, #3B82F6, #1D4ED8)"
+            accentColor="#3B82F6"
+            pulsing={isRunning}
+          />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Avg Score" value={avgScore ? <AnimatedNumber value={avgScore} decimals={1} /> : '—'} subtitle="out of 10" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient={`linear-gradient(135deg, ${avgScore >= 7 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} pulsing={isRunning} />
+          <StatCard
+            title="Avg Score"
+            value={avgScore ? <AnimatedNumber value={avgScore} decimals={1} /> : '—'}
+            subtitle={avgScore ? `${avgScore >= 7 ? 'Above' : 'Below'} passing threshold (7.0)` : 'out of 10'}
+            icon={<SpeedRoundedIcon sx={{ fontSize: 22, color: 'white' }} />}
+            gradient={`linear-gradient(135deg, ${avgScore >= 7 ? '#10B981, #059669' : '#F59E0B, #D97706'})`}
+            accentColor={avgScore >= 7 ? '#10B981' : '#F59E0B'}
+            pulsing={isRunning}
+          />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Pass Rate" value={ads.length ? <AnimatedNumber value={passRate} suffix="%" /> : '—'} subtitle={ads.length ? `${passingCount} passing · ${belowCount} below threshold` : 'score >= 7.0'} icon={<Typography sx={{ fontSize: 18, fontWeight: 800, color: 'white' }}>%</Typography>} gradient={`linear-gradient(135deg, ${passRate >= 80 ? '#10B981, #059669' : '#F59E0B, #D97706'})`} pulsing={isRunning} />
+          <StatCard
+            title="Pass Rate"
+            value={ads.length ? <AnimatedNumber value={passRate} suffix="%" /> : '—'}
+            subtitle={ads.length ? `${passingCount} passing · ${belowCount} below threshold` : 'score >= 7.0'}
+            icon={<CheckCircleRoundedIcon sx={{ fontSize: 22, color: 'white' }} />}
+            gradient={`linear-gradient(135deg, ${passRate >= 80 ? '#10B981, #059669' : '#F59E0B, #D97706'})`}
+            accentColor={passRate >= 80 ? '#10B981' : '#F59E0B'}
+            pulsing={isRunning}
+          />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
-          <StatCard title="Avg Improvement" value={ads.length ? <AnimatedNumber value={avgImprovement} decimals={2} prefix="+" /> : '—'} subtitle="from iteration 1 → best" icon={<TrendingUpRoundedIcon sx={{ fontSize: 20, color: 'white' }} />} gradient="linear-gradient(135deg, #10B981, #F26522)" pulsing={isRunning} />
+          <StatCard
+            title={belowCount > 0 ? 'Below Threshold' : 'Avg Improvement'}
+            value={belowCount > 0
+              ? <AnimatedNumber value={belowCount} />
+              : (ads.length ? <AnimatedNumber value={avgImprovement} decimals={2} prefix="+" /> : '—')
+            }
+            subtitle={belowCount > 0
+              ? `${belowCount} ad${belowCount !== 1 ? 's' : ''} need attention`
+              : 'from iteration 1 to best'
+            }
+            icon={belowCount > 0
+              ? <WarningAmberRoundedIcon sx={{ fontSize: 22, color: 'white' }} />
+              : <TrendingUpRoundedIcon sx={{ fontSize: 22, color: 'white' }} />
+            }
+            gradient={belowCount > 0
+              ? 'linear-gradient(135deg, #EF4444, #DC2626)'
+              : 'linear-gradient(135deg, #10B981, #059669)'
+            }
+            accentColor={belowCount > 0 ? '#EF4444' : '#10B981'}
+            pulsing={isRunning}
+          />
         </Grid>
       </Grid>
 
       {/* Cost Overview */}
       {costSummary && costSummary.total_calls > 0 && (
         <Box sx={{ mb: 3 }}>
-          <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.1em', mb: 1.5, display: 'block' }}>
-            PIPELINE COSTS
-          </Typography>
+          <SectionHeader>PIPELINE COSTS</SectionHeader>
           <Grid container spacing={2}>
             <Grid size={{ xs: 6, md: 3 }}>
               <StatCard
                 title="Total Spend"
                 value={<AnimatedNumber value={costSummary.total_cost_usd} decimals={4} prefix="$" />}
                 subtitle={`${costSummary.total_calls} API calls`}
-                icon={<Typography sx={{ fontSize: 16, fontWeight: 800, color: 'white' }}>$</Typography>}
+                icon={<Typography sx={{ fontSize: 18, fontWeight: 800, color: 'white' }}>$</Typography>}
                 gradient="linear-gradient(135deg, #EF4444, #DC2626)"
+                accentColor="#EF4444"
                 pulsing={isRunning}
               />
             </Grid>
@@ -431,6 +665,7 @@ export default function Dashboard() {
                 subtitle="input + output"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>Tk</Typography>}
                 gradient="linear-gradient(135deg, #F59E0B, #D97706)"
+                accentColor="#F59E0B"
                 pulsing={isRunning}
               />
             </Grid>
@@ -441,6 +676,7 @@ export default function Dashboard() {
                 subtitle="per generated ad"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>/ad</Typography>}
                 gradient="linear-gradient(135deg, #F26522, #FF8A50)"
+                accentColor="#F26522"
                 pulsing={isRunning}
               />
             </Grid>
@@ -451,6 +687,7 @@ export default function Dashboard() {
                 subtitle="generate + eval + refine"
                 icon={<Typography sx={{ fontSize: 14, fontWeight: 800, color: 'white' }}>#</Typography>}
                 gradient="linear-gradient(135deg, #10B981, #059669)"
+                accentColor="#10B981"
                 pulsing={isRunning}
               />
             </Grid>
@@ -463,12 +700,10 @@ export default function Dashboard() {
         const pm = costSummary.pipeline_metrics;
         return (
           <Box sx={{ mb: 3 }}>
-            <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.1em', mb: 1.5, display: 'block' }}>
-              PIPELINE HEALTH
-            </Typography>
+            <SectionHeader>PIPELINE HEALTH</SectionHeader>
             <Grid container spacing={2}>
               <Grid size={{ xs: 6, md: 3 }}>
-                <Paper sx={{ p: 2.5 }}>
+                <Paper sx={{ p: 2.5, borderRadius: '16px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}` }}>
                   <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.55rem' }}>EARLY STOP RATE</Typography>
                   <Typography variant="h4" fontWeight={800} sx={{ mt: 0.25, color: pm.early_stopping.early_stop_rate >= 50 ? '#10B981' : '#F59E0B' }}>
                     {pm.early_stopping.early_stop_rate}%
@@ -479,7 +714,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid size={{ xs: 6, md: 3 }}>
-                <Paper sx={{ p: 2.5 }}>
+                <Paper sx={{ p: 2.5, borderRadius: '16px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}` }}>
                   <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.55rem' }}>BATCH EVAL SUCCESS</Typography>
                   <Typography variant="h4" fontWeight={800} sx={{ mt: 0.25, color: pm.eval_mode.batch_success_rate >= 90 ? '#10B981' : '#EF4444' }}>
                     {pm.eval_mode.batch_success_rate}%
@@ -490,7 +725,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid size={{ xs: 6, md: 3 }}>
-                <Paper sx={{ p: 2.5 }}>
+                <Paper sx={{ p: 2.5, borderRadius: '16px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}` }}>
                   <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.55rem' }}>ITERATION DISTRIBUTION</Typography>
                   <Box sx={{ display: 'flex', gap: 1, mt: 1, alignItems: 'flex-end' }}>
                     {Object.entries(pm.iteration_distribution).sort(([a], [b]) => Number(a) - Number(b)).map(([iter, count]) => {
@@ -508,7 +743,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid size={{ xs: 6, md: 3 }}>
-                <Paper sx={{ p: 2.5 }}>
+                <Paper sx={{ p: 2.5, borderRadius: '16px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}` }}>
                   <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.55rem' }}>IMAGE CACHE</Typography>
                   {pm.image_cache.total > 0 ? (
                     <>
@@ -565,7 +800,7 @@ export default function Dashboard() {
               px: 4, py: 1.25,
               background: 'linear-gradient(135deg, #F26522, #D4541A)',
               fontSize: '0.9rem', fontWeight: 700,
-              borderRadius: '12px',
+              borderRadius: '14px',
               boxShadow: '0 4px 16px rgba(242,101,34,0.3)',
               '&:hover': { background: 'linear-gradient(135deg, #FF8A50, #F26522)', boxShadow: '0 6px 24px rgba(242,101,34,0.4)' },
             }}
@@ -578,29 +813,61 @@ export default function Dashboard() {
       <Grid container spacing={2.5}>
         {/* Score Distribution */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Score Distribution</Typography>
+          <ChartCard
+            title="Score Distribution"
+            subtitle={scores.length > 0 ? `${scores.length} ads scored · Median: ${medianScore.toFixed(1)}` : undefined}
+            headerRight={medianScore > 0 ? (
+              <Chip
+                label={`Median ${medianScore.toFixed(1)}`}
+                size="small"
+                sx={{
+                  fontWeight: 700, fontSize: '0.65rem', height: 22,
+                  bgcolor: medianScore >= 7 ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
+                  color: medianScore >= 7 ? '#10B981' : '#F59E0B',
+                  border: `1px solid ${medianScore >= 7 ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}`,
+                }}
+              />
+            ) : undefined}
+          >
             {ads.length === 0 ? (
               <Box sx={{ py: 6, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">Run the pipeline to see score distribution</Typography></Box>
             ) : (
-              <ResponsiveContainer width="100%" height={240}>
-                <BarChart data={histData} barSize={28} key={`hist-${ads.length}`}>
-                  <XAxis dataKey="range" tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-                  <Tooltip contentStyle={TOOLTIP_STYLE} />
-                  <Bar dataKey="count" radius={[6, 6, 0, 0]} isAnimationActive={true} animationDuration={600}>
-                    {histData.map((_, i) => <Cell key={i} fill={i >= 7 ? '#10B981' : i >= 6 ? '#F26522' : i >= 4 ? '#F59E0B' : '#EF4444'} fillOpacity={0.7} />)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <Box>
+                {/* Color band legend */}
+                <Box sx={{ display: 'flex', gap: 2, mb: 1.5, justifyContent: 'center' }}>
+                  {[
+                    { label: 'Poor (1-5)', color: '#EF4444' },
+                    { label: 'Fair (5-7)', color: '#F59E0B' },
+                    { label: 'Good (7-10)', color: '#10B981' },
+                  ].map(band => (
+                    <Box key={band.label} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: band.color, opacity: 0.8 }} />
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>{band.label}</Typography>
+                    </Box>
+                  ))}
+                </Box>
+                <ResponsiveContainer width="100%" height={240}>
+                  <BarChart data={histData} barSize={28} key={`hist-${ads.length}`}>
+                    <ReferenceArea x1="1" x2="5" fill="#EF4444" fillOpacity={isDark ? 0.04 : 0.03} />
+                    <ReferenceArea x1="5" x2="7" fill="#F59E0B" fillOpacity={isDark ? 0.04 : 0.03} />
+                    <ReferenceArea x1="7" x2="10" fill="#10B981" fillOpacity={isDark ? 0.04 : 0.03} />
+                    <XAxis dataKey="range" tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
+                    <Tooltip contentStyle={TOOLTIP_STYLE} />
+                    <ReferenceLine y={0} stroke="transparent" />
+                    <Bar dataKey="count" radius={[6, 6, 0, 0]} isAnimationActive={true} animationDuration={600}>
+                      {histData.map((_, i) => <Cell key={i} fill={i >= 7 ? '#10B981' : i >= 6 ? '#F26522' : i >= 4 ? '#F59E0B' : '#EF4444'} fillOpacity={0.8} />)}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </Box>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Dimension Radar — avg across all ads */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Avg Dimension Scores</Typography>
+          <ChartCard title="Quality Radar" subtitle="Average dimension scores across all ads">
             {ads.length === 0 ? (
               <Box sx={{ py: 6, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No data yet</Typography></Box>
             ) : (
@@ -614,79 +881,130 @@ export default function Dashboard() {
                 </RadarChart>
               </ResponsiveContainer>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Iteration Progression */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>Score Progression by Iteration</Typography>
-              {avgImprovement > 0 && (
-                <Chip label={`+${avgImprovement.toFixed(2)} avg`} size="small" sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }} />
-              )}
-            </Box>
+          <ChartCard
+            title="Iteration Effectiveness"
+            subtitle={improvedPct > 0 ? `${improvedPct}% of ads improved through iteration` : 'Score progression across iterations'}
+            headerRight={
+              <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                {avgImprovement > 0 && (
+                  <Chip label={`+${avgImprovement.toFixed(2)} avg lift`} size="small" sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }} />
+                )}
+                {improvedPct > 0 && (
+                  <Chip
+                    icon={<TrendingUpRoundedIcon sx={{ fontSize: 14, color: '#10B981 !important' }} />}
+                    label={`${improvedPct}%`}
+                    size="small"
+                    sx={{ fontWeight: 700, fontSize: '0.65rem', bgcolor: 'rgba(16,185,129,0.06)', color: '#10B981' }}
+                  />
+                )}
+              </Box>
+            }
+          >
             {iterProgressionData.length === 0 ? (
               <Box sx={{ py: 6, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No data yet</Typography></Box>
             ) : (
-              <ResponsiveContainer width="100%" height={240}>
-                <LineChart data={iterProgressionData} key={`line-${ads.length}-${avgScore.toFixed(1)}`}>
-                  <CartesianGrid stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'} />
-                  <XAxis dataKey="iteration" tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis domain={[5, 10]} tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={TOOLTIP_STYLE} />
-                  <Line type="monotone" dataKey="avgScore" stroke="#F26522" strokeWidth={2.5} dot={{ fill: '#F26522', r: 5, strokeWidth: 0 }} name="Avg" isAnimationActive={true} animationDuration={600} />
-                  <Line type="monotone" dataKey="maxScore" stroke="#10B981" strokeWidth={1.5} strokeDasharray="4 4" dot={false} name="Max" isAnimationActive={true} animationDuration={600} />
-                  <Line type="monotone" dataKey="minScore" stroke="#EF4444" strokeWidth={1.5} strokeDasharray="4 4" dot={false} name="Min" isAnimationActive={true} animationDuration={600} />
-                  <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
-                </LineChart>
-              </ResponsiveContainer>
+              <Box>
+                {/* Before/After visual */}
+                {iterProgressionData.length >= 2 && (
+                  <Box sx={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, mb: 2,
+                    p: 1.5, borderRadius: '12px',
+                    bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                  }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem', fontWeight: 600 }}>FIRST ITER</Typography>
+                      <Typography variant="h6" fontWeight={800} sx={{ color: '#F59E0B', fontSize: '1.1rem' }}>
+                        {iterProgressionData[0].avgScore.toFixed(1)}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <Box sx={{ width: 24, height: 2, bgcolor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)' }} />
+                      <TrendingUpRoundedIcon sx={{ fontSize: 20, color: '#10B981' }} />
+                      <Box sx={{ width: 24, height: 2, bgcolor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)' }} />
+                    </Box>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem', fontWeight: 600 }}>BEST ITER</Typography>
+                      <Typography variant="h6" fontWeight={800} sx={{ color: '#10B981', fontSize: '1.1rem' }}>
+                        {iterProgressionData[iterProgressionData.length - 1].avgScore.toFixed(1)}
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={iterProgressionData} key={`line-${ads.length}-${avgScore.toFixed(1)}`}>
+                    <CartesianGrid stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'} />
+                    <XAxis dataKey="iteration" tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <YAxis domain={[5, 10]} tick={{ fill: isDark ? '#94A3B8' : '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={TOOLTIP_STYLE} />
+                    <ReferenceLine y={7} stroke="#F59E0B" strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: 'Pass', fill: '#F59E0B', fontSize: 10, position: 'right' }} />
+                    <Line type="monotone" dataKey="avgScore" stroke="#F26522" strokeWidth={2.5} dot={{ fill: '#F26522', r: 5, strokeWidth: 0 }} name="Avg" isAnimationActive={true} animationDuration={600} />
+                    <Line type="monotone" dataKey="maxScore" stroke="#10B981" strokeWidth={1.5} strokeDasharray="4 4" dot={false} name="Max" isAnimationActive={true} animationDuration={600} />
+                    <Line type="monotone" dataKey="minScore" stroke="#EF4444" strokeWidth={1.5} strokeDasharray="4 4" dot={false} name="Min" isAnimationActive={true} animationDuration={600} />
+                    <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </Box>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Weakest Dimensions */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Weakest Dimensions</Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.72rem' }}>
-              How often each dimension is the weakest scoring area
-            </Typography>
+          <ChartCard title="Weakest Dimensions" subtitle="How often each dimension is the lowest scoring area">
             {ads.length === 0 ? (
               <Box sx={{ py: 4, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No data yet</Typography></Box>
             ) : (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                {weakestData.map(d => {
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: 1 }}>
+                {weakestData.map((d, i) => {
                   const pct = ads.length ? (d.count / ads.length * 100) : 0;
                   return (
                     <Box key={d.name}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
-                        <Typography variant="body2" fontWeight={600} sx={{ fontSize: '0.82rem' }}>{d.name}</Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem', fontWeight: 600 }}>
-                          {pct.toFixed(0)}% ({d.count}/{ads.length})
-                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          {i === 0 && d.count > 1 && (
+                            <TrendingDownRoundedIcon sx={{ fontSize: 14, color: '#EF4444' }} />
+                          )}
+                          <Typography variant="body2" fontWeight={600} sx={{ fontSize: '0.82rem' }}>{d.name}</Typography>
+                        </Box>
+                        <Chip
+                          label={`${pct.toFixed(0)}%`}
+                          size="small"
+                          sx={{
+                            fontWeight: 700, fontSize: '0.6rem', height: 20,
+                            bgcolor: `${d.color}15`,
+                            color: d.color,
+                            border: `1px solid ${d.color}25`,
+                          }}
+                        />
                       </Box>
                       <LinearProgress
                         variant="determinate"
                         value={pct}
                         sx={{
-                          height: 6, borderRadius: 3,
+                          height: 8, borderRadius: 4,
                           bgcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-                          '& .MuiLinearProgress-bar': { bgcolor: d.color, borderRadius: 3 },
+                          '& .MuiLinearProgress-bar': { bgcolor: d.color, borderRadius: 4 },
                         }}
                       />
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem', mt: 0.25, display: 'block' }}>
+                        {d.count} of {ads.length} ads
+                      </Typography>
                     </Box>
                   );
                 })}
               </Box>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Audience Comparison */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Performance by Audience</Typography>
+          <ChartCard title="Performance by Audience" subtitle="Score and cost comparison across segments">
             {Object.keys(audienceStats).length === 0 ? (
               <Box sx={{ py: 4, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No data yet</Typography></Box>
             ) : (
@@ -699,13 +1017,14 @@ export default function Dashboard() {
                       key={seg}
                       sx={{
                         p: 2, display: 'flex', alignItems: 'center', gap: 2,
+                        borderRadius: '12px',
                         border: `1px solid ${color}20`,
                         bgcolor: `${color}05`,
-                        transition: 'all 0.2s',
-                        '&:hover': { borderColor: `${color}40` },
+                        transition: 'all 0.25s ease',
+                        '&:hover': { borderColor: `${color}40`, transform: 'translateX(4px)' },
                       }}
                     >
-                      <Box sx={{ width: 6, height: 40, borderRadius: 3, bgcolor: color }} />
+                      <Box sx={{ width: 6, height: 48, borderRadius: 3, bgcolor: color }} />
                       <Box sx={{ flex: 1 }}>
                         <Typography variant="subtitle2" fontWeight={700} sx={{ textTransform: 'capitalize', fontSize: '0.88rem' }}>
                           {seg}
@@ -715,10 +1034,17 @@ export default function Dashboard() {
                         </Typography>
                       </Box>
                       <Box sx={{ textAlign: 'right' }}>
-                        <Typography variant="h6" fontWeight={800} sx={{ color: scoreColor, fontSize: '1.1rem' }}>
-                          {stats.avgScore.toFixed(1)}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem' }}>
+                        <Box sx={{
+                          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                          px: 1.5, py: 0.5, borderRadius: '10px',
+                          bgcolor: `${scoreColor}15`,
+                          border: `1px solid ${scoreColor}25`,
+                        }}>
+                          <Typography variant="h6" fontWeight={800} sx={{ color: scoreColor, fontSize: '1.1rem' }}>
+                            {stats.avgScore.toFixed(1)}
+                          </Typography>
+                        </Box>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem', display: 'block', mt: 0.25 }}>
                           avg score
                         </Typography>
                       </Box>
@@ -727,16 +1053,30 @@ export default function Dashboard() {
                 })}
               </Box>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Top Ads */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>Top Performing Ads</Typography>
-              {ads.length > 0 && <Chip label="View All" size="small" variant="outlined" onClick={() => navigate('/ads')} sx={{ cursor: 'pointer', fontSize: '0.7rem' }} />}
-            </Box>
+          <ChartCard
+            title="Top Performing Ads"
+            subtitle={ads.length > 0 ? `Best ${Math.min(5, ads.length)} by quality score` : undefined}
+            headerRight={
+              ads.length > 0 ? (
+                <Chip
+                  label="View All"
+                  size="small"
+                  variant="outlined"
+                  onClick={() => navigate('/ads')}
+                  sx={{
+                    cursor: 'pointer', fontSize: '0.7rem', borderRadius: '8px',
+                    borderColor: '#F26522', color: '#F26522',
+                    '&:hover': { bgcolor: 'rgba(242,101,34,0.06)' },
+                  }}
+                />
+              ) : undefined
+            }
+          >
             {ads.length === 0 ? (
               <Box sx={{ py: 6, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No ads generated yet</Typography></Box>
             ) : (
@@ -748,6 +1088,7 @@ export default function Dashboard() {
                     const best = ad.copy_iterations[ad.best_copy_index];
                     const firstScore = ad.copy_iterations[0].evaluation.weighted_average;
                     const improvement = best.evaluation.weighted_average - firstScore;
+                    const rankColors = ['#FFD700', '#C0C0C0', '#CD7F32'];
                     return (
                       <Box
                         key={ad.brief_id}
@@ -755,18 +1096,29 @@ export default function Dashboard() {
                         sx={{
                           display: 'flex', alignItems: 'center', gap: 1.5,
                           p: 1.5, borderRadius: '12px', cursor: 'pointer',
-                          transition: 'all 0.2s',
-                          '&:hover': { bgcolor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' },
+                          transition: 'all 0.2s ease',
+                          border: `1px solid transparent`,
+                          '&:hover': {
+                            bgcolor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)',
+                            borderColor: isDark ? 'rgba(242,101,34,0.15)' : 'rgba(242,101,34,0.1)',
+                            transform: 'translateX(4px)',
+                          },
                         }}
                       >
                         <Box
                           sx={{
-                            width: 24, height: 24, borderRadius: '8px', display: 'flex',
+                            width: 28, height: 28, borderRadius: '10px', display: 'flex',
                             alignItems: 'center', justifyContent: 'center',
-                            bgcolor: i === 0 ? 'rgba(16,185,129,0.12)' : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                            background: i < 3
+                              ? `linear-gradient(135deg, ${rankColors[i]}30, ${rankColors[i]}10)`
+                              : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                            border: i < 3 ? `1px solid ${rankColors[i]}30` : 'none',
                           }}
                         >
-                          <Typography variant="caption" fontWeight={800} sx={{ fontSize: '0.7rem', color: i === 0 ? '#10B981' : 'text.secondary' }}>
+                          <Typography variant="caption" fontWeight={800} sx={{
+                            fontSize: '0.72rem',
+                            color: i < 3 ? rankColors[i] : 'text.secondary',
+                          }}>
                             {i + 1}
                           </Typography>
                         </Box>
@@ -781,10 +1133,11 @@ export default function Dashboard() {
                         </Box>
                         {improvement > 0 && (
                           <Chip
+                            icon={<TrendingUpRoundedIcon sx={{ fontSize: 12, color: '#10B981 !important' }} />}
                             label={`+${improvement.toFixed(1)}`}
                             size="small"
                             sx={{
-                              fontWeight: 700, fontSize: '0.6rem', height: 18,
+                              fontWeight: 700, fontSize: '0.6rem', height: 22,
                               bgcolor: 'rgba(16,185,129,0.08)', color: '#10B981',
                               border: '1px solid rgba(16,185,129,0.15)',
                             }}
@@ -798,22 +1151,36 @@ export default function Dashboard() {
                   })}
               </Box>
             )}
-          </Paper>
+          </ChartCard>
         </Grid>
 
         {/* Actionable Recommendations */}
         {ads.length >= 3 && (
           <Grid size={12}>
-            <Paper sx={{ p: 3, border: '1px solid rgba(242,101,34,0.12)', bgcolor: 'rgba(242,101,34,0.02)' }}>
-              <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Recommendations</Typography>
+            <Paper sx={{
+              p: 3, borderRadius: '16px',
+              border: '1px solid rgba(242,101,34,0.15)',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(242,101,34,0.06) 0%, rgba(16,185,129,0.03) 100%)'
+                : 'linear-gradient(135deg, rgba(242,101,34,0.03) 0%, rgba(16,185,129,0.02) 100%)',
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                <AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+                <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>Recommendations</Typography>
+              </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 {/* Recommend scaling the best audience */}
                 {(() => {
                   const bestAudience = Object.entries(audienceStats).sort((a, b) => b[1].avgScore - a[1].avgScore)[0];
                   if (bestAudience) {
                     return (
-                      <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
-                        <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#10B981', mt: '7px', flexShrink: 0 }} />
+                      <Box sx={{
+                        display: 'flex', gap: 1.5, alignItems: 'flex-start',
+                        p: 1.5, borderRadius: '10px',
+                        bgcolor: isDark ? 'rgba(16,185,129,0.05)' : 'rgba(16,185,129,0.03)',
+                        border: '1px solid rgba(16,185,129,0.1)',
+                      }}>
+                        <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#10B981', mt: '6px', flexShrink: 0 }} />
                         <Typography variant="body2" sx={{ fontSize: '0.85rem', lineHeight: 1.7, color: isDark ? 'rgba(226,232,240,0.8)' : 'rgba(30,41,59,0.8)' }}>
                           <strong>Scale {bestAudience[0]} ads</strong> — highest average score ({bestAudience[1].avgScore.toFixed(1)}/10) at ${bestAudience[1].avgCost.toFixed(4)}/ad. Consider running a 10+ batch for this segment.
                         </Typography>
@@ -825,8 +1192,13 @@ export default function Dashboard() {
 
                 {/* Flag weakest dimension for targeted improvement */}
                 {weakestData.length > 0 && weakestData[0].count > 1 && (
-                  <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
-                    <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#F59E0B', mt: '7px', flexShrink: 0 }} />
+                  <Box sx={{
+                    display: 'flex', gap: 1.5, alignItems: 'flex-start',
+                    p: 1.5, borderRadius: '10px',
+                    bgcolor: isDark ? 'rgba(245,158,11,0.05)' : 'rgba(245,158,11,0.03)',
+                    border: '1px solid rgba(245,158,11,0.1)',
+                  }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#F59E0B', mt: '6px', flexShrink: 0 }} />
                     <Typography variant="body2" sx={{ fontSize: '0.85rem', lineHeight: 1.7, color: isDark ? 'rgba(226,232,240,0.8)' : 'rgba(30,41,59,0.8)' }}>
                       <strong>Improve {weakestData[0].name}</strong> — weakest dimension in {weakestData[0].count}/{ads.length} ads ({(weakestData[0].count / ads.length * 100).toFixed(0)}%). Consider refining the {weakestData[0].name.toLowerCase()} rubric or adding targeted refinement prompts.
                     </Typography>
@@ -835,18 +1207,28 @@ export default function Dashboard() {
 
                 {/* Iteration effectiveness insight */}
                 {avgImprovement > 0 && (
-                  <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
-                    <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#F26522', mt: '7px', flexShrink: 0 }} />
+                  <Box sx={{
+                    display: 'flex', gap: 1.5, alignItems: 'flex-start',
+                    p: 1.5, borderRadius: '10px',
+                    bgcolor: isDark ? 'rgba(242,101,34,0.05)' : 'rgba(242,101,34,0.03)',
+                    border: '1px solid rgba(242,101,34,0.1)',
+                  }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#F26522', mt: '6px', flexShrink: 0 }} />
                     <Typography variant="body2" sx={{ fontSize: '0.85rem', lineHeight: 1.7, color: isDark ? 'rgba(226,232,240,0.8)' : 'rgba(30,41,59,0.8)' }}>
-                      <strong>Iteration is working</strong> — average lift of +{avgImprovement.toFixed(2)} per ad across iterations. The refinement loop is producing measurable improvement.
+                      <strong>Iteration is working</strong> — average lift of +{avgImprovement.toFixed(2)} per ad across iterations. {improvedPct}% of multi-iteration ads showed improvement.
                     </Typography>
                   </Box>
                 )}
 
                 {/* Cost efficiency insight */}
                 {costSummary && costSummary.total_cost_usd > 0 && avgScore > 0 && (
-                  <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
-                    <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#FF8A50', mt: '7px', flexShrink: 0 }} />
+                  <Box sx={{
+                    display: 'flex', gap: 1.5, alignItems: 'flex-start',
+                    p: 1.5, borderRadius: '10px',
+                    bgcolor: isDark ? 'rgba(139,92,246,0.05)' : 'rgba(139,92,246,0.03)',
+                    border: '1px solid rgba(139,92,246,0.1)',
+                  }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#8B5CF6', mt: '6px', flexShrink: 0 }} />
                     <Typography variant="body2" sx={{ fontSize: '0.85rem', lineHeight: 1.7, color: isDark ? 'rgba(226,232,240,0.8)' : 'rgba(30,41,59,0.8)' }}>
                       <strong>Quality per dollar: {(avgScore / costSummary.total_cost_usd).toFixed(0)}</strong> — at ${(costSummary.total_cost_usd / ads.length).toFixed(4)}/ad, this is{' '}
                       {costSummary.total_cost_usd / ads.length < 0.02 ? 'highly efficient' : 'within normal range'} for LLM-generated ad copy.
@@ -860,8 +1242,12 @@ export default function Dashboard() {
 
         {/* Cost + Quality Summary Row */}
         <Grid size={12}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: '1rem' }}>Dimension Score Breakdown (All Ads)</Typography>
+          <Paper sx={{ p: 3, borderRadius: '16px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}` }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <Box sx={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #F26522, #10B981)' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>Dimension Score Breakdown</Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>All Ads</Typography>
+            </Box>
             {ads.length === 0 ? (
               <Box sx={{ py: 4, textAlign: 'center' }}><Typography variant="body2" color="text.secondary">No data yet</Typography></Box>
             ) : (
@@ -875,9 +1261,14 @@ export default function Dashboard() {
                     <Grid size={{ xs: 12, sm: 6, md: "grow" }} key={d}>
                       <Paper
                         sx={{
-                          p: 2, textAlign: 'center',
+                          p: 2, textAlign: 'center', borderRadius: '14px',
                           border: `1px solid ${color}20`,
                           bgcolor: `${color}05`,
+                          transition: 'all 0.25s ease',
+                          '&:hover': {
+                            transform: 'translateY(-2px)',
+                            boxShadow: `0 4px 16px ${color}15`,
+                          },
                         }}
                       >
                         <Typography variant="caption" fontWeight={700} sx={{ color, fontSize: '0.6rem', letterSpacing: '0.05em' }}>
@@ -898,9 +1289,9 @@ export default function Dashboard() {
                           variant="determinate"
                           value={avg * 10}
                           sx={{
-                            mt: 1, height: 4, borderRadius: 2,
+                            mt: 1, height: 5, borderRadius: 3,
                             bgcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-                            '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 2 },
+                            '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 3 },
                           }}
                         />
                       </Paper>
