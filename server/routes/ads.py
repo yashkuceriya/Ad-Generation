@@ -518,6 +518,108 @@ def check_diversity(brief_id: str):
     return result.diversity.model_dump()
 
 
+class BulkApproveRequest(BaseModel):
+    brief_ids: list[str]
+    approved_by: str
+    notes: str = ""
+    client_id: str = ""
+
+
+class BulkRejectRequest(BaseModel):
+    brief_ids: list[str]
+    rejected_by: str
+    reason: str
+    client_id: str = ""
+
+
+REVIEWABLE_STATUSES = {
+    AdStatus.EVALUATOR_PASS.value,
+    AdStatus.COMPLIANCE_PASS.value,
+    AdStatus.NEEDS_REVIEW.value,
+}
+
+
+@router.post("/bulk-approve")
+def bulk_approve(req: BulkApproveRequest):
+    """Approve multiple ads in one request."""
+    store = RunStore()
+    broadcaster = SSEBroadcaster()
+    approved: list[str] = []
+    skipped: list[dict] = []
+
+    for brief_id in req.brief_ids:
+        result = store.get_result(brief_id)
+        if not result:
+            skipped.append({"id": brief_id, "reason": "Not found"})
+            continue
+
+        if result.status == AdStatus.REJECTED.value:
+            skipped.append({"id": brief_id, "reason": "Cannot approve a rejected ad"})
+            continue
+
+        if result.status not in REVIEWABLE_STATUSES:
+            skipped.append({
+                "id": brief_id,
+                "reason": f"Not in a reviewable state (current: {result.status})",
+            })
+            continue
+
+        result.status = AdStatus.HUMAN_APPROVED.value
+        result.approved_by = req.approved_by
+        result.approved_at = datetime.now(timezone.utc).isoformat()
+        result.approval_notes = req.notes or None
+        store.update_result(result)
+
+        broadcaster.broadcast_sync("ad_approved", {
+            "brief_id": brief_id,
+            "approved_by": req.approved_by,
+            "status": result.status,
+        })
+        approved.append(brief_id)
+
+    return {"approved": approved, "skipped": skipped}
+
+
+@router.post("/bulk-reject")
+def bulk_reject(req: BulkRejectRequest):
+    """Reject multiple ads in one request."""
+    store = RunStore()
+    broadcaster = SSEBroadcaster()
+    rejected: list[str] = []
+    skipped: list[dict] = []
+
+    for brief_id in req.brief_ids:
+        result = store.get_result(brief_id)
+        if not result:
+            skipped.append({"id": brief_id, "reason": "Not found"})
+            continue
+
+        if result.status == AdStatus.EXPERIMENT_READY.value:
+            skipped.append({"id": brief_id, "reason": "Cannot reject an experiment-ready ad"})
+            continue
+
+        if result.status not in REVIEWABLE_STATUSES:
+            skipped.append({
+                "id": brief_id,
+                "reason": f"Not in a reviewable state (current: {result.status})",
+            })
+            continue
+
+        result.status = AdStatus.REJECTED.value
+        result.rejection_reason = req.reason
+        store.update_result(result)
+
+        broadcaster.broadcast_sync("ad_rejected", {
+            "brief_id": brief_id,
+            "rejected_by": req.rejected_by,
+            "reason": req.reason,
+            "status": result.status,
+        })
+        rejected.append(brief_id)
+
+    return {"rejected": rejected, "skipped": skipped}
+
+
 @router.post("/{brief_id}/approve")
 def approve_ad(brief_id: str, req: ApproveRequest):
     """Mark an ad as human-approved."""

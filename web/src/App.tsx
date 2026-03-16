@@ -17,6 +17,7 @@ const Analysis = lazy(() => import('./pages/Analysis'));
 const RunPipeline = lazy(() => import('./pages/RunPipeline'));
 const Settings = lazy(() => import('./pages/Settings'));
 const TrustCenter = lazy(() => import('./pages/TrustCenter'));
+const ReviewQueue = lazy(() => import('./pages/ReviewQueue'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageLoader() {
@@ -70,6 +71,7 @@ export default function App() {
                   <Route path="/analysis" element={<Analysis />} />
                   <Route path="/run" element={<RunPipeline />} />
                   <Route path="/trust" element={<TrustCenter />} />
+                  <Route path="/review" element={<ReviewQueue />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>

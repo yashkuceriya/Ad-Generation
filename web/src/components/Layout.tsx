@@ -27,6 +27,7 @@ import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
+import RateReviewRoundedIcon from '@mui/icons-material/RateReviewRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -44,6 +45,7 @@ const NAV_SECTIONS = [
     items: [
       { path: '/', label: 'Dashboard', icon: <DashboardRoundedIcon /> },
       { path: '/ads', label: 'Ad Library', icon: <AutoAwesomeMosaicRoundedIcon /> },
+      { path: '/review', label: 'Review Queue', icon: <RateReviewRoundedIcon /> },
       { path: '/ads/compare', label: 'Compare', icon: <CompareArrowsRoundedIcon /> },
     ],
   },
