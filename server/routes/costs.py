@@ -1,5 +1,6 @@
 """Cost tracking endpoints."""
 
+import os
 from fastapi import APIRouter, Query
 
 from src.tracking.cost_tracker import CostTracker, PipelineMetrics
