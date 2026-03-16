@@ -24,10 +24,10 @@ export const getPipelineStatus = () =>
   api.get<PipelineStatus>('/pipeline/status');
 
 export const getCostSummary = () =>
-  api.get<CostSummary>('/costs/summary');
+  api.get<CostSummary>('/costs/summary', { params: { client_id: getClientId() } });
 
 export const getCostLedger = () =>
-  api.get<StepCost[]>('/costs/ledger');
+  api.get<StepCost[]>('/costs/ledger', { params: { client_id: getClientId() } });
 
 export const getPresets = () =>
   api.get<Presets>('/briefs/presets');
@@ -43,7 +43,7 @@ export interface RunHistoryEntry {
 }
 
 export const getRunHistory = () =>
-  api.get<RunHistoryEntry[]>('/pipeline/history');
+  api.get<RunHistoryEntry[]>('/pipeline/history', { params: { client_id: getClientId() } });
 
 export const refineAd = (briefId: string, instruction: string) =>
   api.post(`/ads/${briefId}/refine`, {
@@ -79,7 +79,7 @@ export const markExperimentReady = (briefId: string) =>
   api.post(`/ads/${briefId}/mark-experiment-ready`);
 
 export const getTrustSignals = () =>
-  api.get<TrustSignals>('/trust');
+  api.get<TrustSignals>('/trust', { params: { client_id: getClientId() } });
 
 export interface EngineConfig {
   models: Record<string, string>;

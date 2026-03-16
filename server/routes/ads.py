@@ -286,6 +286,23 @@ def refine_ad(brief_id: str, req: RefineRequest):
     if not req.instruction or not req.instruction.strip():
         raise HTTPException(400, "Refinement instruction cannot be empty")
 
+    # Track whether the ad was previously approved so we can inform the caller
+    previous_status = result.status
+    status_was_reset = False
+
+    # Fix 1: Refinement of an approved/experiment-ready ad must reset status
+    if result.status in (AdStatus.HUMAN_APPROVED.value, AdStatus.EXPERIMENT_READY.value):
+        print(
+            f"  [Refine] Resetting status for {brief_id} from '{result.status}' "
+            f"to '{AdStatus.NEEDS_REVIEW.value}' due to refinement"
+        )
+        result.status = AdStatus.NEEDS_REVIEW.value
+        result.approved_by = None
+        result.approved_at = None
+        result.approval_notes = None
+        status_was_reset = True
+        store.update_result(result)
+
     def _refine():
         broadcaster = SSEBroadcaster()
         try:
@@ -341,6 +358,7 @@ def refine_ad(brief_id: str, req: RefineRequest):
                 "weakest_dimension": new_eval.weakest_dimension,
                 "headline": ad_copy.headline,
                 "human_steered": True,
+                "status_reset": status_was_reset,
             })
         except Exception as e:
             print(f"  [Refine] Failed for {brief_id}: {e}")
@@ -353,7 +371,17 @@ def refine_ad(brief_id: str, req: RefineRequest):
 
     thread = threading.Thread(target=_refine, daemon=True)
     thread.start()
-    return {"status": "refining", "brief_id": brief_id}
+
+    # Fix 3: Return clear indication that status was reset
+    response: dict = {"status": "refining", "brief_id": brief_id}
+    if status_was_reset:
+        response["status_reset"] = True
+        response["previous_status"] = previous_status
+        response["note"] = (
+            "Ad status has been reset to 'needs_review' because it was refined "
+            "after being approved. Re-review and re-approve before marking experiment-ready."
+        )
+    return response
 
 
 @router.post("/{brief_id}/compliance")
@@ -549,10 +577,30 @@ def mark_experiment_ready(brief_id: str):
     if not result:
         raise HTTPException(404, f"Ad {brief_id} not found")
 
+    # Gate 1: Must be human-approved
     if result.status != AdStatus.HUMAN_APPROVED.value:
         raise HTTPException(
             400,
             f"Ad must be human_approved to mark experiment-ready. Current status: {result.status}",
+        )
+
+    # Gate 2: Must have copy iterations
+    if not result.copy_iterations:
+        raise HTTPException(
+            400,
+            "Ad has no copy iterations. Cannot mark experiment-ready without generated copy.",
+        )
+
+    # Gate 3: If compliance data exists, it must have passed
+    if result.compliance is not None and not result.compliance.passes:
+        violation_summary = "; ".join(
+            v.message for v in result.compliance.violations[:3]
+        )
+        raise HTTPException(
+            400,
+            f"Ad has not passed compliance checks. "
+            f"Resolve compliance issues before marking experiment-ready. "
+            f"Violations: {violation_summary}",
         )
 
     result.status = AdStatus.EXPERIMENT_READY.value

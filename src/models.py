@@ -144,6 +144,7 @@ class AdStatus(str, Enum):
     GENERATED = "generated"                # Copy complete, pending evaluation
     EVALUATOR_PASS = "evaluator_pass"      # Score >= threshold
     COMPLIANCE_PASS = "compliance_pass"    # Evaluator pass + compliance pass
+    NEEDS_REVIEW = "needs_review"          # Refined after approval, needs re-review
     HUMAN_APPROVED = "human_approved"      # Manually approved
     EXPERIMENT_READY = "experiment_ready"  # Approved + variants ready
     BELOW_THRESHOLD = "below_threshold"
@@ -259,6 +260,7 @@ class AdResult(BaseModel):
             AdStatus.HUMAN_APPROVED.value,
             AdStatus.EXPERIMENT_READY.value,
             AdStatus.REJECTED.value,
+            AdStatus.NEEDS_REVIEW.value,
         }
         if self.status in preserved:
             return

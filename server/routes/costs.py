@@ -1,6 +1,6 @@
 """Cost tracking endpoints."""
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from src.tracking.cost_tracker import CostTracker, PipelineMetrics
 from src.evaluate.dimension_scorer import DimensionScorer
@@ -79,10 +79,33 @@ def _ensure_db_loaded():
 
 
 @router.get("/summary")
-def cost_summary():
+def cost_summary(client_id: str | None = Query(None)):
     _ensure_db_loaded()
     tracker = CostTracker()
-    data = tracker.summary()
+
+    if client_id:
+        # Build summary from DB entries filtered by client_id
+        from server.database import load_cost_ledger_from_db
+        filtered_entries = load_cost_ledger_from_db(client_id=client_id)
+        total_cost = round(sum(e.get("cost_usd", 0) for e in filtered_entries), 6)
+        total_tokens = sum(e.get("input_tokens", 0) + e.get("output_tokens", 0) for e in filtered_entries)
+        cost_by_model: dict[str, float] = {}
+        cost_by_stage: dict[str, float] = {}
+        for e in filtered_entries:
+            m = e.get("model", "")
+            cost_by_model[m] = cost_by_model.get(m, 0) + e.get("cost_usd", 0)
+            s = e.get("pipeline_stage", "")
+            cost_by_stage[s] = cost_by_stage.get(s, 0) + e.get("cost_usd", 0)
+        data = {
+            "total_cost_usd": total_cost,
+            "total_tokens": total_tokens,
+            "total_calls": len(filtered_entries),
+            "cost_by_model": {k: round(v, 6) for k, v in cost_by_model.items()},
+            "cost_by_stage": {k: round(v, 6) for k, v in cost_by_stage.items()},
+        }
+    else:
+        data = tracker.summary()
+
     data["parse_telemetry"] = DimensionScorer.parse_telemetry()
     data["pipeline_metrics"] = PipelineMetrics().summary()
 
@@ -94,7 +117,10 @@ def cost_summary():
     session = get_session()
     if session:
         try:
-            img_count = session.query(func.count(ImageRow.id)).scalar() or 0
+            query = session.query(func.count(ImageRow.id))
+            if client_id:
+                query = query.filter(ImageRow.client_id == client_id)
+            img_count = query.scalar() or 0
             session.close()
         except Exception:
             img_count = 0
@@ -111,8 +137,13 @@ def cost_summary():
 
 
 @router.get("/ledger")
-def cost_ledger():
+def cost_ledger(client_id: str | None = Query(None)):
     _ensure_db_loaded()
+
+    if client_id:
+        from server.database import load_cost_ledger_from_db
+        return load_cost_ledger_from_db(client_id=client_id)
+
     tracker = CostTracker()
     return tracker.export_json()
 

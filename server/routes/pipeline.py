@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
 from server.state import RunStore
@@ -61,13 +61,28 @@ def pipeline_status():
 
 
 @router.get("/history")
-def run_history():
-    """Return list of past pipeline runs."""
+def run_history(client_id: str | None = Query(None)):
+    """Return list of past pipeline runs, optionally filtered by client_id."""
+    # Try DB first
+    try:
+        from server.database import load_run_history_from_db, db_available
+        if db_available():
+            entries = load_run_history_from_db(client_id=client_id)
+            if entries:
+                return entries
+    except Exception:
+        pass
+
+    # Fall back to JSON file (no client_id filtering available here)
     path = os.path.join(REPORTS_DIR, "run_history.json")
     if not os.path.exists(path):
         return []
     try:
         with open(path) as f:
-            return json.load(f)
+            history = json.load(f)
+        # Best-effort filter on JSON data if client_id provided
+        if client_id and history:
+            history = [h for h in history if h.get("client_id", "") == client_id]
+        return history
     except (json.JSONDecodeError, OSError):
         return []

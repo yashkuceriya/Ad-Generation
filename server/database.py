@@ -38,6 +38,7 @@ class RunHistoryRow(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
+    client_id = Column(String, default="")
     total_ads = Column(Integer, default=0)
     avg_score = Column(Float, default=0.0)
     pass_rate = Column(Float, default=0.0)
@@ -69,6 +70,7 @@ class CostLedgerRow(Base):
     step_name = Column(String)
     pipeline_stage = Column(String)
     brief_id = Column(String)
+    client_id = Column(String, default="")
     iteration = Column(Integer, default=0)
     input_tokens = Column(Integer, default=0)
     output_tokens = Column(Integer, default=0)
@@ -255,7 +257,7 @@ def get_all_images_for_brief(brief_id: str, client_id: str) -> list[dict]:
         session.close()
 
 
-def save_cost_ledger_to_db(entries: list[dict]) -> bool:
+def save_cost_ledger_to_db(entries: list[dict], client_id: str = "") -> bool:
     """Bulk-save cost ledger entries to DB. Returns True on success."""
     session = get_session()
     if not session:
@@ -267,6 +269,7 @@ def save_cost_ledger_to_db(entries: list[dict]) -> bool:
                 step_name=e.get("step_name", ""),
                 pipeline_stage=e.get("pipeline_stage", ""),
                 brief_id=e.get("brief_id", ""),
+                client_id=e.get("client_id", client_id),
                 iteration=e.get("iteration", 0),
                 input_tokens=e.get("input_tokens", 0),
                 output_tokens=e.get("output_tokens", 0),
@@ -285,19 +288,23 @@ def save_cost_ledger_to_db(entries: list[dict]) -> bool:
         session.close()
 
 
-def load_cost_ledger_from_db() -> list[dict]:
-    """Load all cost ledger entries from DB."""
+def load_cost_ledger_from_db(client_id: str | None = None) -> list[dict]:
+    """Load cost ledger entries from DB, optionally filtered by client_id."""
     session = get_session()
     if not session:
         return []
     try:
-        rows = session.query(CostLedgerRow).order_by(CostLedgerRow.id).all()
+        query = session.query(CostLedgerRow)
+        if client_id:
+            query = query.filter(CostLedgerRow.client_id == client_id)
+        rows = query.order_by(CostLedgerRow.id).all()
         return [
             {
                 "model": r.model,
                 "step_name": r.step_name,
                 "pipeline_stage": r.pipeline_stage,
                 "brief_id": r.brief_id,
+                "client_id": r.client_id or "",
                 "iteration": r.iteration,
                 "input_tokens": r.input_tokens,
                 "output_tokens": r.output_tokens,
@@ -359,5 +366,35 @@ def load_parse_telemetry_from_db() -> dict | None:
     except Exception as e:
         print(f"  DB parse telemetry load error: {e}")
         return None
+    finally:
+        session.close()
+
+
+def load_run_history_from_db(client_id: str | None = None) -> list[dict]:
+    """Load run history entries from DB, optionally filtered by client_id."""
+    session = get_session()
+    if not session:
+        return []
+    try:
+        query = session.query(RunHistoryRow)
+        if client_id:
+            query = query.filter(RunHistoryRow.client_id == client_id)
+        rows = query.order_by(RunHistoryRow.timestamp.desc()).all()
+        return [
+            {
+                "timestamp": r.timestamp.isoformat() if r.timestamp else "",
+                "client_id": r.client_id or "",
+                "total_ads": r.total_ads,
+                "avg_score": r.avg_score,
+                "pass_rate": r.pass_rate,
+                "total_cost": r.total_cost,
+                "elapsed_seconds": r.elapsed_seconds,
+                "brief_ids": r.brief_ids or [],
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"  DB run history load error: {e}")
+        return []
     finally:
         session.close()
