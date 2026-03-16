@@ -28,6 +28,7 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import RateReviewRoundedIcon from '@mui/icons-material/RateReviewRounded';
+import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -55,6 +56,7 @@ const NAV_SECTIONS = [
       { path: '/analysis', label: 'Evaluation', icon: <InsightsRoundedIcon /> },
       { path: '/trust', label: 'Trust Center', icon: <VerifiedUserRoundedIcon /> },
       { path: '/costs', label: 'Cost Analytics', icon: <BarChartRoundedIcon /> },
+      { path: '/insights', label: 'Insights', icon: <PsychologyRoundedIcon /> },
       { path: '/settings', label: 'Settings', icon: <SettingsRoundedIcon /> },
     ],
   },

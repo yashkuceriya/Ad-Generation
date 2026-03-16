@@ -86,3 +86,19 @@ def run_history(client_id: str | None = Query(None)):
         return history
     except (json.JSONDecodeError, OSError):
         return []
+
+
+@router.get("/insights")
+def get_insights(
+    audience: str | None = Query(None),
+    goal: str | None = Query(None),
+):
+    """Return stored insights, optionally filtered by audience and/or goal."""
+    try:
+        from server.database import load_insights_from_db, db_available
+        if db_available():
+            insights = load_insights_from_db(audience=audience, goal=goal)
+            return {"insights": insights, "count": len(insights)}
+    except Exception:
+        pass
+    return {"insights": [], "count": 0}

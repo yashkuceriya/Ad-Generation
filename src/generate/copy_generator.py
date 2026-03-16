@@ -113,6 +113,19 @@ You MUST respond with ONLY valid JSON in this format:
 {{"primary_text": "...", "headline": "...", "description": "...", "cta_button": "..."}}"""
 
 
+def _get_relevant_insights(audience: str, goal: str) -> str:
+    """Load insights from DB and format for prompt injection."""
+    try:
+        from server.database import load_insights_from_db
+        insights = load_insights_from_db(audience=audience, goal=goal)
+        if not insights:
+            return ""
+        lines = [f"- {i['insight_text']}" for i in insights[:5]]  # top 5
+        return "\n\nINSIGHTS FROM PRIOR RUNS:\n" + "\n".join(lines)
+    except Exception:
+        return ""
+
+
 class CopyGenerator:
     def __init__(self):
         self.draft_llm = ChatOpenAI(
@@ -161,6 +174,11 @@ class CopyGenerator:
                     + "\n".join(f"- {p}" for p in brief.competitor_context)
                 )
 
+            # Load relevant insights from prior runs
+            insights_section = _get_relevant_insights(
+                brief.audience_segment.value, brief.campaign_goal.value
+            )
+
             user_msg = f"""Generate a Facebook/Instagram ad for Varsity Tutors SAT prep.
 
 AUDIENCE: {brief.audience_segment.value} — {audience.get('description', '')}
@@ -170,7 +188,7 @@ Motivators: {', '.join(audience.get('motivators', []))}
 PRODUCT/OFFER: {brief.product_offer}
 CAMPAIGN GOAL: {brief.campaign_goal.value}
 TONE: {brief.tone}
-{competitor_context}
+{competitor_context}{insights_section}
 
 Generate compelling ad copy that will stop the scroll and drive {brief.campaign_goal.value}."""
 

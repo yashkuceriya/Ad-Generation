@@ -347,6 +347,17 @@ class BackgroundRunner:
             except Exception as db_err:
                 print(f"  [Runner] DB cost persist warning: {db_err}")
 
+            # Extract and persist insights from completed results
+            try:
+                from src.intelligence.insight_extractor import extract_insights
+                from server.database import save_insights_to_db
+                insights = extract_insights(results)
+                if insights:
+                    save_insights_to_db(insights)
+                    print(f"  [Runner] Extracted and saved {len(insights)} insights")
+            except Exception as insight_err:
+                print(f"  [Runner] Insight extraction warning: {insight_err}")
+
             # Human-readable markdown summary
             from src.output.formatter import AdFormatter
             formatter = AdFormatter()

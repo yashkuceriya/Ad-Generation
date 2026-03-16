@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from datetime import datetime
 
-from sqlalchemy import create_engine, Column, String, Float, Boolean, DateTime, Integer, Text, LargeBinary
+from sqlalchemy import create_engine, Column, String, Float, Boolean, DateTime, Integer, Text, LargeBinary, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -76,6 +76,23 @@ class CostLedgerRow(Base):
     output_tokens = Column(Integer, default=0)
     latency_ms = Column(Float, default=0.0)
     cost_usd = Column(Float, default=0.0)
+
+
+class InsightRow(Base):
+    __tablename__ = "insights"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    audience_segment = Column(String, index=True, default="")
+    campaign_goal = Column(String, index=True, default="")
+    dimension = Column(String, default="")
+    insight_type = Column(String, default="")  # winning_pattern, weak_dimension, refinement_tip, top_performer
+    insight_text = Column(Text, nullable=False)
+    evidence = Column(JSONB, default=dict)
+    sample_count = Column(Integer, default=1)
+    avg_score_impact = Column(Float, default=0.0)
+    created_at = Column(DateTime, default=func.now)
+    updated_at = Column(DateTime, default=func.now, onupdate=func.now)
+    active = Column(Boolean, default=True)
 
 
 class ParseTelemetryRow(Base):
@@ -366,6 +383,95 @@ def load_parse_telemetry_from_db() -> dict | None:
     except Exception as e:
         print(f"  DB parse telemetry load error: {e}")
         return None
+    finally:
+        session.close()
+
+
+def save_insights_to_db(insights: list[dict]) -> bool:
+    """Upsert insights to DB. Returns True on success."""
+    session = get_session()
+    if not session:
+        return False
+    try:
+        for ins in insights:
+            # Try to find existing insight with same audience+goal+dimension+type
+            existing = (
+                session.query(InsightRow)
+                .filter_by(
+                    audience_segment=ins.get("audience_segment", ""),
+                    campaign_goal=ins.get("campaign_goal", ""),
+                    dimension=ins.get("dimension", ""),
+                    insight_type=ins.get("insight_type", ""),
+                    active=True,
+                )
+                .first()
+            )
+            if existing:
+                existing.insight_text = ins.get("insight_text", existing.insight_text)
+                existing.evidence = ins.get("evidence", existing.evidence)
+                existing.sample_count = existing.sample_count + 1
+                existing.avg_score_impact = ins.get("avg_score_impact", existing.avg_score_impact)
+            else:
+                row = InsightRow(
+                    audience_segment=ins.get("audience_segment", ""),
+                    campaign_goal=ins.get("campaign_goal", ""),
+                    dimension=ins.get("dimension", ""),
+                    insight_type=ins.get("insight_type", ""),
+                    insight_text=ins.get("insight_text", ""),
+                    evidence=ins.get("evidence", {}),
+                    sample_count=ins.get("sample_count", 1),
+                    avg_score_impact=ins.get("avg_score_impact", 0.0),
+                    active=True,
+                )
+                session.add(row)
+        session.commit()
+        print(f"  DB: saved {len(insights)} insights")
+        return True
+    except Exception as e:
+        session.rollback()
+        print(f"  DB insight save error: {e}")
+        return False
+    finally:
+        session.close()
+
+
+def load_insights_from_db(
+    audience: str | None = None,
+    goal: str | None = None,
+    dimension: str | None = None,
+) -> list[dict]:
+    """Load insights from DB, optionally filtered by audience, goal, dimension."""
+    session = get_session()
+    if not session:
+        return []
+    try:
+        query = session.query(InsightRow).filter_by(active=True)
+        if audience:
+            query = query.filter(InsightRow.audience_segment == audience)
+        if goal:
+            query = query.filter(InsightRow.campaign_goal == goal)
+        if dimension:
+            query = query.filter(InsightRow.dimension == dimension)
+        rows = query.order_by(InsightRow.sample_count.desc(), InsightRow.id.desc()).all()
+        return [
+            {
+                "id": r.id,
+                "audience_segment": r.audience_segment,
+                "campaign_goal": r.campaign_goal,
+                "dimension": r.dimension,
+                "insight_type": r.insight_type,
+                "insight_text": r.insight_text,
+                "evidence": r.evidence,
+                "sample_count": r.sample_count,
+                "avg_score_impact": r.avg_score_impact,
+                "created_at": r.created_at.isoformat() if r.created_at else "",
+                "updated_at": r.updated_at.isoformat() if r.updated_at else "",
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"  DB insight load error: {e}")
+        return []
     finally:
         session.close()
 
