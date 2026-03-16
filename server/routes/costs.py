@@ -83,13 +83,15 @@ def cost_summary(client_id: str | None = Query(None)):
     _ensure_db_loaded()
     tracker = CostTracker()
 
+    # Try DB-filtered entries first, then all DB entries, then in-memory tracker
+    filtered_entries = []
     if client_id:
-        # Build summary from DB entries filtered by client_id
-        # Fall back to all entries if no client-specific data exists (legacy data)
         from server.database import load_cost_ledger_from_db
         filtered_entries = load_cost_ledger_from_db(client_id=client_id)
         if not filtered_entries:
             filtered_entries = load_cost_ledger_from_db()
+
+    if filtered_entries:
         total_cost = round(sum(e.get("cost_usd", 0) for e in filtered_entries), 6)
         total_tokens = sum(e.get("input_tokens", 0) + e.get("output_tokens", 0) for e in filtered_entries)
         cost_by_model: dict[str, float] = {}
@@ -107,6 +109,7 @@ def cost_summary(client_id: str | None = Query(None)):
             "cost_by_stage": {k: round(v, 6) for k, v in cost_by_stage.items()},
         }
     else:
+        # Fall back to in-memory tracker (covers no-DB and empty-DB cases)
         data = tracker.summary()
 
     data["parse_telemetry"] = DimensionScorer.parse_telemetry()
@@ -117,6 +120,7 @@ def cost_summary(client_id: str | None = Query(None)):
     from sqlalchemy import func
     from config.settings import IMAGE_COST_PER_IMAGE
 
+    img_count = 0
     session = get_session()
     if session:
         try:
@@ -130,8 +134,16 @@ def cost_summary(client_id: str | None = Query(None)):
         except Exception:
             img_count = 0
             session.close()
-    else:
-        img_count = 0
+
+    # Fallback: count images from in-memory ad results if DB returned 0
+    if img_count == 0:
+        from server.state import RunStore
+        store = RunStore()
+        for r in store.get_all_results():
+            if r.image_iterations:
+                img_count += len(r.image_iterations)
+            elif hasattr(r, 'best_image_url') and r.best_image_url:
+                img_count += 1
 
     image_total = round(img_count * IMAGE_COST_PER_IMAGE, 4)
     data["image_costs"] = {"count": img_count, "cost_per_image": IMAGE_COST_PER_IMAGE, "total_cost": image_total}

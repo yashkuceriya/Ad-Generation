@@ -22,7 +22,7 @@ import { getTrustSignals } from '../api/endpoints';
 import type { TrustSignals } from '../types';
 
 function computeTrustScore(signals: TrustSignals['signals']): number {
-  const confidence = signals.evaluator_confidence.average * 1000; // 0-1 -> 0-100
+  const confidence = signals.evaluator_confidence.average * 100; // 0-1 -> 0-100
   const complianceRate = signals.compliance.pass_rate !== null ? signals.compliance.pass_rate * 100 : 100;
   const consistencyPenalty = Math.min(signals.score_consistency.avg_iteration_range * 10, 40); // cap penalty
   const consistency = 100 - consistencyPenalty;
