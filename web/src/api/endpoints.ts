@@ -81,6 +81,42 @@ export const markExperimentReady = (briefId: string) =>
 export const getTrustSignals = () =>
   api.get<TrustSignals>('/trust', { params: { client_id: getClientId() } });
 
+export const getExperimentPack = () =>
+  api.get<ExperimentPackResponse>('/ads/experiment-pack', { params: { client_id: getClientId() } });
+
+export interface ExperimentPackVariant {
+  variant_type: string;
+  variant_hypothesis: string;
+  headline: string;
+  primary_text: string;
+  cta_button: string;
+}
+
+export interface ExperimentPackItem {
+  brief_id: string;
+  headline: string;
+  audience: string;
+  goal: string;
+  score: number;
+  variants: ExperimentPackVariant[];
+  hypothesis: string;
+  readiness_blockers: string[];
+  has_image: boolean;
+  cost_usd: number;
+}
+
+export interface ExperimentPackSummary {
+  total_ready: number;
+  total_with_variants: number;
+  total_with_images: number;
+  avg_score: number;
+}
+
+export interface ExperimentPackResponse {
+  packs: ExperimentPackItem[];
+  summary: ExperimentPackSummary;
+}
+
 export interface EngineConfig {
   models: Record<string, string>;
   temperatures: Record<string, number>;

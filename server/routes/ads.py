@@ -120,6 +120,99 @@ def list_ads(
     return [_serialize_result_lite(r, client_id=client_id, image_map=image_map) for r in results]
 
 
+@router.get("/experiment-pack")
+def get_experiment_pack(client_id: str | None = Query(None)):
+    """Build experiment launch packs for all experiment-ready ads."""
+    store = RunStore()
+    results = store.get_all_results()
+
+    # Filter to experiment_ready ads that have copy iterations
+    ready = [
+        r for r in results
+        if r.status == AdStatus.EXPERIMENT_READY.value and r.copy_iterations
+    ]
+
+    image_map: dict[str, dict] = {}
+    if db_available():
+        image_map = get_best_images_batch(client_id or "default")
+
+    packs = []
+    total_with_variants = 0
+    total_with_images = 0
+    score_sum = 0.0
+
+    for r in ready:
+        best = r.best_copy
+        score = best.evaluation.weighted_average
+        score_sum += score
+
+        audience = r.brief.audience_segment.value
+        goal = r.brief.campaign_goal.value
+        headline = best.ad_copy.headline
+
+        # Determine image availability
+        has_image = bool(r.image_iterations) or (r.brief_id in image_map)
+
+        # Serialize variants
+        variants = [
+            {
+                "variant_type": v.variant_type,
+                "variant_hypothesis": v.variant_hypothesis,
+                "headline": v.ad_copy.headline,
+                "primary_text": v.ad_copy.primary_text[:120],
+                "cta_button": v.ad_copy.cta_button,
+            }
+            for v in r.variants
+        ]
+
+        # Readiness blockers
+        readiness_blockers: list[str] = []
+        if not r.variants:
+            readiness_blockers.append("no variants")
+        if r.compliance is None:
+            readiness_blockers.append("no compliance check")
+        elif not r.compliance.passes:
+            readiness_blockers.append("compliance failed")
+        if score < 7.0:
+            readiness_blockers.append("low score")
+        if not has_image:
+            readiness_blockers.append("no image")
+
+        if r.variants:
+            total_with_variants += 1
+        if has_image:
+            total_with_images += 1
+
+        packs.append({
+            "brief_id": r.brief_id,
+            "headline": headline,
+            "audience": audience,
+            "goal": goal,
+            "score": round(score, 1),
+            "variants": variants,
+            "hypothesis": (
+                f"Ad targeting {audience} for {goal} with score "
+                f"{round(score, 1)}/10 will outperform baseline"
+            ),
+            "readiness_blockers": readiness_blockers,
+            "has_image": has_image,
+            "cost_usd": round(r.total_cost_usd, 4),
+        })
+
+    total_ready = len(packs)
+    avg_score = round(score_sum / total_ready, 1) if total_ready else 0.0
+
+    return {
+        "packs": packs,
+        "summary": {
+            "total_ready": total_ready,
+            "total_with_variants": total_with_variants,
+            "total_with_images": total_with_images,
+            "avg_score": avg_score,
+        },
+    }
+
+
 @router.get("/{brief_id}")
 def get_ad(brief_id: str, client_id: str | None = Query(None)):
     store = RunStore()

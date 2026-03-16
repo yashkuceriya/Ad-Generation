@@ -28,6 +28,7 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import RateReviewRoundedIcon from '@mui/icons-material/RateReviewRounded';
+import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded';
 import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -47,6 +48,7 @@ const NAV_SECTIONS = [
       { path: '/', label: 'Dashboard', icon: <DashboardRoundedIcon /> },
       { path: '/ads', label: 'Ad Library', icon: <AutoAwesomeMosaicRoundedIcon /> },
       { path: '/review', label: 'Review Queue', icon: <RateReviewRoundedIcon /> },
+      { path: '/experiments', label: 'Experiments', icon: <ScienceRoundedIcon /> },
       { path: '/ads/compare', label: 'Compare', icon: <CompareArrowsRoundedIcon /> },
     ],
   },
