@@ -107,4 +107,4 @@ def test_image_cost():
     tracker.record(model="google/gemini-3.1-flash-image-preview", step_name="gen_image",
                    pipeline_stage="image_generation")
 
-    assert tracker.total_cost == 0.06  # per_image pricing
+    assert tracker.total_cost == 0.07  # per_image pricing from COST_PER_TOKEN
