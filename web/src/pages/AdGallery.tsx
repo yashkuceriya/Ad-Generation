@@ -346,7 +346,7 @@ export default function AdGallery() {
                   '&:hover': { borderColor: '#F26522', bgcolor: 'rgba(242,101,34,0.06)' },
                 }}
               >
-                Export JSON
+                JSON
               </Button>
               <Button
                 variant="outlined"
@@ -360,7 +360,7 @@ export default function AdGallery() {
                   '&:hover': { borderColor: '#10B981', bgcolor: 'rgba(16,185,129,0.06)' },
                 }}
               >
-                Export CSV
+                CSV
               </Button>
               <Button
                 variant="outlined"
@@ -374,7 +374,7 @@ export default function AdGallery() {
                   '&:hover': { borderColor: '#8B5CF6', bgcolor: 'rgba(139,92,246,0.06)' },
                 }}
               >
-                Export HTML Report
+                HTML
               </Button>
             </Box>
           </Box>

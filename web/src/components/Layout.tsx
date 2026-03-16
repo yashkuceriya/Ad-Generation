@@ -186,15 +186,21 @@ export default function Layout() {
           startIcon={<RocketLaunchRoundedIcon sx={{ fontSize: 17 }} />}
           onClick={() => handleNavClick('/run')}
           sx={{
-            bgcolor: '#F26522',
+            background: 'linear-gradient(135deg, #F26522 0%, #FF8A50 100%)',
             color: 'white',
-            fontWeight: 700,
-            fontSize: '0.82rem',
-            py: 1.1,
-            borderRadius: '10px',
+            fontWeight: 800,
+            fontSize: '0.85rem',
+            py: 1.2,
+            borderRadius: '12px',
             textTransform: 'none',
-            boxShadow: '0 2px 8px rgba(242,101,34,0.3)',
-            '&:hover': { bgcolor: '#D4541A', boxShadow: '0 4px 12px rgba(242,101,34,0.4)' },
+            boxShadow: '0 4px 16px rgba(242,101,34,0.4)',
+            letterSpacing: '-0.01em',
+            '&:hover': {
+              background: 'linear-gradient(135deg, #FF8A50 0%, #F26522 100%)',
+              boxShadow: '0 6px 24px rgba(242,101,34,0.5)',
+              transform: 'translateY(-1px)',
+            },
+            transition: 'all 0.2s ease',
           }}
         >
           New Run

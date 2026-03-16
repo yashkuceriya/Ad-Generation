@@ -96,8 +96,11 @@ export function createAppTheme(mode: PaletteMode) {
           root: {
             backgroundImage: 'none',
             backgroundColor: isDark ? '#1A1D27' : '#FFFFFF',
+            borderRadius: 12,
             border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-            boxShadow: isDark ? '0 1px 3px rgba(0,0,0,0.3)' : '0 1px 3px rgba(0,0,0,0.04)',
+            boxShadow: isDark
+              ? '0 2px 8px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)'
+              : '0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03)',
           },
         },
       },

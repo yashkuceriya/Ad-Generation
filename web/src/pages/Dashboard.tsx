@@ -431,55 +431,23 @@ export default function Dashboard() {
 
           {/* Quick summary stats line */}
           {ads.length > 0 && (
-            <Box
-              sx={{
-                display: 'flex', alignItems: 'center', gap: 1, mb: 2.5, flexWrap: 'wrap',
-              }}
-            >
-              <Chip
-                label={`${ads.length} ads generated`}
-                size="small"
-                sx={{
-                  fontWeight: 700, fontSize: '0.75rem', height: 26,
-                  bgcolor: isDark ? 'rgba(242,101,34,0.12)' : 'rgba(242,101,34,0.08)',
-                  color: '#F26522',
-                  border: '1px solid rgba(242,101,34,0.2)',
-                }}
-              />
-              <Chip
-                label={`${passRate}% pass rate`}
-                size="small"
-                sx={{
-                  fontWeight: 700, fontSize: '0.75rem', height: 26,
-                  bgcolor: passRate >= 80 ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
-                  color: passRate >= 80 ? '#10B981' : '#F59E0B',
-                  border: `1px solid ${passRate >= 80 ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}`,
-                }}
-              />
+            <Typography variant="body2" sx={{ mb: 2.5, fontSize: '0.9rem', color: 'text.secondary', fontWeight: 500 }}>
+              <Box component="span" sx={{ color: '#F26522', fontWeight: 800 }}>{ads.length}</Box> ads generated
+              {' · '}
+              <Box component="span" sx={{ color: passRate >= 80 ? '#10B981' : '#F59E0B', fontWeight: 800 }}>{passRate}%</Box> pass rate
               {costSummary && costSummary.total_cost_usd > 0 && (
-                <Chip
-                  label={`$${costSummary.total_cost_usd.toFixed(2)} total cost`}
-                  size="small"
-                  sx={{
-                    fontWeight: 700, fontSize: '0.75rem', height: 26,
-                    bgcolor: isDark ? 'rgba(139,92,246,0.1)' : 'rgba(139,92,246,0.06)',
-                    color: '#8B5CF6',
-                    border: '1px solid rgba(139,92,246,0.2)',
-                  }}
-                />
+                <>
+                  {' · '}
+                  <Box component="span" sx={{ color: '#8B5CF6', fontWeight: 800 }}>${costSummary.total_cost_usd.toFixed(2)}</Box> total cost
+                </>
               )}
               {medianScore > 0 && (
-                <Chip
-                  label={`${medianScore.toFixed(1)} median score`}
-                  size="small"
-                  sx={{
-                    fontWeight: 700, fontSize: '0.75rem', height: 26,
-                    bgcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-                    color: 'text.secondary',
-                  }}
-                />
+                <>
+                  {' · '}
+                  <Box component="span" sx={{ fontWeight: 800 }}>{medianScore.toFixed(1)}</Box> median
+                </>
               )}
-            </Box>
+            </Typography>
           )}
 
           {ads.length === 0 && (
