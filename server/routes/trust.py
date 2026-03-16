@@ -13,20 +13,21 @@ def get_trust_signals(client_id: str | None = Query(None)):
     store = RunStore()
     results = store.get_all_results()
 
-    # Filter by client_id if provided (match via brief_id prefix or ad data)
-    if client_id:
+    # Filter by client_id if provided — but fall back to all results if filter yields nothing
+    # (legacy ads don't have client_id in their data blob)
+    if client_id and results:
         from server.database import get_session, AdResultRow
         session = get_session()
         if session:
             try:
-                # Get brief_ids belonging to this client from the ads data
                 rows = session.query(AdResultRow.brief_id, AdResultRow.data).all()
                 client_brief_ids = set()
                 for row in rows:
                     data = row.data if isinstance(row.data, dict) else {}
                     if data.get("client_id", "") == client_id:
                         client_brief_ids.add(row.brief_id)
-                results = [r for r in results if r.brief_id in client_brief_ids]
+                if client_brief_ids:  # only filter if we found matching ads
+                    results = [r for r in results if r.brief_id in client_brief_ids]
             except Exception:
                 pass
             finally:

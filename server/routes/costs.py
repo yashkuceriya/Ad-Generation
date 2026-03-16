@@ -85,8 +85,11 @@ def cost_summary(client_id: str | None = Query(None)):
 
     if client_id:
         # Build summary from DB entries filtered by client_id
+        # Fall back to all entries if no client-specific data exists (legacy data)
         from server.database import load_cost_ledger_from_db
         filtered_entries = load_cost_ledger_from_db(client_id=client_id)
+        if not filtered_entries:
+            filtered_entries = load_cost_ledger_from_db()
         total_cost = round(sum(e.get("cost_usd", 0) for e in filtered_entries), 6)
         total_tokens = sum(e.get("input_tokens", 0) + e.get("output_tokens", 0) for e in filtered_entries)
         cost_by_model: dict[str, float] = {}
@@ -119,8 +122,10 @@ def cost_summary(client_id: str | None = Query(None)):
         try:
             query = session.query(func.count(ImageRow.id))
             if client_id:
-                query = query.filter(ImageRow.client_id == client_id)
-            img_count = query.scalar() or 0
+                filtered_count = query.filter(ImageRow.client_id == client_id).scalar() or 0
+                img_count = filtered_count if filtered_count > 0 else (query.scalar() or 0)
+            else:
+                img_count = query.scalar() or 0
             session.close()
         except Exception:
             img_count = 0
@@ -142,7 +147,9 @@ def cost_ledger(client_id: str | None = Query(None)):
 
     if client_id:
         from server.database import load_cost_ledger_from_db
-        return load_cost_ledger_from_db(client_id=client_id)
+        entries = load_cost_ledger_from_db(client_id=client_id)
+        if entries:
+            return entries
 
     tracker = CostTracker()
     return tracker.export_json()

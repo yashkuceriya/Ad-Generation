@@ -70,6 +70,11 @@ def run_history(client_id: str | None = Query(None)):
             entries = load_run_history_from_db(client_id=client_id)
             if entries:
                 return entries
+            # Fall back to all history if client filter returned empty (legacy data)
+            if client_id:
+                entries = load_run_history_from_db()
+                if entries:
+                    return entries
     except Exception:
         pass
 
@@ -82,7 +87,9 @@ def run_history(client_id: str | None = Query(None)):
             history = json.load(f)
         # Best-effort filter on JSON data if client_id provided
         if client_id and history:
-            history = [h for h in history if h.get("client_id", "") == client_id]
+            filtered = [h for h in history if h.get("client_id", "") == client_id]
+            if filtered:
+                history = filtered
         return history
     except (json.JSONDecodeError, OSError):
         return []
