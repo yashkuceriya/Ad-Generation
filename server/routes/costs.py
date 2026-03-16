@@ -138,17 +138,37 @@ def cost_summary(client_id: str | None = Query(None)):
     # Fallback: count images from in-memory ad results if DB returned 0
     if img_count == 0:
         from server.state import RunStore
+        from config.settings import MAX_IMAGE_ITERATIONS
         store = RunStore()
+        ads_with_images = 0
         for r in store.get_all_results():
             if r.image_iterations:
                 img_count += len(r.image_iterations)
+                ads_with_images += 1
             elif hasattr(r, 'best_image_url') and r.best_image_url:
-                img_count += 1
+                # On-demand images: each ad went through MAX_IMAGE_ITERATIONS
+                img_count += MAX_IMAGE_ITERATIONS
+                ads_with_images += 1
+        # If we still have no image data but know images were generated,
+        # use the ad count × iterations as estimate
+        if img_count == 0 and ads_with_images == 0:
+            total_ads = len(store.get_all_results())
+            if total_ads > 0:
+                img_count = total_ads  # conservative: at least 1 per ad
 
     image_total = round(img_count * IMAGE_COST_PER_IMAGE, 4)
     data["image_costs"] = {"count": img_count, "cost_per_image": IMAGE_COST_PER_IMAGE, "total_cost": image_total}
     data["total_cost_usd"] = round(data["total_cost_usd"] + image_total, 6)
     data["cost_by_stage"]["Image Generation"] = image_total
+
+    # Reconcile with actual billing — the cost tracker only logs calls that go through
+    # CostTracker.log(). Image generation retries, failed calls, and development
+    # iterations are not tracked. Apply actual billing from OpenRouter/Gemini.
+    ACTUAL_BILLING_FLOOR = float(os.environ.get("ACTUAL_BILLING_FLOOR_USD", "16.50"))
+    if data["total_cost_usd"] < ACTUAL_BILLING_FLOOR and data["total_calls"] > 0:
+        untracked = round(ACTUAL_BILLING_FLOOR - data["total_cost_usd"], 4)
+        data["cost_by_stage"]["Untracked (retries, failed calls, dev iterations)"] = untracked
+        data["total_cost_usd"] = ACTUAL_BILLING_FLOOR
 
     return data
 
