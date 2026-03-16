@@ -36,6 +36,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Cell,
   CartesianGrid,
   LineChart, Line,
+  AreaChart, Area, ReferenceLine, ComposedChart,
 } from 'recharts';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
@@ -125,6 +126,41 @@ export default function Analysis() {
     const avgCost = segAds.length ? segAds.reduce((s, a) => s + (a.total_cost_usd || 0), 0) / segAds.length : 0;
     return { segment: seg, avgScore: +avgScore.toFixed(2), avgCost: +avgCost.toFixed(5), count: segAds.length, color };
   }), [safeAds]);
+
+  // Score distribution: bin scores into ranges for area chart
+  const scoreDistribution = useMemo(() => {
+    const bins: { range: string; count: number; mid: number }[] = [];
+    const step = 0.5;
+    for (let lo = 0; lo <= 9.5; lo += step) {
+      const hi = lo + step;
+      const count = safeAds.filter(a => {
+        const s = a.copy_iterations[a.best_copy_index].evaluation.weighted_average;
+        return s >= lo && s < hi;
+      }).length;
+      if (count > 0 || (lo >= 5 && lo <= 9)) {
+        bins.push({ range: `${lo.toFixed(1)}-${hi.toFixed(1)}`, count, mid: lo + step / 2 });
+      }
+    }
+    return bins;
+  }, [safeAds]);
+
+  const avgScoreAll = useMemo(() => {
+    if (!safeAds.length) return 0;
+    return safeAds.reduce((s, a) => s + a.copy_iterations[a.best_copy_index].evaluation.weighted_average, 0) / safeAds.length;
+  }, [safeAds]);
+
+  // Dimension heatmap: average score per dimension per audience
+  const dimensionHeatmap = useMemo(() => {
+    return DIMS.map(d => {
+      const row: Record<string, string | number> = { dimension: DIM_LABELS[d] };
+      Object.keys(AUDIENCE_COLORS).forEach(seg => {
+        const segAds = safeAds.filter(a => a.brief.audience_segment === seg);
+        const scores = segAds.map(a => a.copy_iterations[a.best_copy_index].evaluation.scores[d]?.score || 0);
+        row[seg] = scores.length ? Number((scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(2)) : 0;
+      });
+      return row;
+    });
+  }, [safeAds]);
 
   // Iteration efficiency: how much does each iteration improve score?
   const iterDeltas = useMemo(() => {
@@ -495,7 +531,7 @@ export default function Analysis() {
           </Paper>
         </Grid>
 
-        {/* Score & Cost by Audience */}
+        {/* Score & Cost by Audience — Dual Axis Grouped Bar + Line */}
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper sx={{
             p: 3, height: '100%',
@@ -508,40 +544,81 @@ export default function Analysis() {
                 Score & Cost by Audience
               </Typography>
             </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontSize: '0.72rem' }}>
-              Average quality score and cost per audience segment
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontSize: '0.72rem' }}>
+              Average quality score (bars) and cost (line) per audience segment
             </Typography>
-            <ResponsiveContainer width="100%" height={330}>
-              <BarChart data={audienceStats} layout="vertical" margin={{ top: 5, right: 60, bottom: 5, left: 10 }}>
-                <CartesianGrid stroke={gridStroke} strokeDasharray="3 3" horizontal={false} />
-                <XAxis type="number" domain={[0, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="segment" tick={{ fill: isDark ? '#CBD5E1' : '#475569', fontSize: 12, fontWeight: 600 }} axisLine={false} tickLine={false} width={70} />
+            <ResponsiveContainer width="100%" height={360}>
+              <ComposedChart data={audienceStats} margin={{ top: 15, right: 20, bottom: 10, left: 0 }}>
+                <defs>
+                  {audienceStats.map((entry, i) => (
+                    <linearGradient key={`grad-${i}`} id={`barGrad-${i}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={entry.color} stopOpacity={0.95} />
+                      <stop offset="100%" stopColor={entry.color} stopOpacity={0.5} />
+                    </linearGradient>
+                  ))}
+                </defs>
+                <CartesianGrid stroke={gridStroke} strokeDasharray="3 3" vertical={false} />
+                <XAxis
+                  dataKey="segment"
+                  tick={{ fill: isDark ? '#CBD5E1' : '#475569', fontSize: 12, fontWeight: 600 } as never}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  yAxisId="score"
+                  domain={[0, 10]}
+                  tick={{ fill: '#64748B', fontSize: 11 } as never}
+                  axisLine={false}
+                  tickLine={false}
+                  label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#64748B' } } as never}
+                />
+                <YAxis
+                  yAxisId="cost"
+                  orientation="right"
+                  tick={{ fill: '#64748B', fontSize: 11 } as never}
+                  axisLine={false}
+                  tickLine={false}
+                  tickFormatter={((v: number) => `$${v.toFixed(3)}`) as never}
+                  label={{ value: 'Cost ($)', angle: 90, position: 'insideRight', style: { fontSize: 11, fill: '#64748B' } } as never}
+                />
                 <Tooltip
                   contentStyle={tooltipStyle}
-                  formatter={((v: unknown, name: unknown) => [Number(v).toFixed(2), String(name)]) as never}
-                  labelFormatter={((label: unknown) => `${label} (${audienceStats.find(a => a.segment === String(label))?.count ?? 0} ads)`) as never}
+                  formatter={((v: unknown, name: unknown) => {
+                    if (String(name) === 'Avg Cost') return [`$${Number(v).toFixed(5)}`, String(name)];
+                    return [Number(v).toFixed(2), String(name)];
+                  }) as never}
+                  labelFormatter={((label: unknown) => `${String(label).charAt(0).toUpperCase() + String(label).slice(1)} (${audienceStats.find(a => a.segment === String(label))?.count ?? 0} ads)`) as never}
                 />
-                <Bar dataKey="avgScore" name="Avg Score" radius={[0, 6, 6, 0]} barSize={32} isAnimationActive={true} animationDuration={800}
-                  label={(((props: Record<string, unknown>) => {
-                    const x = Number(props.x ?? 0);
-                    const y = Number(props.y ?? 0);
-                    const width = Number(props.width ?? 0);
-                    const height = Number(props.height ?? 0);
-                    const value = Number(props.value ?? 0);
-                    const index = Number(props.index ?? 0);
-                    const cost = audienceStats[index]?.avgCost ?? 0;
-                    return (
-                      <text x={x + width + 4} y={y + height / 2} dy={0} textAnchor="start" fontSize={11} fontWeight={700} fill={isDark ? '#CBD5E1' : '#475569'}>
-                        {value.toFixed(1)} · ${cost.toFixed(4)}
-                      </text>
-                    );
-                  }) as never)}
+                <Legend
+                  verticalAlign="top"
+                  height={32}
+                  iconType="circle"
+                  wrapperStyle={{ fontSize: 12, fontWeight: 600 }}
+                />
+                <Bar
+                  yAxisId="score"
+                  dataKey="avgScore"
+                  name="Avg Score"
+                  radius={[6, 6, 0, 0] as never}
+                  barSize={40}
+                  isAnimationActive={true}
+                  animationDuration={800}
                 >
-                  {audienceStats.map((entry, i) => (
-                    <Cell key={i} fill={entry.color} fillOpacity={0.85} />
+                  {audienceStats.map((_entry, i) => (
+                    <Cell key={i} fill={`url(#barGrad-${i})`} />
                   ))}
                 </Bar>
-              </BarChart>
+                <Line
+                  yAxisId="cost"
+                  type="monotone"
+                  dataKey="avgCost"
+                  name="Avg Cost"
+                  stroke="#EF4444"
+                  strokeWidth={2.5}
+                  dot={{ r: 5, fill: '#EF4444', stroke: isDark ? '#1E293B' : '#fff', strokeWidth: 2 } as never}
+                  activeDot={{ r: 7, strokeWidth: 2 } as never}
+                />
+              </ComposedChart>
             </ResponsiveContainer>
           </Paper>
         </Grid>
@@ -732,6 +809,151 @@ export default function Analysis() {
                   </Box>
                 );
               })}
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Score Distribution Area Chart */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+            animation: `${fadeInUp} 0.5s ease-out`,
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <InsightsRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Score Distribution
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontSize: '0.72rem' }}>
+              Distribution of quality scores across all ads. Orange line marks the average.
+            </Typography>
+            <ResponsiveContainer width="100%" height={320}>
+              <AreaChart data={scoreDistribution} margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
+                <defs>
+                  <linearGradient id="scoreAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#F26522" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#F26522" stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke={gridStroke} strokeDasharray="3 3" vertical={false} />
+                <XAxis
+                  dataKey="range"
+                  tick={{ fill: isDark ? '#CBD5E1' : '#475569', fontSize: 10, fontWeight: 500 } as never}
+                  axisLine={false}
+                  tickLine={false}
+                  interval={0}
+                  angle={-30}
+                  textAnchor="end"
+                  height={45}
+                />
+                <YAxis
+                  tick={{ fill: '#64748B', fontSize: 11 } as never}
+                  axisLine={false}
+                  tickLine={false}
+                  allowDecimals={false}
+                  label={{ value: 'Count', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#64748B' } } as never}
+                />
+                <Tooltip contentStyle={tooltipStyle} />
+                <ReferenceLine
+                  x={scoreDistribution.find(b => avgScoreAll >= b.mid - 0.25 && avgScoreAll < b.mid + 0.25)?.range}
+                  stroke="#F26522"
+                  strokeWidth={2}
+                  strokeDasharray="6 3"
+                  label={{ value: `Avg ${avgScoreAll.toFixed(1)}`, position: 'top', fill: '#F26522', fontSize: 11, fontWeight: 700 } as never}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#F26522"
+                  strokeWidth={2.5}
+                  fill="url(#scoreAreaGrad)"
+                  dot={{ r: 4, fill: '#F26522', stroke: isDark ? '#1E293B' : '#fff', strokeWidth: 2 } as never}
+                  isAnimationActive={true}
+                  animationDuration={1000}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Paper>
+        </Grid>
+
+        {/* Dimension Heatmap */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Paper sx={{
+            p: 3, height: '100%',
+            border: `1px solid ${faintBorder}`,
+            boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.04)',
+            animation: `${fadeInUp} 0.5s ease-out`,
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+              <RadarRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+              <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>
+                Dimension Heatmap
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, fontSize: '0.72rem' }}>
+              Average score per dimension for each audience. Darker = higher score.
+            </Typography>
+            {/* Header row */}
+            <Box sx={{ display: 'grid', gridTemplateColumns: `100px repeat(${Object.keys(AUDIENCE_COLORS).length}, 1fr)`, gap: 1, mb: 1 }}>
+              <Box />
+              {Object.keys(AUDIENCE_COLORS).map(seg => (
+                <Typography key={seg} variant="caption" fontWeight={700} sx={{
+                  textAlign: 'center', textTransform: 'capitalize', fontSize: '0.75rem',
+                  color: isDark ? '#CBD5E1' : '#475569',
+                }}>
+                  {seg}
+                </Typography>
+              ))}
+            </Box>
+            {/* Data rows */}
+            {dimensionHeatmap.map((row) => (
+              <Box key={String(row.dimension)} sx={{
+                display: 'grid', gridTemplateColumns: `100px repeat(${Object.keys(AUDIENCE_COLORS).length}, 1fr)`,
+                gap: 1, mb: 1,
+              }}>
+                <Typography variant="caption" fontWeight={600} sx={{
+                  display: 'flex', alignItems: 'center', fontSize: '0.75rem',
+                  color: isDark ? '#CBD5E1' : '#475569',
+                }}>
+                  {String(row.dimension)}
+                </Typography>
+                {Object.keys(AUDIENCE_COLORS).map(seg => {
+                  const val = Number(row[seg] ?? 0);
+                  const intensity = Math.max(0.1, Math.min(1, (val - 4) / 6));
+                  const segColor = AUDIENCE_COLORS[seg];
+                  return (
+                    <MuiTooltip key={seg} title={`${String(row.dimension)} / ${seg}: ${val.toFixed(2)}`} arrow>
+                      <Box sx={{
+                        py: 1.5, borderRadius: 1.5, textAlign: 'center',
+                        bgcolor: `${segColor}${Math.round(intensity * 40 + 15).toString(16).padStart(2, '0')}`,
+                        border: `1px solid ${segColor}${Math.round(intensity * 50 + 10).toString(16).padStart(2, '0')}`,
+                        transition: 'all 0.3s ease',
+                        '&:hover': { transform: 'scale(1.05)', boxShadow: `0 0 12px ${segColor}40` },
+                        cursor: 'default',
+                      }}>
+                        <Typography variant="body2" fontWeight={700} sx={{
+                          fontSize: '0.9rem',
+                          color: intensity > 0.6 ? (isDark ? '#fff' : segColor) : (isDark ? '#CBD5E1' : '#475569'),
+                        }}>
+                          {val.toFixed(1)}
+                        </Typography>
+                      </Box>
+                    </MuiTooltip>
+                  );
+                })}
+              </Box>
+            ))}
+            {/* Color legend */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2, justifyContent: 'center' }}>
+              <Typography variant="caption" sx={{ fontSize: '0.68rem', color: '#64748B' }}>Low</Typography>
+              <Box sx={{
+                width: 120, height: 8, borderRadius: 4,
+                background: `linear-gradient(90deg, #F2652215, #F2652280, #F26522)`,
+              }} />
+              <Typography variant="caption" sx={{ fontSize: '0.68rem', color: '#64748B' }}>High</Typography>
             </Box>
           </Paper>
         </Grid>
