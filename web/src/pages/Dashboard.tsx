@@ -27,6 +27,7 @@ import { useSSE } from '../api/useSSE';
 import Skeleton from '@mui/material/Skeleton';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
@@ -64,6 +65,11 @@ const pulseGlow = keyframes`
   50% { box-shadow: 0 0 16px 2px rgba(242, 101, 34, 0.12); }
 `;
 
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 
 /* ---------- Section Header ---------- */
 function SectionHeader({ children }: { children: React.ReactNode }) {
@@ -94,10 +100,10 @@ function SectionHeader({ children }: { children: React.ReactNode }) {
 }
 
 /* ---------- Stat Card ---------- */
-function StatCard({ title, value, subtitle, icon, gradient, pulsing, accentColor }: {
+function StatCard({ title, value, subtitle, icon, gradient, pulsing, accentColor, animDelay = 0, extra }: {
   title: string; value: React.ReactNode; subtitle?: string;
   icon: React.ReactNode; gradient: string; pulsing?: boolean;
-  accentColor?: string;
+  accentColor?: string; animDelay?: number; extra?: React.ReactNode;
 }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
@@ -105,7 +111,8 @@ function StatCard({ title, value, subtitle, icon, gradient, pulsing, accentColor
     <Paper
       sx={{
         p: 3, position: 'relative', overflow: 'hidden', borderRadius: '16px',
-        animation: pulsing ? `${pulseGlow} 2.5s ease-in-out infinite` : 'none',
+        animation: pulsing ? `${pulseGlow} 2.5s ease-in-out infinite, ${fadeInUp} 0.6s ease-out both` : `${fadeInUp} 0.6s ease-out both`,
+        animationDelay: pulsing ? `0s, ${animDelay}s` : `${animDelay}s`,
         transition: 'transform 0.25s ease, box-shadow 0.3s ease',
         background: isDark
           ? `linear-gradient(135deg, ${accentColor || '#F26522'}12 0%, transparent 60%)`
@@ -151,6 +158,7 @@ function StatCard({ title, value, subtitle, icon, gradient, pulsing, accentColor
           {icon}
         </Box>
       </Box>
+      {extra}
     </Paper>
   );
 }
@@ -589,17 +597,36 @@ export default function Dashboard() {
             gradient="linear-gradient(135deg, #3B82F6, #1D4ED8)"
             accentColor="#3B82F6"
             pulsing={isRunning}
+            animDelay={0.1}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
           <StatCard
             title="Avg Score"
-            value={avgScore ? <AnimatedNumber value={avgScore} decimals={1} /> : '—'}
+            value={avgScore ? <AnimatedNumber value={avgScore} decimals={1} suffix="/10" /> : '—'}
             subtitle={avgScore ? `${avgScore >= 7 ? 'Above' : 'Below'} passing threshold (7.0)` : 'out of 10'}
             icon={<SpeedRoundedIcon sx={{ fontSize: 22, color: 'white' }} />}
             gradient={`linear-gradient(135deg, ${avgScore >= 7 ? '#10B981, #059669' : '#F59E0B, #D97706'})`}
             accentColor={avgScore >= 7 ? '#10B981' : '#F59E0B'}
             pulsing={isRunning}
+            animDelay={0.2}
+            extra={scores.length >= 2 ? (
+              <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                  <CircularProgress variant="determinate" value={100} size={40} thickness={3} sx={{ color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)', position: 'absolute' }} />
+                  <CircularProgress variant="determinate" value={avgScore * 10} size={40} thickness={3} sx={{ color: avgScore >= 7 ? '#10B981' : avgScore >= 5 ? '#F59E0B' : '#EF4444', '& .MuiCircularProgress-circle': { strokeLinecap: 'round' } }} />
+                </Box>
+                <ResponsiveContainer width={60} height={24}>
+                  <LineChart data={scores.map((v, i) => ({ v, i }))}>
+                    <Line type="monotone" dataKey="v" stroke={avgScore >= 7 ? '#10B981' : '#F59E0B'} strokeWidth={1.5} dot={false} isAnimationActive={true} animationDuration={800} />
+                  </LineChart>
+                </ResponsiveContainer>
+                {avgScore >= 7 && (
+                  <Chip label={`+${(avgScore - 7).toFixed(1)} above threshold`} size="small"
+                    sx={{ bgcolor: 'rgba(16,185,129,0.1)', color: '#10B981', fontWeight: 700, fontSize: '0.6rem', height: 20 }} />
+                )}
+              </Box>
+            ) : undefined}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
@@ -611,6 +638,15 @@ export default function Dashboard() {
             gradient={`linear-gradient(135deg, ${passRate >= 80 ? '#10B981, #059669' : '#F59E0B, #D97706'})`}
             accentColor={passRate >= 80 ? '#10B981' : '#F59E0B'}
             pulsing={isRunning}
+            animDelay={0.3}
+            extra={ads.length > 0 ? (
+              <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                  <CircularProgress variant="determinate" value={100} size={40} thickness={3} sx={{ color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)', position: 'absolute' }} />
+                  <CircularProgress variant="determinate" value={passRate} size={40} thickness={3} sx={{ color: passRate >= 80 ? '#10B981' : passRate >= 50 ? '#F59E0B' : '#EF4444', '& .MuiCircularProgress-circle': { strokeLinecap: 'round' } }} />
+                </Box>
+              </Box>
+            ) : undefined}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
@@ -634,6 +670,21 @@ export default function Dashboard() {
             }
             accentColor={belowCount > 0 ? '#EF4444' : '#10B981'}
             pulsing={isRunning}
+            animDelay={0.4}
+            extra={avgImprovement !== 0 && belowCount === 0 ? (
+              <Box sx={{ mt: 1 }}>
+                <Chip
+                  icon={avgImprovement > 0 ? <TrendingUpRoundedIcon sx={{ fontSize: 12, color: '#10B981 !important' }} /> : <TrendingDownRoundedIcon sx={{ fontSize: 12, color: '#EF4444 !important' }} />}
+                  label={`${avgImprovement > 0 ? '+' : ''}${avgImprovement.toFixed(2)} avg lift`}
+                  size="small"
+                  sx={{
+                    fontWeight: 700, fontSize: '0.6rem', height: 20,
+                    bgcolor: avgImprovement > 0 ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
+                    color: avgImprovement > 0 ? '#10B981' : '#EF4444',
+                  }}
+                />
+              </Box>
+            ) : undefined}
           />
         </Grid>
       </Grid>
@@ -1037,7 +1088,7 @@ export default function Dashboard() {
                           border: `1px solid ${scoreColor}25`,
                         }}>
                           <Typography variant="h6" fontWeight={800} sx={{ color: scoreColor, fontSize: '1.1rem' }}>
-                            {stats.avgScore.toFixed(1)}
+                            <AnimatedNumber value={stats.avgScore} decimals={1} />
                           </Typography>
                         </Box>
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem', display: 'block', mt: 0.25 }}>
@@ -1161,7 +1212,14 @@ export default function Dashboard() {
                 : 'linear-gradient(135deg, rgba(242,101,34,0.03) 0%, rgba(16,185,129,0.02) 100%)',
             }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                <AutoAwesomeRoundedIcon sx={{ fontSize: 20, color: '#F26522' }} />
+                <Box sx={{
+                  width: 32, height: 32, borderRadius: '10px',
+                  background: 'linear-gradient(135deg, #F26522, #10B981)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 3px 10px rgba(242,101,34,0.25)',
+                }}>
+                  <AutoAwesomeRoundedIcon sx={{ fontSize: 16, color: 'white' }} />
+                </Box>
                 <Typography variant="h6" fontWeight={700} sx={{ fontSize: '1rem' }}>Recommendations</Typography>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -1271,7 +1329,7 @@ export default function Dashboard() {
                           {DIM_LABELS[d].toUpperCase()}
                         </Typography>
                         <Typography variant="h5" fontWeight={800} sx={{ mt: 0.5, color }}>
-                          {avg.toFixed(1)}
+                          <AnimatedNumber value={avg} decimals={1} />
                         </Typography>
                         <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center', gap: 1.5 }}>
                           <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem' }}>

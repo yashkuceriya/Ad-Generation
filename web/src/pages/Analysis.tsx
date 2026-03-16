@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { keyframes } from '@mui/system';
 import usePageTitle from '../hooks/usePageTitle';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -73,6 +74,11 @@ const IMG_DIM_LABELS: Record<string, string> = {
 const IMG_DIM_COLORS: Record<string, string> = {
   brand_consistency: '#F26522', engagement_potential: '#10B981', text_image_alignment: '#F59E0B',
 };
+
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 export default function Analysis() {
   usePageTitle('Evaluation');
@@ -304,10 +310,14 @@ export default function Analysis() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{
             p: 0, overflow: 'hidden',
+            animation: `${fadeInUp} 0.6s ease-out both`,
+            animationDelay: '0.1s',
             background: isDark
               ? 'linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0.04) 100%)'
               : 'linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(16,185,129,0.02) 100%)',
             border: '1px solid rgba(16,185,129,0.2)',
+            transition: 'transform 0.25s ease',
+            '&:hover': { transform: 'translateY(-2px)' },
           }}>
             <Box sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
@@ -323,9 +333,20 @@ export default function Analysis() {
                   BEST PERFORMING AD
                 </Typography>
               </Box>
-              <Typography variant="h4" fontWeight={800} sx={{ color: '#10B981', lineHeight: 1.1 }}>
-                <AnimatedNumber value={bestScore} decimals={1} suffix="/10" />
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                  <CircularProgress variant="determinate" value={100} size={48} thickness={4} sx={{ color: 'rgba(16,185,129,0.15)', position: 'absolute' }} />
+                  <CircularProgress variant="determinate" value={bestScore * 10} size={48} thickness={4} sx={{ color: '#10B981', '& .MuiCircularProgress-circle': { strokeLinecap: 'round' } }} />
+                  <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Typography variant="caption" fontWeight={800} sx={{ color: '#10B981', fontSize: '0.7rem' }}>
+                      <AnimatedNumber value={bestScore} decimals={1} />
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography variant="h4" fontWeight={800} sx={{ color: '#10B981', lineHeight: 1.1 }}>
+                  <AnimatedNumber value={bestScore} decimals={1} suffix="/10" />
+                </Typography>
+              </Box>
               <Typography variant="body2" noWrap sx={{ mt: 1, fontSize: '0.8rem', fontWeight: 600, color: isDark ? '#E2E8F0' : '#1E293B' }}>
                 {bestAd!.copy_iterations[bestAd!.best_copy_index].ad_copy.headline}
               </Typography>
@@ -339,10 +360,14 @@ export default function Analysis() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{
             p: 0, overflow: 'hidden',
+            animation: `${fadeInUp} 0.6s ease-out both`,
+            animationDelay: '0.2s',
             background: isDark
               ? 'linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.04) 100%)'
               : 'linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.02) 100%)',
             border: '1px solid rgba(245,158,11,0.2)',
+            transition: 'transform 0.25s ease',
+            '&:hover': { transform: 'translateY(-2px)' },
           }}>
             <Box sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
@@ -358,9 +383,20 @@ export default function Analysis() {
                   NEEDS IMPROVEMENT
                 </Typography>
               </Box>
-              <Typography variant="h4" fontWeight={800} sx={{ color: '#F59E0B', lineHeight: 1.1 }}>
-                <AnimatedNumber value={worstScore} decimals={1} suffix="/10" />
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                  <CircularProgress variant="determinate" value={100} size={48} thickness={4} sx={{ color: 'rgba(245,158,11,0.15)', position: 'absolute' }} />
+                  <CircularProgress variant="determinate" value={worstScore * 10} size={48} thickness={4} sx={{ color: worstScore >= 7 ? '#10B981' : worstScore >= 5 ? '#F59E0B' : '#EF4444', '& .MuiCircularProgress-circle': { strokeLinecap: 'round' } }} />
+                  <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Typography variant="caption" fontWeight={800} sx={{ color: worstScore >= 7 ? '#10B981' : worstScore >= 5 ? '#F59E0B' : '#EF4444', fontSize: '0.7rem' }}>
+                      <AnimatedNumber value={worstScore} decimals={1} />
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography variant="h4" fontWeight={800} sx={{ color: '#F59E0B', lineHeight: 1.1 }}>
+                  <AnimatedNumber value={worstScore} decimals={1} suffix="/10" />
+                </Typography>
+              </Box>
               <Typography variant="body2" noWrap sx={{ mt: 1, fontSize: '0.8rem', fontWeight: 600, color: isDark ? '#E2E8F0' : '#1E293B' }}>
                 {worstAd!.copy_iterations[worstAd!.best_copy_index].ad_copy.headline}
               </Typography>
@@ -374,10 +410,14 @@ export default function Analysis() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{
             p: 0, overflow: 'hidden',
+            animation: `${fadeInUp} 0.6s ease-out both`,
+            animationDelay: '0.3s',
             background: isDark
               ? 'linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.04) 100%)'
               : 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(99,102,241,0.02) 100%)',
             border: '1px solid rgba(139,92,246,0.2)',
+            transition: 'transform 0.25s ease',
+            '&:hover': { transform: 'translateY(-2px)' },
           }}>
             <Box sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
@@ -481,7 +521,7 @@ export default function Analysis() {
                   formatter={((v: unknown, name: unknown) => [Number(v).toFixed(2), String(name)]) as never}
                   labelFormatter={((label: unknown) => `${label} (${audienceStats.find(a => a.segment === String(label))?.count ?? 0} ads)`) as never}
                 />
-                <Bar dataKey="avgScore" name="Avg Score" radius={[0, 6, 6, 0]} barSize={32}
+                <Bar dataKey="avgScore" name="Avg Score" radius={[0, 6, 6, 0]} barSize={32} isAnimationActive={true} animationDuration={800}
                   label={(((props: Record<string, unknown>) => {
                     const x = Number(props.x ?? 0);
                     const y = Number(props.y ?? 0);
@@ -668,7 +708,7 @@ export default function Analysis() {
                         </Box>
                       </Box>
                       <Typography variant="subtitle1" fontWeight={800} sx={{ color: barColor, fontSize: '1.05rem', minWidth: 55, textAlign: 'right' }}>
-                        r={d.correlation.toFixed(2)}
+                        r=<AnimatedNumber value={d.correlation} decimals={2} />
                       </Typography>
                     </Box>
                     <LinearProgress
@@ -838,8 +878,8 @@ export default function Analysis() {
                     />
                     <Tooltip contentStyle={tooltipStyle} />
                     <Legend wrapperStyle={{ fontSize: '0.7rem' }} />
-                    <Bar yAxisId="cost" dataKey="avgCost" name="Avg Cost (m$)" fill="#F26522" radius={[4, 4, 0, 0]} barSize={28} />
-                    <Bar yAxisId="lift" dataKey="avgLift" name="Avg Score Lift" fill="#10B981" radius={[4, 4, 0, 0]} barSize={28} />
+                    <Bar yAxisId="cost" dataKey="avgCost" name="Avg Cost (m$)" fill="#F26522" radius={[4, 4, 0, 0]} barSize={28} isAnimationActive={true} animationDuration={800} />
+                    <Bar yAxisId="lift" dataKey="avgLift" name="Avg Score Lift" fill="#10B981" radius={[4, 4, 0, 0]} barSize={28} isAnimationActive={true} animationDuration={800} />
                   </BarChart>
                 </ResponsiveContainer>
                 <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -875,7 +915,7 @@ export default function Analysis() {
                   <Grid size={4}>
                     <Box sx={{ textAlign: 'center', p: 1.5, borderRadius: '10px', bgcolor: diversityStats.avgScore >= 8 ? 'rgba(16,185,129,0.06)' : 'rgba(245,158,11,0.06)' }}>
                       <Typography variant="h4" fontWeight={800} sx={{ color: diversityStats.avgScore >= 8 ? '#10B981' : '#F59E0B' }}>
-                        {diversityStats.avgScore.toFixed(1)}
+                        <AnimatedNumber value={diversityStats.avgScore} decimals={1} />
                       </Typography>
                       <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>Avg Score</Typography>
                     </Box>
@@ -883,7 +923,7 @@ export default function Analysis() {
                   <Grid size={4}>
                     <Box sx={{ textAlign: 'center', p: 1.5, borderRadius: '10px', bgcolor: 'rgba(16,185,129,0.06)' }}>
                       <Typography variant="h4" fontWeight={800} sx={{ color: '#10B981' }}>
-                        {diversityStats.diverseCount}/{diversityStats.total}
+                        <AnimatedNumber value={diversityStats.diverseCount} decimals={0} />/{diversityStats.total}
                       </Typography>
                       <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>Unique</Typography>
                     </Box>
@@ -891,7 +931,7 @@ export default function Analysis() {
                   <Grid size={4}>
                     <Box sx={{ textAlign: 'center', p: 1.5, borderRadius: '10px', bgcolor: diversityStats.errorCount > 0 ? 'rgba(239,68,68,0.06)' : 'rgba(16,185,129,0.06)' }}>
                       <Typography variant="h4" fontWeight={800} sx={{ color: diversityStats.errorCount > 0 ? '#EF4444' : '#10B981' }}>
-                        {diversityStats.errorCount}
+                        <AnimatedNumber value={diversityStats.errorCount} decimals={0} />
                       </Typography>
                       <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>Duplicates</Typography>
                     </Box>
@@ -1200,8 +1240,8 @@ function ImageIterationAnalysis({ ads, navigate }: { ads: AdResult[]; navigate: 
                       <YAxis domain={[0, 10]} tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
                       <Tooltip contentStyle={tooltipStyle} />
                       <Legend wrapperStyle={{ fontSize: '0.75rem' }} />
-                      <Bar dataKey="accepted" fill="#10B981" fillOpacity={0.7} radius={[4, 4, 0, 0]} barSize={28} name="Accepted" />
-                      <Bar dataKey="rejected" fill="#EF4444" fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={28} name="Rejected" />
+                      <Bar dataKey="accepted" fill="#10B981" fillOpacity={0.7} radius={[4, 4, 0, 0]} barSize={28} name="Accepted" isAnimationActive={true} animationDuration={800} />
+                      <Bar dataKey="rejected" fill="#EF4444" fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={28} name="Rejected" isAnimationActive={true} animationDuration={800} />
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (

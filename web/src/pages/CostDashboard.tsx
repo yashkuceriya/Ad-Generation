@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
+import { keyframes } from '@mui/system';
 import usePageTitle from '../hooks/usePageTitle';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,6 +12,7 @@ import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
 import TokenRoundedIcon from '@mui/icons-material/TokenRounded';
 import ApiRoundedIcon from '@mui/icons-material/ApiRounded';
 import SpeedRoundedIcon from '@mui/icons-material/SpeedRounded';
+import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
 import Skeleton from '@mui/material/Skeleton';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import type { PieLabelRenderProps } from 'recharts';
@@ -18,12 +20,18 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import HealthAndSafetyRoundedIcon from '@mui/icons-material/HealthAndSafetyRounded';
 import { getCostSummary, getCostLedger } from '../api/endpoints';
+import AnimatedNumber from '../components/AnimatedNumber';
 import type { CostSummary, StepCost, ParseTelemetry } from '../types';
+
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 const CHART_COLORS = ['#F26522', '#10B981', '#F59E0B', '#EF4444', '#FF8A50', '#24C6DC'];
 
-function CostStatCard({ title, value, subtitle, icon, gradient }: {
-  title: string; value: string; subtitle?: string; icon: React.ReactNode; gradient: string;
+function CostStatCard({ title, value, subtitle, icon, gradient, animDelay = 0 }: {
+  title: string; value: React.ReactNode; subtitle?: string; icon: React.ReactNode; gradient: string; animDelay?: number;
 }) {
   return (
     <Paper
@@ -31,6 +39,13 @@ function CostStatCard({ title, value, subtitle, icon, gradient }: {
         p: 2.5,
         position: 'relative',
         overflow: 'hidden',
+        animation: `${fadeInUp} 0.6s ease-out both`,
+        animationDelay: `${animDelay}s`,
+        transition: 'transform 0.25s ease, box-shadow 0.3s ease',
+        '&:hover': {
+          transform: 'translateY(-2px)',
+          boxShadow: '0 6px 24px rgba(0,0,0,0.08)',
+        },
         '&::before': {
           content: '""',
           position: 'absolute', top: 0, right: 0,
@@ -277,40 +292,83 @@ export default function CostDashboard() {
         <Grid size={{ xs: 6, md: 3 }}>
           <CostStatCard
             title="Total Cost"
-            value={`$${summary?.total_cost_usd?.toFixed(4) || '0.00'}`}
+            value={<><AnimatedNumber value={summary?.total_cost_usd ?? 0} decimals={4} prefix="$" /></>}
             subtitle={`${summary?.total_calls || 0} API calls${summary?.image_costs?.count ? ` · incl. ${summary.image_costs.count} images` : ''}`}
             icon={<PaidRoundedIcon sx={{ fontSize: 18, color: 'white' }} />}
             gradient="linear-gradient(135deg, #F26522, #D4541A)"
+            animDelay={0.1}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
           <CostStatCard
             title="Total Tokens"
-            value={(summary?.total_tokens || 0).toLocaleString()}
+            value={<AnimatedNumber value={summary?.total_tokens ?? 0} decimals={0} />}
             subtitle="input + output combined"
             icon={<TokenRoundedIcon sx={{ fontSize: 18, color: 'white' }} />}
             gradient="linear-gradient(135deg, #10B981, #059669)"
+            animDelay={0.2}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
           <CostStatCard
             title="API Calls"
-            value={String(summary?.total_calls || 0)}
+            value={<AnimatedNumber value={summary?.total_calls ?? 0} decimals={0} />}
             subtitle={briefCosts.length > 0 ? `across ${briefCosts.length} briefs` : undefined}
             icon={<ApiRoundedIcon sx={{ fontSize: 18, color: 'white' }} />}
             gradient="linear-gradient(135deg, #F59E0B, #F5C400)"
+            animDelay={0.3}
           />
         </Grid>
         <Grid size={{ xs: 6, md: 3 }}>
           <CostStatCard
             title="Avg Latency"
-            value={latencyStats ? `${(latencyStats.avg / 1000).toFixed(1)}s` : '—'}
+            value={latencyStats ? <AnimatedNumber value={latencyStats.avg / 1000} decimals={1} suffix="s" /> : '—'}
             subtitle={latencyStats ? `p50: ${(latencyStats.p50 / 1000).toFixed(1)}s · p95: ${(latencyStats.p95 / 1000).toFixed(1)}s` : undefined}
             icon={<SpeedRoundedIcon sx={{ fontSize: 18, color: 'white' }} />}
             gradient="linear-gradient(135deg, #EF4444, #EE5A5A)"
+            animDelay={0.4}
           />
         </Grid>
       </Grid>
+
+      {/* Cost Per Ad */}
+      {briefCosts.length > 0 && summary && (
+        <Box sx={{ mb: 3.5, animation: `${fadeInUp} 0.6s ease-out both`, animationDelay: '0.5s' }}>
+          <Paper
+            sx={{
+              p: 2.5, display: 'flex', alignItems: 'center', gap: 2.5,
+              borderRadius: '14px',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(16,185,129,0.04) 100%)'
+                : 'linear-gradient(135deg, rgba(139,92,246,0.05) 0%, rgba(16,185,129,0.02) 100%)',
+              border: '1px solid rgba(139,92,246,0.15)',
+            }}
+          >
+            <Box
+              sx={{
+                width: 42, height: 42, borderRadius: '12px',
+                background: 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(139,92,246,0.3)',
+                flexShrink: 0,
+              }}
+            >
+              <CalculateRoundedIcon sx={{ fontSize: 20, color: 'white' }} />
+            </Box>
+            <Box>
+              <Typography variant="overline" color="text.secondary" sx={{ fontSize: '0.6rem', letterSpacing: '0.08em' }}>
+                COST PER AD
+              </Typography>
+              <Typography variant="h4" fontWeight={800} sx={{ fontSize: '1.75rem', lineHeight: 1, color: '#8B5CF6' }}>
+                <AnimatedNumber value={summary.total_cost_usd / briefCosts.length} decimals={5} prefix="$" />
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem', mt: 0.25, display: 'block' }}>
+                {summary.total_cost_usd.toFixed(4)} total across {briefCosts.length} briefs · avg {((summary.total_calls || 0) / briefCosts.length).toFixed(1)} calls/ad
+              </Typography>
+            </Box>
+          </Paper>
+        </Box>
+      )}
 
       <Grid container spacing={2.5}>
         {/* Cost by Stage */}
@@ -479,7 +537,7 @@ export default function CostDashboard() {
                       ];
                     }}
                   />
-                  <Bar dataKey="cost" radius={[0, 6, 6, 0]} barSize={20}>
+                  <Bar dataKey="cost" radius={[0, 6, 6, 0]} barSize={20} isAnimationActive={true} animationDuration={800}>
                     {briefCosts.map((_, i) => (
                       <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} fillOpacity={0.7} />
                     ))}
@@ -510,7 +568,7 @@ export default function CostDashboard() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2.5 }}>
                       <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="h4" fontWeight={800} sx={{ color: healthColor }}>
-                          {successRate.toFixed(0)}%
+                          <AnimatedNumber value={Number(successRate.toFixed(0))} decimals={0} suffix="%" />
                         </Typography>
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
                           Parse Success
@@ -527,7 +585,7 @@ export default function CostDashboard() {
                       />
                       <Box sx={{ textAlign: 'center', ml: 'auto' }}>
                         <Typography variant="h5" fontWeight={800} sx={{ color: isDark ? '#94A3B8' : '#64748B' }}>
-                          {total}
+                          <AnimatedNumber value={total} decimals={0} />
                         </Typography>
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
                           Total Evals
