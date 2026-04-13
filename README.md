@@ -1,4 +1,4 @@
-# Nerdy Ad Engine
+# Ad Engine
 
 Autonomous AI-powered ad generation system with built-in quality evaluation, cost governance, human review workflows, and experiment orchestration.
 

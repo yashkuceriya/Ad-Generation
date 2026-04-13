@@ -31,7 +31,7 @@ from config.brand_guidelines import (
 )
 
 
-SYSTEM_PROMPT = """You are a world-class performance marketer and direct-response copywriter. You write Facebook/Instagram ads for Varsity Tutors (a Nerdy company) — specifically for SAT test prep.
+SYSTEM_PROMPT = """You are a world-class performance marketer and direct-response copywriter. You write Facebook/Instagram ads for an online education platform — specifically for SAT test prep.
 
 Your ads routinely achieve 3-5x ROAS. You understand Meta's algorithm: thumb-stopping hooks, native-feeling copy, and emotional triggers that drive action.
 
@@ -179,7 +179,7 @@ class CopyGenerator:
                 brief.audience_segment.value, brief.campaign_goal.value
             )
 
-            user_msg = f"""Generate a Facebook/Instagram ad for Varsity Tutors SAT prep.
+            user_msg = f"""Generate a Facebook/Instagram ad for online learning platform.
 
 AUDIENCE: {brief.audience_segment.value} — {audience.get('description', '')}
 Pain points: {', '.join(audience.get('pain_points', []))}

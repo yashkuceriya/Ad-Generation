@@ -28,7 +28,7 @@ from src.tracking.resilient_call import resilient_invoke
 from config.evaluation_rubrics import DIMENSION_RUBRICS, DIMENSION_WEIGHTS
 
 
-BATCHED_EVAL_PROMPT = """You are an expert ad copy evaluator. Score this Facebook/Instagram ad for Varsity Tutors SAT prep on ALL 5 dimensions below.
+BATCHED_EVAL_PROMPT = """You are an expert ad copy evaluator. Score this Facebook/Instagram ad for online learning platform on ALL 5 dimensions below.
 
 ═══ AD COPY ═══
 Primary Text: {primary_text}
@@ -50,7 +50,7 @@ Campaign Goal: {campaign_goal}
 3. CTA STRENGTH (weight {w_cta}): Is the call-to-action clear, urgent, and low-friction?
    1-2: No CTA | 3-4: Weak/high-friction | 5-6: Decent but no urgency | 7-8: Clear and specific | 9-10: Urgent with scarcity
 
-4. BRAND VOICE (weight {w_brand}): Does it sound like Varsity Tutors — empowering, knowledgeable, approachable, results-focused?
+4. BRAND VOICE (weight {w_brand}): Does it sound like Online Learning — empowering, knowledgeable, approachable, results-focused?
    1-2: Generic tone | 3-4: Inconsistent | 5-6: Appropriate but bland | 7-8: Distinctly on-brand | 9-10: Unmistakable
 
 5. EMOTIONAL RESONANCE (weight {w_emotion}): Does it tap into real motivation (parent anxiety, student ambition, test anxiety)?

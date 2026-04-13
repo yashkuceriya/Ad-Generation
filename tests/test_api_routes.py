@@ -31,7 +31,7 @@ def _make_result(brief_id: str = "test_brief", score: float = 7.5) -> AdResult:
         iteration_number=1,
         ad_copy=AdCopy(
             primary_text="Boost your SAT score today.",
-            headline="SAT Prep That Works",
+            headline="Test Prep That Works",
             description="Expert tutoring for top scores.",
             cta_button="Get Started",
         ),

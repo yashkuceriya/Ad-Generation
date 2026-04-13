@@ -21,7 +21,7 @@ from config.settings import (
 from config.brand_guidelines import IMAGE_GUIDELINES
 
 
-IMAGE_PROMPT_TEMPLATE = """Create a high-end Facebook/Instagram ad image for Varsity Tutors SAT test prep.
+IMAGE_PROMPT_TEMPLATE = """Create a high-end Facebook/Instagram ad image for online test prep.
 
 VISUAL CONCEPT: {subject}
 
@@ -48,7 +48,7 @@ ART DIRECTION:
 - DO: Show diversity, real-feeling moments, aspirational but achievable success"""
 
 
-REFINEMENT_IMAGE_PROMPT = """Create an IMPROVED version of a Varsity Tutors SAT prep ad image. This is iteration {iteration} of {max_iterations}.
+REFINEMENT_IMAGE_PROMPT = """Create an IMPROVED version of a online learning platform ad image. This is iteration {iteration} of {max_iterations}.
 
 ═══ PREVIOUS SCORES ═══
 - Brand Consistency: {prev_brand}/10
@@ -308,7 +308,7 @@ class ImageGenerator:
                 font_large = ImageFont.load_default()
                 font_small = ImageFont.load_default()
 
-            draw.text((100, 400), "Varsity Tutors", fill="white", font=font_large)
+            draw.text((100, 400), "Online Learning", fill="white", font=font_large)
             headline = ad_copy.headline[:40]
             draw.text((100, 500), headline, fill="white", font=font_small)
             draw.text((100, 600), "SAT Test Prep", fill=(200, 220, 255), font=font_small)

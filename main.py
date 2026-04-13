@@ -1,4 +1,4 @@
-"""Main entry point for the Nerdy Autonomous Ad Generation Engine."""
+"""Main entry point for the Autonomous Ad Generation Engine."""
 
 from __future__ import annotations
 
@@ -22,8 +22,8 @@ from src.output.visualizer import AdVisualizer
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Nerdy Autonomous Ad Generation Engine — "
-        "Generate, evaluate, and iterate Facebook/Instagram ads for Varsity Tutors SAT prep."
+        description="Autonomous Ad Generation Engine — "
+        "Generate, evaluate, and iterate Facebook/Instagram ads for online learning platform."
     )
     parser.add_argument(
         "--mode", choices=["demo", "batch", "single"],
@@ -59,7 +59,7 @@ def main():
 
     print("=" * 60)
     print("  NERDY AUTONOMOUS AD GENERATION ENGINE")
-    print("  Varsity Tutors SAT Prep — Facebook/Instagram Ads")
+    print("  Online Learning Platform — Facebook/Instagram Ads")
     print("=" * 60)
     print(f"  Mode: {args.mode}")
     print(f"  Images: {args.images}")

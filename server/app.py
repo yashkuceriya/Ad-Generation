@@ -1,4 +1,4 @@
-"""FastAPI application for Nerdy Ad Engine."""
+"""FastAPI application for Ad Engine."""
 
 import asyncio
 import os
@@ -42,8 +42,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Nerdy Ad Engine",
-    description="Autonomous ad generation pipeline for Varsity Tutors SAT Prep",
+    title="Ad Engine",
+    description="Autonomous ad generation pipeline for Online Learning Platform",
     version="1.0.0",
     lifespan=lifespan,
 )

@@ -97,7 +97,7 @@ export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegen
         </Avatar>
         <Box sx={{ flex: 1 }}>
           <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', lineHeight: 1.25, color: '#E4E6EB' }}>
-            Varsity Tutors
+            Online Learning
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <Typography sx={{ fontSize: '0.75rem', color: '#B0B3B8' }}>
@@ -330,7 +330,7 @@ export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegen
                     lineHeight: 1.1,
                   }}
                 >
-                  Varsity Tutors
+                  Online Learning
                 </Typography>
                 <Typography
                   sx={{
@@ -391,7 +391,7 @@ export default function AdPreviewCard({ copy, imageUrl, onGenerateImage, onRegen
       >
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Typography sx={{ fontSize: '0.72rem', color: '#B0B3B8', textTransform: 'uppercase', letterSpacing: '0.02em' }}>
-            varsitytutors.com
+            example.com
           </Typography>
           <Typography sx={{ fontWeight: 600, fontSize: '0.95rem', lineHeight: 1.3, color: '#E4E6EB' }} noWrap>
             {copy.headline}

@@ -1,6 +1,6 @@
 # Prompts, Models & Tools
 
-How the Nerdy Ad Engine uses AI and what tools it is built with.
+How the Ad Engine uses AI and what tools it is built with.
 
 ## AI Models Used
 
@@ -17,7 +17,7 @@ All models are accessed via OpenRouter. LangChain's `ChatOpenAI` client handles 
 
 ## Generation Prompt Strategy
 
-**System prompt** establishes the persona: a world-class performance marketer writing Facebook/Instagram ads for Varsity Tutors SAT prep. It includes:
+**System prompt** establishes the persona: a world-class performance marketer writing Facebook/Instagram ads for online learning platform. It includes:
 
 - Full brand voice guidelines (injected from `config/brand_guidelines.py`)
 - Approved CTA buttons (Learn More, Sign Up, Get Started, Book Now, Apply Now)
@@ -37,7 +37,7 @@ Each ad is scored independently on 5 dimensions, one LLM call per dimension:
 | Clarity | 0.20 | Message understandable in under 3 seconds |
 | Value Proposition | 0.25 | Specific, compelling, differentiated benefit |
 | CTA Strength | 0.20 | Clear, urgent, low-friction next step |
-| Brand Voice | 0.15 | Sounds like Varsity Tutors (empowering, approachable, results-focused) |
+| Brand Voice | 0.15 | Sounds like Online Learning (empowering, approachable, results-focused) |
 | Emotional Resonance | 0.20 | Taps into real parent/student motivations |
 
 Each rubric prompt includes:

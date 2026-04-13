@@ -1,7 +1,7 @@
-"""Varsity Tutors (Nerdy) brand guidelines for ad generation."""
+"""the brand brand guidelines for ad generation."""
 
-BRAND_NAME = "Varsity Tutors"
-PARENT_COMPANY = "Nerdy"
+BRAND_NAME = "Online Learning"
+PARENT_COMPANY = "AdEngine"
 
 BRAND_VOICE = {
     "tone": "Expert but approachable — never condescending, always encouraging",
@@ -34,7 +34,7 @@ BRAND_VOICE = {
     "voice_examples": [
         "Good: 'Your SAT score doesn't define you — but the right prep can open doors you didn't know existed.'",
         "Good: '50,000 students raised their SAT scores with a tutor who gets them. Your kid could be next.'",
-        "Bad: 'Varsity Tutors leverages cutting-edge pedagogical methodologies to optimize student outcomes.'",
+        "Bad: 'Online Learning leverages cutting-edge pedagogical methodologies to optimize student outcomes.'",
     ],
 }
 
@@ -98,7 +98,7 @@ AUDIENCE_PROFILES = {
             "Free trial to reduce risk",
             "Trusted platform with real reviews",
         ],
-        "messaging_angle": "Why families choose Varsity Tutors over the rest",
+        "messaging_angle": "Why families choose Online Learning over the rest",
     },
 }
 

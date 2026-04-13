@@ -108,7 +108,7 @@ function exportAdPreviewHTML(ad: AdResult) {
   <div class="card-header">
     <div class="avatar">N</div>
     <div class="card-header-text">
-      <div class="name">Nerdy Ad Engine</div>
+      <div class="name">Ad Engine</div>
       <div class="meta">Sponsored · ${ad.brief.audience_segment}</div>
     </div>
   </div>

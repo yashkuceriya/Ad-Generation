@@ -171,7 +171,7 @@ export default function Layout() {
             Ad Engine
           </Typography>
           <Typography variant="caption" sx={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.06em' }}>
-            VARSITY TUTORS
+            AD ENGINE
           </Typography>
         </Box>
       </Box>
@@ -332,7 +332,7 @@ export default function Layout() {
           }}
         >
           <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>
-            Nerdy Ad Engine
+            Ad Engine
           </Typography>
           <Typography variant="body2" sx={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600, mt: 0.25 }}>
             v2.0 · Autonomous Pipeline
@@ -478,7 +478,7 @@ export default function Layout() {
           }}
         >
           <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.62rem' }}>
-            Nerdy Ad Engine · v2.0 · Autonomous Pipeline
+            Ad Engine · v2.0 · Autonomous Pipeline
           </Typography>
         </Box>
       </Box>

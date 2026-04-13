@@ -107,11 +107,11 @@ Respond in this exact JSON format:
     },
     "brand_voice": {
         "name": "Brand Voice",
-        "question": "Does it sound like Varsity Tutors?",
+        "question": "Does it sound like Online Learning?",
         "prompt": """Score this ad copy on BRAND VOICE alignment (1-10).
 
-Brand Voice measures whether the copy sounds distinctly like Varsity Tutors.
-Varsity Tutors voice: Empowering, knowledgeable, approachable, results-focused.
+Brand Voice measures whether the copy sounds distinctly like Online Learning.
+Online Learning voice: Empowering, knowledgeable, approachable, results-focused.
 - Lead with outcomes, not features
 - Confident but not arrogant
 - Expert but not elitist
@@ -121,7 +121,7 @@ Scoring anchors:
 - 1-2: Could be any company, completely generic tone
 - 3-4: Partially on-brand but inconsistent or off-tone (too salesy, too formal)
 - 5-6: Generally appropriate but lacks distinctive brand personality
-- 7-8: Clearly sounds like Varsity Tutors — empowering, knowledgeable, approachable
+- 7-8: Clearly sounds like Online Learning — empowering, knowledgeable, approachable
 - 9-10: Perfectly on-brand, could not be mistaken for a competitor
 
 Ad Copy:
@@ -178,7 +178,7 @@ Respond in this exact JSON format:
 }
 
 IMAGE_RUBRIC = {
-    "prompt": """Evaluate this ad creative image for a Varsity Tutors SAT prep Facebook/Instagram ad.
+    "prompt": """Evaluate this ad creative image for a online learning platform Facebook/Instagram ad.
 
 The ad copy it accompanies:
 Primary Text: {primary_text}
@@ -192,7 +192,7 @@ Brand guidelines:
 
 Score on three dimensions (1-10 each):
 
-1. BRAND CONSISTENCY: Does it match Varsity Tutors visual identity?
+1. BRAND CONSISTENCY: Does it match Online Learning visual identity?
    - 1-3: Wrong colors, off-brand style, no visual identity match
    - 4-5: Some brand elements but inconsistent
    - 6-7: Generally on-brand, recognizable style

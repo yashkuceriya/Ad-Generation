@@ -425,8 +425,8 @@ export default function Dashboard() {
             )}
           </Box>
           <Typography variant="h3" fontWeight={800} sx={{ mt: 0.5, mb: 1, letterSpacing: '-0.02em' }}>
-            Varsity Tutors
-            <Box component="span" sx={{ background: 'linear-gradient(135deg, #F26522, #10B981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', ml: 1.5 }}>SAT Prep</Box>
+            Online Learning
+            <Box component="span" sx={{ background: 'linear-gradient(135deg, #F26522, #10B981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', ml: 1.5 }}>Test Prep</Box>
           </Typography>
 
           {/* Quick summary stats line */}

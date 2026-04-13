@@ -68,7 +68,7 @@ COMPETITOR_PATTERNS = {
     },
 }
 
-# Cross-competitor patterns that Varsity Tutors should learn from
+# Cross-competitor patterns that Online Learning should learn from
 WINNING_PATTERNS = {
     "parents": [
         "Princeton Review leads with score guarantees — counter with personalized 1-on-1 advantage",
@@ -106,7 +106,7 @@ HOOK_TEMPLATES = {
     ],
     "story": [
         "My daughter went from a {before} to a {after} in {weeks} weeks.",
-        "I was scoring {before} and thought I'd never reach {target}. Then I found Varsity Tutors.",
+        "I was scoring {before} and thought I'd never reach {target}. Then I found Online Learning.",
     ],
     "fear": [
         "The SAT is {months} months away. Is your student ready?",
@@ -138,7 +138,7 @@ class CompetitorAnalyzer:
         return HOOK_TEMPLATES
 
     def get_differentiation_points(self) -> list[str]:
-        """Key ways Varsity Tutors differentiates from competitors."""
+        """Key ways Online Learning differentiates from competitors."""
         return [
             "1-on-1 expert human tutors (vs Princeton Review's classes, Khan's content)",
             "Personalized learning plan adapted in real-time (vs Kaplan's structured curriculum)",

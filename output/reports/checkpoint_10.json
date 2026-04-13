@@ -1,0 +1,2437 @@
+[
+  {
+    "brief_id": "r39182_001",
+    "brief": {
+      "brief_id": "r39182_001",
+      "audience_segment": "parents",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "awareness",
+      "tone": "empowering",
+      "competitor_context": [
+        "Princeton Review leads with score guarantees \u2014 counter with personalized 1-on-1 advantage",
+        "Kaplan uses brand authority \u2014 counter with modern, technology-enabled approach",
+        "Khan Academy offers free \u2014 counter with expert human tutors (not just content)",
+        "Use specific numbers: score improvements, student count, tutor qualifications",
+        "Parent testimonials outperform expert claims for SAT prep"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points? \n\nMost students get stuck on a score plateau because generic prep books don't address their specific gaps. We\u2019ve helped 50,000+ students break through with personal 1-on-1 tutoring that targets exactly what they need.\n\nSee where your child stands before the next test date with a professional-grade diagnostic. It\u2019s the first step toward that 200-point average improvement.\n\nFind your baseline today.",
+          "headline": "Free SAT Diagnostic: Map Their Path to 1500+",
+          "description": "Join 50,000+ parents who trust our expert tutors to unlock their child's top-tier college future.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution dynamic is established within the first two sentences. The reader knows exactly what is being offered (a diagnostic) and why (to avoid missing dream schools).",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '50 points' or '1500+' to make the text skimmable.",
+                "Ensure the visual creative clearly mirrors the 'diagnostic' offer to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.5,
+              "rationale": "The '200-point average improvement' is a strong, quantifiable claim. However, it feels slightly generic compared to the '50,000+ students' social proof. It differentiates well by highlighting the 'plateau' problem that books can't solve.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a specific detail about the diagnostic, such as '15-minute' or 'AI-powered,' to make the 'free' offer feel more tangible.",
+                "Highlight the 'personalized' aspect more aggressively as the primary differentiator against cheaper, non-tutoring alternatives."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('Free'), but it lacks urgency. There is no reason for the parent to click *now* versus next week. It functions as a utility rather than a compelling 'must-act' trigger.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a time-sensitive element, such as 'Prepare for the upcoming [Month] test date.'",
+                "Use a more benefit-driven CTA like 'Claim Your Free Diagnostic' or 'See Your Child's Potential'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 8.0,
+              "rationale": "The copy hits the 'Varsity Tutors' sweet spot: professional, results-oriented, and authoritative. It sounds like an expert partner rather than a pushy salesperson.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Inject a slightly more 'supportive' tone to balance the 'anxiety-inducing' hook.",
+                "Ensure the language remains consistent across the landing page to maintain this professional authority."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.0,
+              "rationale": "The opening hook is a masterclass in 'parental fear' marketing. It effectively taps into the anxiety of a child falling just short of their potential. It is effective, though perhaps a bit standard for the test-prep industry.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Pivot slightly from 'fear of missing out' to 'pride of achievement' in the second half of the copy to leave the parent feeling empowered rather than just worried.",
+                "Use a brief, relatable anecdote or 'parent-to-parent' sentiment to deepen the connection."
+              ]
+            }
+          },
+          "weighted_average": 7.48,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.48/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 7.5/10 (could improve)\n    Suggestions: Add a specific detail about the diagnostic, such as '15-minute' or 'AI-powered,' to make the 'free' offer feel more tangible.; Highlight the 'personalized' aspect more aggressively as the primary differentiator against cheaper, non-tutoring alternatives.\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Add a time-sensitive element, such as 'Prepare for the upcoming [Month] test date.'; Use a more benefit-driven CTA like 'Claim Your Free Diagnostic' or 'See Your Child's Potential'.\n  Brand Voice: 8.0/10 \u2713 PROTECT\n  Emotional Resonance: 7.0/10 (could improve)\n    Suggestions: Pivot slightly from 'fear of missing out' to 'pride of achievement' in the second half of the copy to leave the parent feeling empowered rather than just worried.; Use a brief, relatable anecdote or 'parent-to-parent' sentiment to deepen the connection.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction ('Free'), but it lacks urgency. There is no reason for the parent to click *now* versus next week. It functions as a utility rather than a compelling 'must-act' trigger.\nSpecific suggestions: Add a time-sensitive element, such as 'Prepare for the upcoming [Month] test date.'; Use a more benefit-driven CTA like 'Claim Your Free Diagnostic' or 'See Your Child's Potential'.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: What if your child misses their dream school by just 50 points? \n\nMost students get stuck on a score plateau because generic prep books don't address their specific gaps. We\u2019ve helped 50,000+ students break through with personal 1-on-1 tutoring that targets exactly what they need.\n\nSee where your child stands before the next test date with a professional-grade diagnostic. It\u2019s the first step toward that 200-point average improvement.\n\nFind your baseline today.\nHeadline: Free SAT Diagnostic: Map Their Path to 1500+\nDescription: Join 50,000+ parents who trust our expert tutors to unlock their child's top-tier college future.\nCTA: Get Started Free\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_001",
+            "input_tokens": 1560,
+            "output_tokens": 180,
+            "latency_ms": 2962.16,
+            "cost_usd": 0.00132,
+            "timestamp": "2026-03-14T20:46:25.635699"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_001",
+            "input_tokens": 886,
+            "output_tokens": 729,
+            "latency_ms": 3204.66,
+            "cost_usd": 0.001315,
+            "timestamp": "2026-03-14T20:46:28.840727"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points?\n\nMost students plateau because generic books can't fix their specific gaps. We\u2019ve helped 50,000+ students break through with 1-on-1 tutoring that targets their unique needs for an average 200-point boost.\n\nClaim your free 15-minute diagnostic today to see exactly where they stand before the March SAT registration deadline. \n\nSee your child's potential.",
+          "headline": "Free SAT Diagnostic: Map Their 1500+ Path",
+          "description": "Join 50,000+ parents using expert 1-on-1 prep to secure top-tier college futures.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is logical. The reader knows exactly what is being offered and why within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Ensure the visual creative matches the '1500+ path' promise to avoid cognitive dissonance.",
+                "Consider bolding the '1-on-1' aspect in the primary text to make it pop for skimmers."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong use of social proof (50,000+ students) and a specific outcome (200-point boost). It effectively differentiates 1-on-1 tutoring from 'generic books.'",
+              "confidence": 0.9,
+              "suggestions": [
+                "Quantify the 'diagnostic' value\u2014what does the parent actually get? (e.g., 'A 5-page personalized score report').",
+                "Highlight the 'why' behind the 200-point boost more explicitly (e.g., 'proprietary AI-driven gap analysis')."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.5,
+              "rationale": "The CTA is low-friction ('Free'), but the urgency is slightly soft. Mentioning the March deadline is good, but it could be tied more tightly to the action.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change the CTA button text to 'Claim My Free Diagnostic' to increase personal ownership.",
+                "Add a time-sensitive element to the primary text, such as 'Only 50 spots available for March prep sessions.'"
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.8,
+              "rationale": "It hits the professional, results-oriented tone expected of a major tutoring brand. It feels authoritative without being overly academic.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'empowerment' language; currently, it leans heavily on the 'fear of missing out' (FOMO).",
+                "Use more active, confident verbs to sound more like a partner in success rather than just a service provider."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.0,
+              "rationale": "The opening hook hits a very specific 'parent pain point'\u2014the fear that their child will fall just short of their potential due to a preventable gap.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Lean into the 'relief' aspect\u2014how does the parent feel after the diagnostic? (e.g., 'Stop the guesswork and finally have a clear plan').",
+                "Acknowledge the student's stress; parents are often looking for a solution that reduces their child's anxiety, not just increases their score."
+              ]
+            }
+          },
+          "weighted_average": 8.02,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_001",
+            "input_tokens": 2170,
+            "output_tokens": 173,
+            "latency_ms": 1970.85,
+            "cost_usd": 0.001604,
+            "timestamp": "2026-03-14T20:46:30.812338"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_001",
+            "input_tokens": 878,
+            "output_tokens": 693,
+            "latency_ms": 2888.19,
+            "cost_usd": 0.001259,
+            "timestamp": "2026-03-14T20:46:33.700759"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005498,
+    "quality_per_dollar": 1458.71,
+    "status": "evaluator_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (8.0 >= 7.0)",
+    "compliance": {
+      "passes": false,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "headline",
+          "rule": "headline_over_recommended",
+          "message": "Headline is 41 chars (recommended max: 40)",
+          "suggestion": "Headlines under 40 chars perform better \u2014 consider shortening"
+        },
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 81 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Get Started Free' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        },
+        {
+          "severity": "error",
+          "field": "description",
+          "rule": "prohibited_content",
+          "message": "Contains prohibited phrase: 'cure'",
+          "suggestion": "Remove or rephrase this content to comply with Meta ad policies"
+        }
+      ],
+      "score": 6.5
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_002",
+    "brief": {
+      "brief_id": "r39182_002",
+      "audience_segment": "students",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "awareness",
+      "tone": "urgent",
+      "competitor_context": [
+        "Students respond to transformation stories (before/after scores)",
+        "Chegg captures 'get unstuck' moment \u2014 position SAT prep as confidence-builder",
+        "Peer social proof works better than authority for this audience",
+        "Quick, visible progress messaging beats long-term promises",
+        "Test anxiety acknowledgment followed by empowerment"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "Your SAT score doesn't define you \u2014 but the right prep can open doors you didn't know existed.\n\nStop guessing which math formulas to memorize or staring at reading passages you don't understand. 50,000+ students have used our 1-on-1 expert tutoring to jump an average of 200 points.\n\nGet a clear roadmap to your dream school with a free diagnostic. See exactly where you stand today.",
+          "headline": "See Your Real SAT Score Potential",
+          "description": "Join 50,000+ students who traded test anxiety for a 200-point average improvement.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad gets straight to the point. The hook addresses the SAT, the body explains the solution, and the CTA tells the user exactly what to do. It is very easy to scan.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Use line breaks to separate the 'problem' paragraph from the 'solution' paragraph for better mobile readability.",
+                "Consider bolding the '200 points' figure to make the primary benefit pop even faster."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "The '200-point average improvement' is a strong, quantifiable claim backed by social proof (50,000+ students). It differentiates by focusing on 1-on-1 personalization rather than generic test prep.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of how long it takes to see these results (e.g., 'in as little as 8 weeks') to make the value feel more tangible.",
+                "Highlight the 'free diagnostic' as a risk-free entry point more prominently."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction, but it lacks urgency. 'Get Started Free' is standard; it doesn't create a 'fear of missing out' or a compelling reason to click *right now*.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Test a more benefit-driven CTA like 'Claim My Free Diagnostic' or 'See My Score Potential'.",
+                "Add a time-sensitive element if applicable, such as 'Start your free diagnostic today'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, encouraging, and authoritative. It successfully positions Varsity Tutors as a knowledgeable partner in the student's journey.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'student-first' empathy to sound less like a corporation and more like a mentor.",
+                "Use slightly more conversational language in the second paragraph to bridge the gap between 'expert' and 'approachable'."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.0,
+              "rationale": "It hits the right notes by acknowledging test anxiety and the pressure of college admissions. It validates the student's feelings before offering the solution.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Focus more on the 'relief' of having a roadmap rather than just the 'score' improvement.",
+                "Use a more evocative opening line that speaks to the specific stress of the SAT, such as 'Tired of the SAT feeling like a barrier to your future?'"
+              ]
+            }
+          },
+          "weighted_average": 7.58,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.58/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 8.2/10 \u2713 PROTECT\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Test a more benefit-driven CTA like 'Claim My Free Diagnostic' or 'See My Score Potential'.; Add a time-sensitive element if applicable, such as 'Start your free diagnostic today'.\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a bit more 'student-first' empathy to sound less like a corporation and more like a mentor.; Use slightly more conversational language in the second paragraph to bridge the gap between 'expert' and 'approachable'.\n  Emotional Resonance: 7.0/10 (could improve)\n    Suggestions: Focus more on the 'relief' of having a roadmap rather than just the 'score' improvement.; Use a more evocative opening line that speaks to the specific stress of the SAT, such as 'Tired of the SAT feeling like a barrier to your future?'\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction, but it lacks urgency. 'Get Started Free' is standard; it doesn't create a 'fear of missing out' or a compelling reason to click *right now*.\nSpecific suggestions: Test a more benefit-driven CTA like 'Claim My Free Diagnostic' or 'See My Score Potential'.; Add a time-sensitive element if applicable, such as 'Start your free diagnostic today'.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: Your SAT score doesn't define you \u2014 but the right prep can open doors you didn't know existed.\n\nStop guessing which math formulas to memorize or staring at reading passages you don't understand. 50,000+ students have used our 1-on-1 expert tutoring to jump an average of 200 points.\n\nGet a clear roadmap to your dream school with a free diagnostic. See exactly where you stand today.\nHeadline: See Your Real SAT Score Potential\nDescription: Join 50,000+ students who traded test anxiety for a 200-point average improvement.\nCTA: Get Started Free\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_002",
+            "input_tokens": 1547,
+            "output_tokens": 170,
+            "latency_ms": 2150.61,
+            "cost_usd": 0.0012835,
+            "timestamp": "2026-03-14T20:46:35.851918"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_002",
+            "input_tokens": 861,
+            "output_tokens": 685,
+            "latency_ms": 2740.91,
+            "cost_usd": 0.00124275,
+            "timestamp": "2026-03-14T20:46:38.593034"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "Your SAT score doesn't define you \u2014 but the right prep can open doors you didn't know existed.\n\nStop staring at reading passages you don't understand. 50,000+ students have used our 1-on-1 expert tutoring to jump an average of 200 points.\n\nTrade test anxiety for a clear roadmap. Claim your free diagnostic today to see exactly where you stand.",
+          "headline": "See Your 200-Point Score Potential",
+          "description": "Join 50,000+ students who stopped guessing and started scoring higher. Limited sessions available.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad is very easy to scan. The hook, the social proof, and the offer are logically ordered. A student knows exactly what is being offered (tutoring) and what the outcome is (score increase) within two seconds.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200 points' in the primary text to make the benefit pop even more for skimmers.",
+                "Ensure the visual asset matches the text's promise of a 'clear roadmap' to reinforce the message."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "The 200-point average increase is a strong, quantifiable claim that differentiates Varsity Tutors from generic study guides. It moves beyond 'better grades' to a specific, high-value outcome.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of how the 'roadmap' is personalized (e.g., 'AI-driven' or 'customized to your weak spots') to further differentiate from competitors.",
+                "Include a tiny bit more detail on the '1-on-1' aspect, as that is a premium differentiator."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.0,
+              "rationale": "The CTA is clear and low-friction ('Free'). However, it lacks a strong sense of urgency. 'Limited sessions available' is a bit of a clich\u00e9 and doesn't feel like a real constraint to a student.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Test a more benefit-driven CTA like 'Get My Personalized Roadmap' instead of the generic 'Get Started Free'.",
+                "If sessions are truly limited, use a specific deadline or a 'first 50 students' hook to create genuine scarcity."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, encouraging, and authoritative. It hits the 'empowering' note well without sounding overly academic or stiff.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'student-first' personality; the current voice is slightly corporate. Use more active, punchy verbs.",
+                "Ensure the tone remains consistent across the landing page to avoid a 'bait and switch' feel."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 6.8,
+              "rationale": "The ad correctly identifies the pain point of 'test anxiety' and 'staring at reading passages.' It validates the student's struggle, which is effective, but it could lean harder into the relief of having a 'clear roadmap.'",
+              "confidence": 0.85,
+              "suggestions": [
+                "Focus more on the 'after' state\u2014the feeling of confidence walking into the test center\u2014rather than just the 'before' state of anxiety.",
+                "Use a short testimonial snippet in the primary text to make the emotional transformation feel more human and less like a marketing claim."
+              ]
+            }
+          },
+          "weighted_average": 7.63,
+          "weakest_dimension": "emotional_resonance",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_002",
+            "input_tokens": 2123,
+            "output_tokens": 153,
+            "latency_ms": 2113.33,
+            "cost_usd": 0.0015205,
+            "timestamp": "2026-03-14T20:46:40.706854"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_002",
+            "input_tokens": 856,
+            "output_tokens": 732,
+            "latency_ms": 3751.44,
+            "cost_usd": 0.001312,
+            "timestamp": "2026-03-14T20:46:44.458689"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005359,
+    "quality_per_dollar": 1423.77,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.6 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 98 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Get Started Free' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_003",
+    "brief": {
+      "brief_id": "r39182_003",
+      "audience_segment": "families",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "awareness",
+      "tone": "empathetic",
+      "competitor_context": [
+        "Comparison-shoppers need clear differentiation from Princeton Review and Kaplan",
+        "Free trial reduces risk \u2014 key when competing against Khan Academy's free model",
+        "1-on-1 personalization is the strongest differentiator vs all competitors",
+        "ROI messaging: cost per score point improvement",
+        "Reviews and ratings as decision-making aid"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "Stop paying for $2,000 SAT 'bootcamps' that treat your child like a number. \n\nMost prep programs use a one-size-fits-all curriculum that ignores where your student actually struggles. Whether it\u2019s geometry or reading comprehension, generic videos won't bridge the gap. \n\nVarsity Tutors provides 1-on-1 expert attention tailored to your child\u2019s specific goals. With an average 200-point score improvement and 50,000+ students helped, we turn 'I'm stuck' into 'I got in.'\n\nSee exactly where they stand before you spend a dime.",
+          "headline": "Free SAT Diagnostic: Get Your Score Prediction",
+          "description": "Join 50,000+ students who traded generic prep for personalized 1-on-1 results.",
+          "cta_button": "Book a Free Diagnostic"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook immediately identifies the problem (expensive, impersonal bootcamps) and the solution (1-on-1 tutoring). The progression from problem to solution to offer is logical and fast to scan.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '1-on-1' benefit to make it pop even more for skimmers.",
+                "Ensure the visual creative reinforces the '1-on-1' aspect to match the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.8,
+              "rationale": "Strong use of social proof (50,000+ students) and a specific outcome (200-point improvement). It differentiates well against 'generic' competitors, though it could be slightly more specific about the 'how' of the personalization.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Mention a specific technology or methodology (e.g., 'AI-driven diagnostics') to make the personalization feel more tangible.",
+                "Quantify the 'before you spend a dime' aspect by explicitly stating the time commitment of the diagnostic."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.2,
+              "rationale": "The CTA is low-friction and benefit-driven. It lacks a sense of urgency (e.g., 'limited spots' or 'this week only'), which is common in education marketing but would elevate the conversion rate.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a time-bound element, such as 'Book your free diagnostic this week to get your personalized roadmap.'",
+                "Test a slightly more benefit-heavy CTA like 'Get My Personalized Score Plan'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, authoritative, and supportive. It successfully positions Varsity Tutors as the 'premium, human-centric' alternative to the 'factory-style' competition.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth to balance the 'expert' tone; perhaps a brief nod to the student's confidence, not just their score.",
+                "Ensure the language remains consistent across the landing page to maintain the 'empowering' brand promise."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.0,
+              "rationale": "It hits the 'parent pain point' perfectly: the fear of wasting money on a program that doesn't actually help their child. It validates the parent's desire for their child to be seen as an individual, not a statistic.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Lean slightly harder into the student's perspective\u2014mentioning the relief of finally 'getting it' could deepen the emotional connection.",
+                "Use a 'parent-to-parent' testimonial snippet to increase trust and emotional validation."
+              ]
+            }
+          },
+          "weighted_average": 7.82,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.82/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 7.8/10 (could improve)\n    Suggestions: Mention a specific technology or methodology (e.g., 'AI-driven diagnostics') to make the personalization feel more tangible.; Quantify the 'before you spend a dime' aspect by explicitly stating the time commitment of the diagnostic.\n  Cta Strength: 7.2/10 \u2190 FIX THIS\n    Suggestions: Add a time-bound element, such as 'Book your free diagnostic this week to get your personalized roadmap.'; Test a slightly more benefit-heavy CTA like 'Get My Personalized Score Plan'.\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a bit more warmth to balance the 'expert' tone; perhaps a brief nod to the student's confidence, not just their score.; Ensure the language remains consistent across the landing page to maintain the 'empowering' brand promise.\n  Emotional Resonance: 8.0/10 \u2713 PROTECT\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 7.2/10)\nEvaluator feedback: The CTA is low-friction and benefit-driven. It lacks a sense of urgency (e.g., 'limited spots' or 'this week only'), which is common in education marketing but would elevate the conversion rate.\nSpecific suggestions: Add a time-bound element, such as 'Book your free diagnostic this week to get your personalized roadmap.'; Test a slightly more benefit-heavy CTA like 'Get My Personalized Score Plan'.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: Stop paying for $2,000 SAT 'bootcamps' that treat your child like a number. \n\nMost prep programs use a one-size-fits-all curriculum that ignores where your student actually struggles. Whether it\u2019s geometry or reading comprehension, generic videos won't bridge the gap. \n\nVarsity Tutors provides 1-on-1 expert attention tailored to your child\u2019s specific goals. With an average 200-point score improvement and 50,000+ students helped, we turn 'I'm stuck' into 'I got in.'\n\nSee exactly where they stand before you spend a dime.\nHeadline: Free SAT Diagnostic: Get Your Score Prediction\nDescription: Join 50,000+ students who traded generic prep for personalized 1-on-1 results.\nCTA: Book a Free Diagnostic\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_003",
+            "input_tokens": 1551,
+            "output_tokens": 202,
+            "latency_ms": 2145.09,
+            "cost_usd": 0.0013815,
+            "timestamp": "2026-03-14T20:46:46.605338"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_003",
+            "input_tokens": 906,
+            "output_tokens": 712,
+            "latency_ms": 2845.13,
+            "cost_usd": 0.0012945,
+            "timestamp": "2026-03-14T20:46:49.451085"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "Stop paying for $2,000 SAT 'bootcamps' that treat your child like a number.\n\nMost programs use a one-size-fits-all curriculum that ignores where your student actually struggles. Our AI-driven diagnostic pinpoints their exact gaps in just 30 minutes, replacing generic videos with 1-on-1 expert attention.\n\nWe\u2019ve helped 50,000+ students turn 'I\u2019m stuck' into 'I got in' with an average 200-point score improvement. \n\nBook your free diagnostic this week to get your personalized score roadmap.",
+          "headline": "Free SAT Diagnostic: Get Your Score Plan",
+          "description": "Join 50,000+ students who traded generic prep for 1-on-1 results. Claim your spot today.",
+          "cta_button": "Book a Free Diagnostic"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook immediately identifies the problem (expensive, impersonal bootcamps) and the solution (AI-driven, 1-on-1). The reader knows exactly what is being offered within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200-point improvement' stat to make it pop for skimmers.",
+                "Ensure the visual creative matches the '1-on-1' promise to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong differentiation by attacking the 'one-size-fits-all' model. The inclusion of the 50,000+ student count and the 200-point improvement metric provides excellent social proof and tangible results.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Quantify the 'AI-driven' aspect slightly more\u2014e.g., 'AI-driven diagnostic that analyzes 50+ sub-skills.'",
+                "Explicitly mention that the diagnostic is online/remote to remove any friction regarding location."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.5,
+              "rationale": "The CTA is clear and low-friction ('Free'). It lacks a strong sense of scarcity or urgency beyond 'this week,' which is a bit generic.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a scarcity element, such as 'Limited spots available for this week\u2019s diagnostic sessions.'",
+                "Test a more benefit-driven CTA like 'Get My Personalized Roadmap' instead of just 'Book'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.0,
+              "rationale": "It hits the 'results-focused' and 'knowledgeable' notes well. However, it leans slightly aggressive/salesy in the opening, which could be softened to sound more 'empowering' and 'approachable.'",
+              "confidence": 0.8,
+              "suggestions": [
+                "Soften the opening attack on competitors to sound more like a partner in the student's success.",
+                "Use more 'we' and 'your student' language to emphasize the partnership aspect of Varsity Tutors."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "It effectively targets the parent's pain point: the fear that their child is just a 'number' in a system. It validates the parent's desire for their child to be seen and understood.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Lean into the 'I got in' transformation\u2014perhaps add a brief mention of the relief or confidence the student feels.",
+                "Use a slightly more empathetic tone regarding the stress of the college admissions process."
+              ]
+            }
+          },
+          "weighted_average": 7.86,
+          "weakest_dimension": "brand_voice",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_003",
+            "input_tokens": 2163,
+            "output_tokens": 196,
+            "latency_ms": 2171.0,
+            "cost_usd": 0.0016695,
+            "timestamp": "2026-03-14T20:46:51.622814"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_003",
+            "input_tokens": 902,
+            "output_tokens": 688,
+            "latency_ms": 4192.79,
+            "cost_usd": 0.0012575,
+            "timestamp": "2026-03-14T20:46:55.815819"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005603,
+    "quality_per_dollar": 1402.82,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.9 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 88 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Book a Free Diagnostic' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_004",
+    "brief": {
+      "brief_id": "r39182_004",
+      "audience_segment": "parents",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "conversion",
+      "tone": "confident",
+      "competitor_context": [
+        "Princeton Review leads with score guarantees \u2014 counter with personalized 1-on-1 advantage",
+        "Kaplan uses brand authority \u2014 counter with modern, technology-enabled approach",
+        "Khan Academy offers free \u2014 counter with expert human tutors (not just content)",
+        "Use specific numbers: score improvements, student count, tutor qualifications",
+        "Parent testimonials outperform expert claims for SAT prep"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points? \n\nWith the March SAT fast approaching, most parents are stuck between expensive books that stay closed and generic classes that don't work. We've helped 50,000+ students find a better way.\n\nOur students see an average 200-point improvement because we skip the pre-recorded videos and focus on 1-on-1 expert attention. It starts with knowing exactly where they stand.\n\nClaim your free diagnostic assessment today.",
+          "headline": "Average 200-Point SAT Score Improvement",
+          "description": "Join 50,000+ students who mastered the SAT with 1-on-1 expert tutoring.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is logical. The reader knows exactly what is being offered and why within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200-point improvement' in the body text to make it pop for skimmers.",
+                "Ensure the visual creative clearly mirrors the '1-on-1' aspect to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong use of social proof (50,000+ students) and a specific metric (200-point improvement). It effectively differentiates from 'generic classes' and 'closed books'.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of the 'expert' vetting process to further justify the premium nature of 1-on-1 tutoring.",
+                "Highlight the 'diagnostic' value\u2014why is it better than a practice test?"
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('Free'), but it lacks urgency. 'Get Started' is a bit generic and doesn't leverage the 'March SAT fast approaching' deadline mentioned in the hook.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change CTA to 'Claim My Free Assessment' to make it feel more like an exclusive benefit.",
+                "Add a time-sensitive element to the CTA area, e.g., 'Claim your free assessment before the March rush.'"
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, authoritative, and results-oriented, which aligns well with Varsity Tutors' market position as a premium, expert-led service.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth to balance the 'results-at-all-costs' tone; perhaps acknowledge the student's stress, not just the parent's.",
+                "Use slightly more conversational language to bridge the gap between 'expert' and 'approachable'."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "The opening hook is a masterclass in tapping into parental 'what-if' anxiety. It hits the exact pain point of a parent fearing their child's potential is being wasted.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Expand slightly on the 'dream school' aspect to make the emotional stakes feel higher.",
+                "Include a brief nod to the student's confidence, as parents want their children to feel capable, not just score higher."
+              ]
+            }
+          },
+          "weighted_average": 7.74,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.74/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 8.2/10 \u2713 PROTECT\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Change CTA to 'Claim My Free Assessment' to make it feel more like an exclusive benefit.; Add a time-sensitive element to the CTA area, e.g., 'Claim your free assessment before the March rush.'\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a bit more warmth to balance the 'results-at-all-costs' tone; perhaps acknowledge the student's stress, not just the parent's.; Use slightly more conversational language to bridge the gap between 'expert' and 'approachable'.\n  Emotional Resonance: 7.8/10 (could improve)\n    Suggestions: Expand slightly on the 'dream school' aspect to make the emotional stakes feel higher.; Include a brief nod to the student's confidence, as parents want their children to feel capable, not just score higher.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction ('Free'), but it lacks urgency. 'Get Started' is a bit generic and doesn't leverage the 'March SAT fast approaching' deadline mentioned in the hook.\nSpecific suggestions: Change CTA to 'Claim My Free Assessment' to make it feel more like an exclusive benefit.; Add a time-sensitive element to the CTA area, e.g., 'Claim your free assessment before the March rush.'\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: What if your child misses their dream school by just 50 points? \n\nWith the March SAT fast approaching, most parents are stuck between expensive books that stay closed and generic classes that don't work. We've helped 50,000+ students find a better way.\n\nOur students see an average 200-point improvement because we skip the pre-recorded videos and focus on 1-on-1 expert attention. It starts with knowing exactly where they stand.\n\nClaim your free diagnostic assessment today.\nHeadline: Average 200-Point SAT Score Improvement\nDescription: Join 50,000+ students who mastered the SAT with 1-on-1 expert tutoring.\nCTA: Get Started Free\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_004",
+            "input_tokens": 1560,
+            "output_tokens": 176,
+            "latency_ms": 2041.4,
+            "cost_usd": 0.001308,
+            "timestamp": "2026-03-14T20:46:57.858050"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_004",
+            "input_tokens": 882,
+            "output_tokens": 673,
+            "latency_ms": 3903.57,
+            "cost_usd": 0.00123,
+            "timestamp": "2026-03-14T20:47:01.761913"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points?\n\nWith the March SAT fast approaching, the stress is real. We've helped 50,000+ students replace that anxiety with confidence through 1-on-1 expert attention\u2014not generic classes.\n\nOur students see an average 200-point improvement because we focus on exactly what they need. Claim your free diagnostic assessment before the March rush.",
+          "headline": "Average 200-Point SAT Score Improvement",
+          "description": "Claim your free assessment today and join 50,000+ successful students.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is logical. The reader knows exactly what is being offered (SAT prep) and why (score improvement) within the first two seconds.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200-point' figure to make it pop visually.",
+                "Ensure the image/video creative aligns perfectly with the 'March SAT' timeline mentioned."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.0,
+              "rationale": "The 200-point average improvement is a strong, quantifiable claim. The differentiation (1-on-1 vs. generic classes) is a solid selling point for parents concerned about ROI.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of how the diagnostic assessment works (e.g., '15-minute AI-powered assessment') to lower the perceived effort.",
+                "Include a brief social proof element, such as a snippet of a parent testimonial, to solidify the claim."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction, but it lacks a sense of urgency or scarcity. 'Get Started Free' is standard; it doesn't leverage the 'March rush' mentioned in the text.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change the CTA to something more time-sensitive like 'Claim Your Free Spot' or 'Start Your Free Assessment Now'.",
+                "Add a line about limited availability for March prep to create genuine urgency."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, results-oriented, and supportive. It fits the Varsity Tutors brand well, though it leans slightly toward 'corporate' rather than 'empowering'.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth regarding the student's potential rather than just focusing on the 'fear' of missing the dream school.",
+                "Use more active, encouraging verbs to emphasize the 'confidence' aspect mentioned in the copy."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.0,
+              "rationale": "The opening hook hits a very specific pain point for parents: the fear of their child falling just short of their goals. It effectively pivots from anxiety to the promise of confidence.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Consider testing a variation that focuses on the 'dream school' outcome rather than the 'missing by 50 points' fear to see if positive vs. negative framing performs better.",
+                "Use a more empathetic tone when addressing the 'stress' to make the brand feel like a partner rather than a service provider."
+              ]
+            }
+          },
+          "weighted_average": 7.73,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_004",
+            "input_tokens": 2147,
+            "output_tokens": 149,
+            "latency_ms": 1840.97,
+            "cost_usd": 0.0015205,
+            "timestamp": "2026-03-14T20:47:03.603653"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_004",
+            "input_tokens": 857,
+            "output_tokens": 690,
+            "latency_ms": 3789.14,
+            "cost_usd": 0.00124925,
+            "timestamp": "2026-03-14T20:47:07.393036"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 0,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005308,
+    "quality_per_dollar": 1458.18,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.7 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 71 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Get Started Free' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_005",
+    "brief": {
+      "brief_id": "r39182_005",
+      "audience_segment": "students",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "conversion",
+      "tone": "aspirational",
+      "competitor_context": [
+        "Students respond to transformation stories (before/after scores)",
+        "Chegg captures 'get unstuck' moment \u2014 position SAT prep as confidence-builder",
+        "Peer social proof works better than authority for this audience",
+        "Quick, visible progress messaging beats long-term promises",
+        "Test anxiety acknowledgment followed by empowerment"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "From 'I'm not a good test taker' to 'I just got into my dream school.' \u2014 that\u2019s the power of a 200-point jump.\n\nStop guessing which math formulas to memorize or staring at prep books that make no sense. We match you with an expert tutor who actually gets how you learn.\n\nOver 50,000 students have traded test anxiety for total confidence. Start with a free diagnostic to see exactly where you stand and how to bridge the gap.",
+          "headline": "Boost Your SAT Score By 200+ Points",
+          "description": "Join 50,000+ students who stopped guessing and started scoring higher with expert 1-on-1 prep.",
+          "cta_button": "Book a Free Diagnostic"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook immediately identifies the problem (test anxiety) and the outcome (dream school/score jump). The structure is logical and flows well for a mobile user scrolling quickly.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200-point jump' in the primary text to make it pop even more.",
+                "Ensure the visual creative matches the 'dream school' narrative to reinforce the text instantly."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.5,
+              "rationale": "The 200-point claim is a strong, quantifiable benefit. However, it lacks a 'why us' differentiator beyond 'expert tutors.' It feels slightly generic compared to the high-stakes nature of SAT prep.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Highlight a specific proprietary method or technology that makes the tutoring 'expert' (e.g., 'AI-driven learning paths').",
+                "Add a brief mention of the guarantee or success rate to move from 'compelling' to 'irresistible'."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction, but it lacks urgency. 'Book a Free Diagnostic' is a standard utility; it doesn't create a 'fear of missing out' or a compelling reason to act *now* versus later.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a time-sensitive element, such as 'Claim your free diagnostic this week.'",
+                "Use a more benefit-driven CTA like 'Get Your Personalized Score Plan' instead of the clinical 'Diagnostic'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 8.0,
+              "rationale": "The copy hits the Varsity Tutors sweet spot: it is professional yet empathetic. It avoids being overly academic, which is perfect for a student-facing audience.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Inject a bit more 'student-speak' to make it feel less like a corporate ad and more like a peer recommendation.",
+                "Maintain this balance of authority and encouragement across all ad sets."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "The copy does an excellent job of naming the 'pain' (test anxiety, confusion) and the 'dream' (getting into college). It validates the student's struggle, which is highly effective.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Use a short testimonial snippet in the primary text to ground the emotional claim in reality.",
+                "Focus slightly more on the relief of 'total confidence' to contrast with the initial 'test anxiety' mentioned."
+              ]
+            }
+          },
+          "weighted_average": 7.63,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.63/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 7.5/10 (could improve)\n    Suggestions: Highlight a specific proprietary method or technology that makes the tutoring 'expert' (e.g., 'AI-driven learning paths').; Add a brief mention of the guarantee or success rate to move from 'compelling' to 'irresistible'.\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Add a time-sensitive element, such as 'Claim your free diagnostic this week.'; Use a more benefit-driven CTA like 'Get Your Personalized Score Plan' instead of the clinical 'Diagnostic'.\n  Brand Voice: 8.0/10 \u2713 PROTECT\n  Emotional Resonance: 7.8/10 (could improve)\n    Suggestions: Use a short testimonial snippet in the primary text to ground the emotional claim in reality.; Focus slightly more on the relief of 'total confidence' to contrast with the initial 'test anxiety' mentioned.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction, but it lacks urgency. 'Book a Free Diagnostic' is a standard utility; it doesn't create a 'fear of missing out' or a compelling reason to act *now* versus later.\nSpecific suggestions: Add a time-sensitive element, such as 'Claim your free diagnostic this week.'; Use a more benefit-driven CTA like 'Get Your Personalized Score Plan' instead of the clinical 'Diagnostic'.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: From 'I'm not a good test taker' to 'I just got into my dream school.' \u2014 that\u2019s the power of a 200-point jump.\n\nStop guessing which math formulas to memorize or staring at prep books that make no sense. We match you with an expert tutor who actually gets how you learn.\n\nOver 50,000 students have traded test anxiety for total confidence. Start with a free diagnostic to see exactly where you stand and how to bridge the gap.\nHeadline: Boost Your SAT Score By 200+ Points\nDescription: Join 50,000+ students who stopped guessing and started scoring higher with expert 1-on-1 prep.\nCTA: Book a Free Diagnostic\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_005",
+            "input_tokens": 1548,
+            "output_tokens": 173,
+            "latency_ms": 2244.06,
+            "cost_usd": 0.001293,
+            "timestamp": "2026-03-14T20:47:09.637816"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_005",
+            "input_tokens": 880,
+            "output_tokens": 677,
+            "latency_ms": 4314.46,
+            "cost_usd": 0.0012355,
+            "timestamp": "2026-03-14T20:47:13.952755"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "From 'I'm not a good test taker' to 'I just got into my dream school.' \u2014 that\u2019s the power of a 200-point jump.\n\nStop staring at prep books that make no sense. We use AI-driven insights to match your child with an expert tutor who builds a personalized roadmap to their target score.\n\nOver 50,000 students have traded test anxiety for total confidence. Claim your free diagnostic this week to get your personalized score plan.",
+          "headline": "Average 200+ Point SAT Score Improvement",
+          "description": "Join 50,000+ students. Get your personalized score plan and see exactly how to bridge the gap.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is punchy and the problem-solution structure is immediately apparent. The reader knows exactly what is being offered (SAT prep) and the outcome (score improvement) within the first two lines.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200-point jump' to make it pop even more for scrollers.",
+                "Ensure the visual creative matches the 'dream school' narrative to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.8,
+              "rationale": "The 200-point claim is a strong, quantifiable benefit. The mention of 'AI-driven insights' adds a modern, tech-forward differentiator, though it could be slightly more specific about how that benefits the student beyond just 'matching'.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Briefly explain the 'AI' benefit\u2014e.g., 'AI that identifies your exact weak spots in minutes.'",
+                "Add a brief mention of the tutor vetting process to increase the perceived value of the 'expert' match."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('Free'), but it lacks urgency. 'This week' is a weak scarcity trigger because it is vague and doesn't create a 'fear of missing out' (FOMO).",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change 'Claim your free diagnostic this week' to 'Claim your free diagnostic before [Day] to secure your spot.'",
+                "Test a more benefit-driven CTA like 'Get My Personalized Plan' instead of the generic 'Get Started'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The copy hits the 'results-focused' and 'empowering' notes well. It feels professional yet accessible, which aligns perfectly with the Varsity Tutors brand identity.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'human' warmth to balance the 'AI' mention; perhaps a short quote or a more personal student success snippet.",
+                "Ensure the tone remains consistent if the ad is targeting parents vs. students (this copy leans slightly toward parents)."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.2,
+              "rationale": "It successfully identifies the pain point of 'test anxiety' and the aspiration of 'dream school.' It validates the student's struggle ('I'm not a good test taker') effectively.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Lean harder into the 'relief' aspect\u2014describe the feeling of walking into the test room with confidence.",
+                "Use a more direct 'You' focus to make the student feel like the hero of their own story."
+              ]
+            }
+          },
+          "weighted_average": 7.52,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_005",
+            "input_tokens": 2138,
+            "output_tokens": 167,
+            "latency_ms": 1951.91,
+            "cost_usd": 0.00157,
+            "timestamp": "2026-03-14T20:47:15.906607"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_005",
+            "input_tokens": 875,
+            "output_tokens": 703,
+            "latency_ms": 3503.76,
+            "cost_usd": 0.00127325,
+            "timestamp": "2026-03-14T20:47:19.410794"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 0,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005372,
+    "quality_per_dollar": 1420.33,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.5 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 94 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Book a Free Diagnostic' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_006",
+    "brief": {
+      "brief_id": "r39182_006",
+      "audience_segment": "families",
+      "product_offer": "Free SAT diagnostic assessment",
+      "campaign_goal": "conversion",
+      "tone": "empowering",
+      "competitor_context": [
+        "Comparison-shoppers need clear differentiation from Princeton Review and Kaplan",
+        "Free trial reduces risk \u2014 key when competing against Khan Academy's free model",
+        "1-on-1 personalization is the strongest differentiator vs all competitors",
+        "ROI messaging: cost per score point improvement",
+        "Reviews and ratings as decision-making aid"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "Stop paying for $2,000 SAT bootcamps where your child is just another face in a crowded Zoom room.\n\nMost prep programs use a one-size-fits-all curriculum that ignores your student's specific gaps. We do it differently with 1-on-1 expert tutoring tailored to their exact needs.\n\nWith an average 200-point score improvement and over 50,000 students helped, we turn test-day anxiety into dream school letters. See exactly where they stand before you spend a dime.\n\nClaim your free diagnostic assessment today.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ students who ditched generic prep for 1-on-1 expert tutoring.",
+          "cta_button": "Get Started"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad identifies the problem (expensive, crowded bootcamps) and the solution (1-on-1 tutoring) within the first two sentences. The value proposition is immediate and easy to scan.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Use line breaks to separate the 'problem' and 'solution' for even faster mobile scanning.",
+                "Consider bolding the '1-on-1' benefit to make it pop."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.8,
+              "rationale": "The '200-point increase' and '50,000 students' provide strong social proof. It differentiates well against 'generic' competitors, though it could be slightly more specific about *how* the diagnostic assessment works.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Mention that the diagnostic assessment is 'AI-powered' or 'personalized' to add a layer of tech-forward sophistication.",
+                "Briefly explain that the diagnostic identifies 'hidden knowledge gaps' to make the free offer feel more valuable."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('free'), but it lacks urgency. 'Get Started' is a standard, somewhat passive button text that doesn't capitalize on the 'test-day anxiety' mentioned earlier.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change the button text to 'Get My Free Assessment' or 'Start My Personalized Plan'.",
+                "Add a time-sensitive element, such as 'Claim your free assessment before your next practice test'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.2,
+              "rationale": "The tone is professional and results-oriented, fitting the Varsity Tutors brand. It feels authoritative without being overly academic, though it leans slightly toward 'marketing-speak' rather than 'educational partner'.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth regarding the student's success to balance the focus on 'test scores'.",
+                "Use slightly more conversational language to sound like a mentor rather than a service provider."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.5,
+              "rationale": "It hits the parent's pain point of wasting money on ineffective solutions and the student's pain point of test anxiety. It successfully frames the service as a path to a 'dream school' rather than just a test score.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Highlight the 'confidence' the student gains, not just the 'score' they achieve.",
+                "Use a short, punchy sentence about the relief a parent feels when their child is finally prepared."
+              ]
+            }
+          },
+          "weighted_average": 7.53,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.53/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 7.8/10 (could improve)\n    Suggestions: Mention that the diagnostic assessment is 'AI-powered' or 'personalized' to add a layer of tech-forward sophistication.; Briefly explain that the diagnostic identifies 'hidden knowledge gaps' to make the free offer feel more valuable.\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Change the button text to 'Get My Free Assessment' or 'Start My Personalized Plan'.; Add a time-sensitive element, such as 'Claim your free assessment before your next practice test'.\n  Brand Voice: 7.2/10 (could improve)\n    Suggestions: Inject a bit more warmth regarding the student's success to balance the focus on 'test scores'.; Use slightly more conversational language to sound like a mentor rather than a service provider.\n  Emotional Resonance: 7.5/10 (could improve)\n    Suggestions: Highlight the 'confidence' the student gains, not just the 'score' they achieve.; Use a short, punchy sentence about the relief a parent feels when their child is finally prepared.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction ('free'), but it lacks urgency. 'Get Started' is a standard, somewhat passive button text that doesn't capitalize on the 'test-day anxiety' mentioned earlier.\nSpecific suggestions: Change the button text to 'Get My Free Assessment' or 'Start My Personalized Plan'.; Add a time-sensitive element, such as 'Claim your free assessment before your next practice test'.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: Stop paying for $2,000 SAT bootcamps where your child is just another face in a crowded Zoom room.\n\nMost prep programs use a one-size-fits-all curriculum that ignores your student's specific gaps. We do it differently with 1-on-1 expert tutoring tailored to their exact needs.\n\nWith an average 200-point score improvement and over 50,000 students helped, we turn test-day anxiety into dream school letters. See exactly where they stand before you spend a dime.\n\nClaim your free diagnostic assessment today.\nHeadline: Average 200-Point SAT Score Increase\nDescription: Join 50,000+ students who ditched generic prep for 1-on-1 expert tutoring.\nCTA: Get Started\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_006",
+            "input_tokens": 1551,
+            "output_tokens": 187,
+            "latency_ms": 1986.32,
+            "cost_usd": 0.0013365,
+            "timestamp": "2026-03-14T20:47:21.404043"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_006",
+            "input_tokens": 892,
+            "output_tokens": 686,
+            "latency_ms": 4253.76,
+            "cost_usd": 0.001252,
+            "timestamp": "2026-03-14T20:47:25.658030"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "Stop paying for $2,000 SAT bootcamps where your child is just another face in a crowded Zoom room.\n\nMost programs ignore your student's specific gaps. Our 1-on-1 expert tutors use personalized, AI-powered diagnostics to find hidden knowledge gaps and build a plan that actually sticks.\n\nWith an average 200-point improvement and 50,000+ success stories, we replace test-day anxiety with the confidence to get into their dream school. Claim your free assessment before your next practice test.\n\nBook your free diagnostic session below.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ students who ditched generic prep for a personalized 1-on-1 plan.",
+          "cta_button": "Get Started"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad immediately identifies the problem (expensive, ineffective bootcamps) and the solution (1-on-1 personalized tutoring). The structure is logical and the benefit is stated within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '1-on-1' aspect to make it pop even more for skimmers.",
+                "Ensure the visual creative matches the '1-on-1' promise to reinforce the text instantly."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong differentiation from 'crowded Zoom rooms.' The inclusion of 'AI-powered diagnostics' and the '200-point improvement' statistic provides both a technical edge and social proof.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Quantify the 'AI-powered' benefit\u2014e.g., 'Finds gaps 3x faster than manual review.'",
+                "Add a brief mention of the tutor vetting process to further justify the premium over bootcamps."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('free assessment'), but it lacks a sense of urgency or scarcity. 'Get Started' is a standard, somewhat passive button text.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change the button text to 'Claim My Free Assessment' to increase perceived value.",
+                "Add a time-sensitive element, such as 'Limited spots available for this month's diagnostic cohort.'"
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "It hits the 'results-focused' and 'knowledgeable' notes well. It feels professional yet accessible to a parent looking for a better alternative to generic prep.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth to balance the 'results-first' tone; perhaps a nod to the student's confidence rather than just the score.",
+                "Ensure the tone remains consistent if the landing page uses more technical jargon."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "It effectively targets the 'parent guilt' of paying for ineffective programs and the 'student anxiety' of test day. It positions the service as a relief mechanism for both parties.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Lean harder into the 'dream school' aspiration\u2014mentioning the relief of the college acceptance letter could heighten the emotional payoff.",
+                "Use a more empathetic opening line that validates the parent's frustration with current options."
+              ]
+            }
+          },
+          "weighted_average": 7.74,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_006",
+            "input_tokens": 2181,
+            "output_tokens": 189,
+            "latency_ms": 2238.78,
+            "cost_usd": 0.0016575,
+            "timestamp": "2026-03-14T20:47:27.897338"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_006",
+            "input_tokens": 895,
+            "output_tokens": 663,
+            "latency_ms": 4246.94,
+            "cost_usd": 0.00121825,
+            "timestamp": "2026-03-14T20:47:32.144957"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005464,
+    "quality_per_dollar": 1416.54,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.7 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 78 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "headline",
+          "rule": "content_warning",
+          "message": "Contains pattern that may trigger review: 'score increase'",
+          "suggestion": "Consider specifying this is an average, not guaranteed"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_007",
+    "brief": {
+      "brief_id": "r39182_007",
+      "audience_segment": "parents",
+      "product_offer": "1-on-1 SAT tutoring sessions",
+      "campaign_goal": "awareness",
+      "tone": "urgent",
+      "competitor_context": [
+        "Princeton Review leads with score guarantees \u2014 counter with personalized 1-on-1 advantage",
+        "Kaplan uses brand authority \u2014 counter with modern, technology-enabled approach",
+        "Khan Academy offers free \u2014 counter with expert human tutors (not just content)",
+        "Use specific numbers: score improvements, student count, tutor qualifications",
+        "Parent testimonials outperform expert claims for SAT prep"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points? \n\nWith most colleges more selective than ever, that 100-point jump isn't just a number\u2014it\u2019s the difference between an acceptance letter and a waitlist. \n\nOver 50,000 students have raised their scores with our 1-on-1 expert tutors. We don't just give them pre-recorded videos; we give them a personalized roadmap to a 200+ point average improvement. \n\nSee how we help students beat the curve.",
+          "headline": "Average 200-Point SAT Score Improvement",
+          "description": "Expert 1-on-1 tutoring designed for your child\u2019s busy schedule.",
+          "cta_button": "Get Started"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is very easy to follow. The reader knows exactly what is being offered within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200+ point' figure to make it pop visually.",
+                "Ensure the image/video creative matches the '1-on-1' messaging to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 7.8,
+              "rationale": "The 200-point improvement claim is a strong, quantifiable benefit. It differentiates well by contrasting 'pre-recorded videos' (the competition) with 'personalized roadmaps' (the solution).",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of how the 'roadmap' is personalized (e.g., 'AI-driven diagnostics' or 'custom curriculum').",
+                "Include a short testimonial snippet to provide social proof for the 50,000 student claim."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.0,
+              "rationale": "The CTA is clear and low-friction, but it lacks urgency. 'Get Started' is a standard, somewhat passive button that doesn't compel the user to act right now.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Test a more benefit-driven CTA like 'See Your Roadmap' or 'Start Your Improvement'.",
+                "Add a line about limited availability for top-tier tutors to create a sense of urgency."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, authoritative, and results-oriented, which aligns perfectly with the Varsity Tutors brand identity. It feels like a premium service.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a slightly more 'empowering' tone to balance the 'anxiety-inducing' hook.",
+                "Use more active verbs to sound more dynamic."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.2,
+              "rationale": "The opening hook hits a very specific 'pain point' for parents: the fear of their child missing out on a dream school by a narrow margin. It effectively leverages the 'what if' scenario.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Ensure the landing page continues this emotional narrative rather than just showing a price list.",
+                "Consider adding a line about reducing the student's stress, not just increasing the score."
+              ]
+            }
+          },
+          "weighted_average": 7.62,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.62/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 7.8/10 (could improve)\n    Suggestions: Add a brief mention of how the 'roadmap' is personalized (e.g., 'AI-driven diagnostics' or 'custom curriculum').; Include a short testimonial snippet to provide social proof for the 50,000 student claim.\n  Cta Strength: 6.0/10 \u2190 FIX THIS\n    Suggestions: Test a more benefit-driven CTA like 'See Your Roadmap' or 'Start Your Improvement'.; Add a line about limited availability for top-tier tutors to create a sense of urgency.\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a slightly more 'empowering' tone to balance the 'anxiety-inducing' hook.; Use more active verbs to sound more dynamic.\n  Emotional Resonance: 8.2/10 \u2713 PROTECT\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.0/10)\nEvaluator feedback: The CTA is clear and low-friction, but it lacks urgency. 'Get Started' is a standard, somewhat passive button that doesn't compel the user to act right now.\nSpecific suggestions: Test a more benefit-driven CTA like 'See Your Roadmap' or 'Start Your Improvement'.; Add a line about limited availability for top-tier tutors to create a sense of urgency.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: What if your child misses their dream school by just 50 points? \n\nWith most colleges more selective than ever, that 100-point jump isn't just a number\u2014it\u2019s the difference between an acceptance letter and a waitlist. \n\nOver 50,000 students have raised their scores with our 1-on-1 expert tutors. We don't just give them pre-recorded videos; we give them a personalized roadmap to a 200+ point average improvement. \n\nSee how we help students beat the curve.\nHeadline: Average 200-Point SAT Score Improvement\nDescription: Expert 1-on-1 tutoring designed for your child\u2019s busy schedule.\nCTA: Get Started\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_007",
+            "input_tokens": 1565,
+            "output_tokens": 177,
+            "latency_ms": 1781.88,
+            "cost_usd": 0.0013135,
+            "timestamp": "2026-03-14T20:47:33.928571"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_007",
+            "input_tokens": 883,
+            "output_tokens": 638,
+            "latency_ms": 2906.66,
+            "cost_usd": 0.00117775,
+            "timestamp": "2026-03-14T20:47:36.835518"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points?\n\nThat gap is often the difference between an acceptance letter and a waitlist. Our AI-driven diagnostics and 1-on-1 expert tutors have helped 50,000+ students achieve a 200+ point average improvement.\n\n\"My daughter went from a 1050 to a 1410 in 8 weeks,\" says one parent. Top-tier tutors for the next test date are booking up fast.\n\nClaim your personalized roadmap today.",
+          "headline": "Average 200-Point SAT Score Boost",
+          "description": "Join 50,000+ students who mastered the SAT with 1-on-1 expert instruction.",
+          "cta_button": "Get Started"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution dynamic is established within the first two sentences. The reader knows exactly what is being offered and why it matters.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200+ point' figure to make it pop for skimmers.",
+                "Ensure the visual creative matches the 'dream school' narrative to reinforce the text."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.0,
+              "rationale": "Strong use of social proof (50,000+ students) and specific metrics (200+ point improvement). It differentiates by combining AI-driven diagnostics with human 1-on-1 tutoring.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Briefly explain what the 'personalized roadmap' entails to make the value feel more tangible.",
+                "Highlight the 'AI-driven' aspect slightly more, as it is a modern differentiator."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear, but 'Get Started' is a generic button label. The copy includes a nice touch of scarcity ('booking up fast'), but the button itself lacks the urgency or benefit-driven language found in the body.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Change the button text to 'Get My Roadmap' or 'Claim My Spot' to increase relevance.",
+                "Add a specific deadline or 'limited availability' tag near the CTA button."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, results-oriented, and authoritative. It fits the Varsity Tutors brand well, though it leans slightly more toward 'salesy' than 'empowering' in the opening hook.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Incorporate a slightly more encouraging tone regarding the student's potential, rather than focusing solely on the fear of missing out.",
+                "Maintain the expert tone but soften the 'dream school' pressure slightly to sound more like a partner in success."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.5,
+              "rationale": "The opening hook hits a major pain point for parents: the fear that their child's future is at risk due to a small margin. It effectively leverages the 'parental anxiety' trigger.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Include a brief mention of the student's confidence or reduced stress to balance the fear-based hook.",
+                "Use a more specific 'dream school' example (e.g., 'the college of their choice') to make the emotional stakes feel more personal."
+              ]
+            }
+          },
+          "weighted_average": 7.83,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_007",
+            "input_tokens": 2116,
+            "output_tokens": 180,
+            "latency_ms": 2094.95,
+            "cost_usd": 0.001598,
+            "timestamp": "2026-03-14T20:47:38.930827"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_007",
+            "input_tokens": 885,
+            "output_tokens": 680,
+            "latency_ms": 2973.46,
+            "cost_usd": 0.00124125,
+            "timestamp": "2026-03-14T20:47:41.905506"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005331,
+    "quality_per_dollar": 1468.77,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.8 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 74 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "primary_text",
+          "rule": "content_warning",
+          "message": "Contains pattern that may trigger review: 'average improvement'",
+          "suggestion": "Consider adding 'results may vary' disclaimer"
+        }
+      ],
+      "score": 9.0
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_008",
+    "brief": {
+      "brief_id": "r39182_008",
+      "audience_segment": "students",
+      "product_offer": "1-on-1 SAT tutoring sessions",
+      "campaign_goal": "awareness",
+      "tone": "empathetic",
+      "competitor_context": [
+        "Students respond to transformation stories (before/after scores)",
+        "Chegg captures 'get unstuck' moment \u2014 position SAT prep as confidence-builder",
+        "Peer social proof works better than authority for this audience",
+        "Quick, visible progress messaging beats long-term promises",
+        "Test anxiety acknowledgment followed by empowerment"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "From 'I'm not a good test-taker' to 'I just got into my dream school.' \u2014 that\u2019s the power of a tutor who actually gets you.\n\nStop drowning in 500-page prep books that make no sense. Our 1-on-1 experts help you crush test anxiety and focus only on the shortcuts you actually need.\n\n50,000+ students have used Varsity Tutors to jump an average of 200+ points. It\u2019s not about studying harder\u2014it\u2019s about studying with someone who knows the SAT inside out.\n\nReady to see what your real potential looks like?",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Get matched with a 1-on-1 expert who simplifies the SAT for you.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is very easy to follow. The transition from the student's pain point to the solution is seamless.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Keep the first sentence as the primary hook; it is very strong.",
+                "Ensure the visual asset matches the 'dream school' narrative to reinforce the text instantly."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "The inclusion of the '200+ point increase' statistic provides strong social proof. It differentiates by focusing on 'shortcuts' and '1-on-1' rather than just generic study materials.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Quantify the 'shortcuts' slightly more\u2014e.g., 'proven test-taking strategies'\u2014to sound more authoritative.",
+                "Consider adding a brief mention of the 'how' (e.g., 'AI-driven diagnostics' or 'customized curriculum') to further differentiate from competitors."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction, but it lacks urgency. 'Get Started Free' is standard; it doesn't compel the user to act *now* versus later.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Test a more benefit-driven CTA like 'Claim Your Free Consultation' or 'Start Your Score Jump'.",
+                "Add a line about limited availability for top-tier tutors to create a sense of urgency."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is approachable and encouraging, which fits the Varsity Tutors brand well. It avoids being overly academic or stiff.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'expert' authority to balance the 'approachable' tone; perhaps a brief mention of 'certified' or 'top-tier' tutors.",
+                "Maintain the conversational style, as it works well for the student-facing audience."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "It hits the 'test anxiety' and 'dream school' pressure points effectively. It validates the student's frustration with traditional, boring prep books.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Lean harder into the 'relief' aspect\u2014the feeling of weight being lifted off their shoulders once they have a tutor.",
+                "Use a more specific 'dream school' reference or a student testimonial snippet to make the emotional payoff feel more tangible."
+              ]
+            }
+          },
+          "weighted_average": 7.74,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.74/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 8.2/10 \u2713 PROTECT\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Test a more benefit-driven CTA like 'Claim Your Free Consultation' or 'Start Your Score Jump'.; Add a line about limited availability for top-tier tutors to create a sense of urgency.\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a bit more 'expert' authority to balance the 'approachable' tone; perhaps a brief mention of 'certified' or 'top-tier' tutors.; Maintain the conversational style, as it works well for the student-facing audience.\n  Emotional Resonance: 7.8/10 (could improve)\n    Suggestions: Lean harder into the 'relief' aspect\u2014the feeling of weight being lifted off their shoulders once they have a tutor.; Use a more specific 'dream school' reference or a student testimonial snippet to make the emotional payoff feel more tangible.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction, but it lacks urgency. 'Get Started Free' is standard; it doesn't compel the user to act *now* versus later.\nSpecific suggestions: Test a more benefit-driven CTA like 'Claim Your Free Consultation' or 'Start Your Score Jump'.; Add a line about limited availability for top-tier tutors to create a sense of urgency.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: From 'I'm not a good test-taker' to 'I just got into my dream school.' \u2014 that\u2019s the power of a tutor who actually gets you.\n\nStop drowning in 500-page prep books that make no sense. Our 1-on-1 experts help you crush test anxiety and focus only on the shortcuts you actually need.\n\n50,000+ students have used Varsity Tutors to jump an average of 200+ points. It\u2019s not about studying harder\u2014it\u2019s about studying with someone who knows the SAT inside out.\n\nReady to see what your real potential looks like?\nHeadline: Average 200-Point SAT Score Increase\nDescription: Get matched with a 1-on-1 expert who simplifies the SAT for you.\nCTA: Get Started Free\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_008",
+            "input_tokens": 1552,
+            "output_tokens": 194,
+            "latency_ms": 2487.82,
+            "cost_usd": 0.001358,
+            "timestamp": "2026-03-14T20:47:44.409189"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_008",
+            "input_tokens": 899,
+            "output_tokens": 664,
+            "latency_ms": 2877.61,
+            "cost_usd": 0.00122075,
+            "timestamp": "2026-03-14T20:47:47.287075"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "From 'I'm not a good test-taker' to 'I just got into my dream school.' \u2014 that\u2019s the relief of having a top-tier expert in your corner.\n\nStop drowning in 500-page prep books. Our certified 1-on-1 tutors help you crush test anxiety by focusing only on the high-scoring shortcuts you actually need.\n\n50,000+ students have used Varsity Tutors to jump an average of 200+ points. Spots for our elite SAT specialists are filling fast for the upcoming test date.\n\nClaim your diagnostic session today and see your score jump.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ students who simplified the SAT with 1-on-1 expert tutoring.",
+          "cta_button": "Get Started Free"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution dynamic is established within the first two sentences. The reader knows exactly what is being offered and why.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200+ points' claim in the body text to make it pop for skimmers.",
+                "Ensure the visual creative matches the 'dream school' narrative to reinforce the text instantly."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "The combination of social proof (50,000+ students) and a specific metric (200+ point jump) is strong. It differentiates by positioning itself as the 'shortcut' to avoid the pain of traditional prep books.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Quantify the 'high-scoring shortcuts'\u2014mentioning a specific strategy or proprietary method could make it feel less generic.",
+                "Highlight the 'diagnostic session' value more clearly; is it a $0 value? Mentioning the monetary savings adds weight."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.5,
+              "rationale": "The CTA is low-friction ('Free'), but the urgency ('spots filling fast') feels slightly tacked on. It lacks a specific deadline or a reason why the upcoming test date makes these spots uniquely scarce.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Tie the scarcity to a specific date (e.g., 'Only 12 spots left for the [Month] SAT prep cohort').",
+                "Use a more action-oriented button text like 'Claim My Free Diagnostic' instead of the generic 'Get Started'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.8,
+              "rationale": "The tone is professional, encouraging, and authoritative. It successfully balances the 'expert' persona with the 'supportive mentor' vibe Varsity Tutors aims for.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Inject a bit more 'student-first' language to sound less like a corporate service and more like a peer-to-peer success story.",
+                "Use slightly more punchy, shorter sentences to maintain the high-energy, results-focused brand identity."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.0,
+              "rationale": "It hits the two biggest pain points for students: the fear of being a 'bad test-taker' and the overwhelming nature of prep books. It offers relief, which is a powerful emotional hook.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Lean harder into the 'relief' aspect\u2014perhaps add a line about how the student will feel *after* the test (e.g., 'Walk into the test center with confidence, not dread').",
+                "Consider a variation that speaks directly to the 'dream school' identity, as that is the ultimate emotional driver for this demographic."
+              ]
+            }
+          },
+          "weighted_average": 8.02,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_008",
+            "input_tokens": 2154,
+            "output_tokens": 197,
+            "latency_ms": 2032.77,
+            "cost_usd": 0.001668,
+            "timestamp": "2026-03-14T20:47:49.320183"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_008",
+            "input_tokens": 902,
+            "output_tokens": 720,
+            "latency_ms": 4444.48,
+            "cost_usd": 0.0013055,
+            "timestamp": "2026-03-14T20:47:53.764989"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005552,
+    "quality_per_dollar": 1444.52,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (8.0 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 73 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Get Started Free' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        },
+        {
+          "severity": "warning",
+          "field": "headline",
+          "rule": "content_warning",
+          "message": "Contains pattern that may trigger review: 'score increase'",
+          "suggestion": "Consider specifying this is an average, not guaranteed"
+        }
+      ],
+      "score": 8.5
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_009",
+    "brief": {
+      "brief_id": "r39182_009",
+      "audience_segment": "families",
+      "product_offer": "1-on-1 SAT tutoring sessions",
+      "campaign_goal": "awareness",
+      "tone": "confident",
+      "competitor_context": [
+        "Comparison-shoppers need clear differentiation from Princeton Review and Kaplan",
+        "Free trial reduces risk \u2014 key when competing against Khan Academy's free model",
+        "1-on-1 personalization is the strongest differentiator vs all competitors",
+        "ROI messaging: cost per score point improvement",
+        "Reviews and ratings as decision-making aid"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "Stop paying for generic SAT prep books and pre-recorded videos your child will never finish.\n\nMost programs treat every student the same, but a 1200 student and a 1400 student don't need the same lessons. We provide 1-on-1 expert tutoring tailored to your child\u2019s specific gaps.\n\nWith an average 200-point improvement and 50,000+ students helped, we deliver the results big-box prep classes can\u2019t match. Experience the difference of a personalized plan before you commit.\n\nBook your free diagnostic session today.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ students who ditched generic prep for 1-on-1 expert tutoring.",
+          "cta_button": "Book a Free Session"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad immediately identifies the problem (generic prep) and the solution (1-on-1 tutoring). The structure is logical and the benefit is stated within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Use a line break after the first sentence to ensure the 'hook' stands out on mobile.",
+                "Consider bolding the '1-on-1' phrase to anchor the eye."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "The '200-point improvement' is a strong, quantifiable claim. It effectively differentiates from 'big-box' competitors by highlighting personalization, which is a high-value pain point for parents.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of the 'how'\u2014e.g., 'AI-driven diagnostics' or 'hand-picked expert tutors'\u2014to make the personalization feel more tangible.",
+                "Include a short social proof snippet or testimonial to further validate the claim."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.5,
+              "rationale": "The CTA is clear and low-friction ('Free diagnostic session'). It lacks a sense of urgency or scarcity, which is common in lead-gen, but it could be punchier.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a time-sensitive element, such as 'Book your free session for this week's availability.'",
+                "Change the CTA button text to something more benefit-driven like 'Get My Personalized Plan'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.0,
+              "rationale": "The tone is professional and results-oriented, fitting the Varsity Tutors brand. It feels authoritative, though it leans slightly toward 'corporate' rather than 'empowering.'",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject more empathy for the student's experience to soften the 'results-only' focus.",
+                "Use more active, inspiring verbs to better align with the 'empowering' aspect of the brand."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 6.5,
+              "rationale": "It successfully taps into the parent's frustration with wasted money and ineffective methods. However, it focuses more on the 'logic' of the tutoring than the 'relief' or 'pride' a parent feels when their child succeeds.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Speak more to the parent's desire to see their child's confidence grow, not just their test score.",
+                "Use a 'pain-agitation-solution' framework to highlight the stress of the college application process."
+              ]
+            }
+          },
+          "weighted_average": 7.6,
+          "weakest_dimension": "emotional_resonance",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.6/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 8.2/10 \u2713 PROTECT\n  Cta Strength: 7.5/10 (could improve)\n    Suggestions: Add a time-sensitive element, such as 'Book your free session for this week's availability.'; Change the CTA button text to something more benefit-driven like 'Get My Personalized Plan'.\n  Brand Voice: 7.0/10 (could improve)\n    Suggestions: Inject more empathy for the student's experience to soften the 'results-only' focus.; Use more active, inspiring verbs to better align with the 'empowering' aspect of the brand.\n  Emotional Resonance: 6.5/10 \u2190 FIX THIS\n    Suggestions: Speak more to the parent's desire to see their child's confidence grow, not just their test score.; Use a 'pain-agitation-solution' framework to highlight the stress of the college application process.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Emotional Resonance (scored 6.5/10)\nEvaluator feedback: It successfully taps into the parent's frustration with wasted money and ineffective methods. However, it focuses more on the 'logic' of the tutoring than the 'relief' or 'pride' a parent feels when their child succeeds.\nSpecific suggestions: Speak more to the parent's desire to see their child's confidence grow, not just their test score.; Use a 'pain-agitation-solution' framework to highlight the stress of the college application process.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: Stop paying for generic SAT prep books and pre-recorded videos your child will never finish.\n\nMost programs treat every student the same, but a 1200 student and a 1400 student don't need the same lessons. We provide 1-on-1 expert tutoring tailored to your child\u2019s specific gaps.\n\nWith an average 200-point improvement and 50,000+ students helped, we deliver the results big-box prep classes can\u2019t match. Experience the difference of a personalized plan before you commit.\n\nBook your free diagnostic session today.\nHeadline: Average 200-Point SAT Score Increase\nDescription: Join 50,000+ students who ditched generic prep for 1-on-1 expert tutoring.\nCTA: Book a Free Session\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_009",
+            "input_tokens": 1556,
+            "output_tokens": 193,
+            "latency_ms": 1966.85,
+            "cost_usd": 0.001357,
+            "timestamp": "2026-03-14T20:47:55.732568"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_009",
+            "input_tokens": 898,
+            "output_tokens": 676,
+            "latency_ms": 2788.86,
+            "cost_usd": 0.0012385,
+            "timestamp": "2026-03-14T20:47:58.522081"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "Stop paying for generic SAT prep books and pre-recorded videos your child will never finish.\n\nWatching your child struggle with test anxiety is exhausting. We replace that stress with the confidence that comes from 1-on-1 expert tutoring tailored to their specific gaps.\n\nWith an average 200-point improvement and 50,000+ students helped, we turn college dreams into realities. See your child\u2019s relief when the material finally clicks.\n\nBook your free diagnostic session for this week\u2019s availability.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ students who replaced test stress with proven 1-on-1 expert tutoring.",
+          "cta_button": "Book a Free Session"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The ad identifies the problem (generic books/videos) and the solution (1-on-1 tutoring) immediately. The structure is logical and easy to scan.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Use line breaks to separate the 'problem' and 'solution' paragraphs for even faster scanning.",
+                "Consider bolding the '1-on-1 expert tutoring' phrase to anchor the reader's eye."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.0,
+              "rationale": "The '200-point improvement' is a strong, quantifiable metric. However, it lacks a 'why us' differentiator beyond just being 1-on-1, which is a common claim in the tutoring space.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Mention a specific proprietary technology or matching process that makes your 1-on-1 tutoring superior to a local freelancer.",
+                "Add a 'guarantee' or 'risk-reversal' element to make the offer truly irresistible."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction, but it lacks genuine urgency. 'This week's availability' is a soft attempt at scarcity that feels a bit generic.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Use a more time-sensitive hook: 'Claim one of the 5 remaining diagnostic slots for this week.'",
+                "Change the CTA button text to something more benefit-driven like 'Get My Child\u2019s Plan'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional and supportive, fitting the Varsity Tutors brand well. It balances the 'expert' authority with the 'approachable' partner role.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more 'Varsity' personality\u2014perhaps a short quote or a specific success story snippet to make it feel less like a corporate template.",
+                "Ensure the language remains consistent across the landing page to maintain the 'empowering' tone."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 8.5,
+              "rationale": "This is the strongest part of the copy. It hits the 'parent pain' (exhaustion from watching a child struggle) and the 'parent desire' (relief and confidence) perfectly.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider adding a very short, one-sentence testimonial from a parent about the 'relief' they felt after the first session.",
+                "Avoid over-indexing on the 'test anxiety' if the creative (image/video) is already high-energy/positive to avoid creating a 'negative' association with the brand."
+              ]
+            }
+          },
+          "weighted_average": 7.83,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_009",
+            "input_tokens": 2151,
+            "output_tokens": 175,
+            "latency_ms": 2109.28,
+            "cost_usd": 0.0016005,
+            "timestamp": "2026-03-14T20:48:00.633667"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_009",
+            "input_tokens": 880,
+            "output_tokens": 691,
+            "latency_ms": 4321.32,
+            "cost_usd": 0.0012565,
+            "timestamp": "2026-03-14T20:48:04.955244"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005452,
+    "quality_per_dollar": 1436.17,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.8 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 82 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Book a Free Session' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        },
+        {
+          "severity": "warning",
+          "field": "headline",
+          "rule": "content_warning",
+          "message": "Contains pattern that may trigger review: 'score increase'",
+          "suggestion": "Consider specifying this is an average, not guaranteed"
+        }
+      ],
+      "score": 8.5
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  },
+  {
+    "brief_id": "r39182_010",
+    "brief": {
+      "brief_id": "r39182_010",
+      "audience_segment": "parents",
+      "product_offer": "1-on-1 SAT tutoring sessions",
+      "campaign_goal": "conversion",
+      "tone": "aspirational",
+      "competitor_context": [
+        "Princeton Review leads with score guarantees \u2014 counter with personalized 1-on-1 advantage",
+        "Kaplan uses brand authority \u2014 counter with modern, technology-enabled approach",
+        "Khan Academy offers free \u2014 counter with expert human tutors (not just content)",
+        "Use specific numbers: score improvements, student count, tutor qualifications",
+        "Parent testimonials outperform expert claims for SAT prep"
+      ],
+      "subject_focus": "SAT test prep"
+    },
+    "copy_iterations": [
+      {
+        "iteration_number": 1,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points? \n\nWe\u2019ve helped 50,000+ students stop the 'test prep overwhelm' and start seeing real results. Unlike pre-recorded videos or crowded classrooms, our 1-on-1 tutors build a custom roadmap around your child\u2019s busy schedule.\n\nThe result? Our students see an average score improvement of 200+ points. Give them the expert guidance they need to turn college applications into college acceptances.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Join 50,000+ families who chose expert 1-on-1 SAT tutoring for proven results.",
+          "cta_button": "Book a Free Session"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is immediate and the problem-solution structure is logical. The reader knows exactly what is being offered and why within the first two sentences.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Consider bolding the '200+ points' figure to make it pop for skimmers.",
+                "Ensure the visual creative matches the '1-on-1' messaging to reinforce the text instantly."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong use of social proof (50,000+ students) and a specific, quantifiable outcome (200+ point increase). It effectively differentiates from 'crowded classrooms' and 'pre-recorded videos'.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of how long it takes to see these results (e.g., 'in as little as 3 months') to make the value feel more tangible.",
+                "Highlight the 'custom roadmap' benefit more by mentioning a specific diagnostic tool or assessment."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 6.5,
+              "rationale": "The CTA is clear and low-friction ('Free Session'), but it lacks urgency. It feels like a standard offer rather than a compelling reason to act *now*.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Add a scarcity element, such as 'Limited spots available for this month's tutoring cohort.'",
+                "Use a more benefit-driven CTA like 'Claim Your Free Diagnostic Session' to emphasize the value of the free offer."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.5,
+              "rationale": "The tone is professional, authoritative, and supportive. It hits the 'Varsity Tutors' sweet spot of being an expert partner in the student's journey.",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth to balance the 'results-focused' data; perhaps a short phrase about student confidence.",
+                "Ensure the language remains consistent across the landing page to maintain the 'expert' persona."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "The opening hook ('What if your child misses their dream school by just 50 points?') is a masterclass in tapping into parental anxiety and the fear of missed opportunity.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Pivot slightly from the fear of failure to the joy of success; add a sentence about the student feeling 'prepared and confident' on test day.",
+                "Use a customer testimonial snippet to provide a 'parent-to-parent' emotional connection."
+              ]
+            }
+          },
+          "weighted_average": 7.74,
+          "weakest_dimension": "cta_strength",
+          "passes_threshold": true
+        },
+        "refinement_feedback": "The previous ad copy scored 7.74/10 overall. We need to push it higher \u2014 every 0.5 point matters.\n\nFULL SCORECARD (all 5 dimensions):\n  Clarity: 8.5/10 \u2713 PROTECT\n  Value Proposition: 8.2/10 \u2713 PROTECT\n  Cta Strength: 6.5/10 \u2190 FIX THIS\n    Suggestions: Add a scarcity element, such as 'Limited spots available for this month's tutoring cohort.'; Use a more benefit-driven CTA like 'Claim Your Free Diagnostic Session' to emphasize the value of the free offer.\n  Brand Voice: 7.5/10 (could improve)\n    Suggestions: Inject a bit more warmth to balance the 'results-focused' data; perhaps a short phrase about student confidence.; Ensure the language remains consistent across the landing page to maintain the 'expert' persona.\n  Emotional Resonance: 7.8/10 (could improve)\n    Suggestions: Pivot slightly from the fear of failure to the joy of success; add a sentence about the student feeling 'prepared and confident' on test day.; Use a customer testimonial snippet to provide a 'parent-to-parent' emotional connection.\n\nPRIORITY FIX \u2014 WEAKEST DIMENSION: Cta Strength (scored 6.5/10)\nEvaluator feedback: The CTA is clear and low-friction ('Free Session'), but it lacks urgency. It feels like a standard offer rather than a compelling reason to act *now*.\nSpecific suggestions: Add a scarcity element, such as 'Limited spots available for this month's tutoring cohort.'; Use a more benefit-driven CTA like 'Claim Your Free Diagnostic Session' to emphasize the value of the free offer.\n\nCURRENT AD COPY (this is what you're improving):\nPrimary Text: What if your child misses their dream school by just 50 points? \n\nWe\u2019ve helped 50,000+ students stop the 'test prep overwhelm' and start seeing real results. Unlike pre-recorded videos or crowded classrooms, our 1-on-1 tutors build a custom roadmap around your child\u2019s busy schedule.\n\nThe result? Our students see an average score improvement of 200+ points. Give them the expert guidance they need to turn college applications into college acceptances.\nHeadline: Average 200-Point SAT Score Increase\nDescription: Join 50,000+ families who chose expert 1-on-1 SAT tutoring for proven results.\nCTA: Book a Free Session\n\nREFINEMENT RULES \u2014 READ CAREFULLY:\n1. PROTECT what scored 8+. Do NOT rewrite parts that are already strong. Copy those sections verbatim or with only minor tweaks. Preserve dimensions scoring 8.0 or higher \u2014 do NOT change what's already working.\n2. FOCUS changes ONLY on the weakest dimension and its specific suggestions. That's where the biggest score gain is. Apply the specific suggestions above.\n3. ALSO bump any dimension below 8.0 \u2014 small targeted edits, not full rewrites.\n4. KEEP the same overall structure and hook approach if it scored well on clarity. Keep the same hook framework; change wording, not structure. Changing everything = regression.\n5. TIGHTEN, don't expand. Shorter copy almost always scores higher on clarity. Cut filler words ruthlessly.\n6. The headline should complement (never repeat) the primary text hook.\n7. Your goal: raise the weakest dimension by at least 1 point without dropping any other dimension.\n\nYou MUST respond with ONLY valid JSON in this format:\n{\"primary_text\": \"...\", \"headline\": \"...\", \"description\": \"...\", \"cta_button\": \"...\"}",
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "generate_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 1,
+            "brief_id": "r39182_010",
+            "input_tokens": 1566,
+            "output_tokens": 171,
+            "latency_ms": 2109.03,
+            "cost_usd": 0.001296,
+            "timestamp": "2026-03-14T20:48:07.065149"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 1,
+            "brief_id": "r39182_010",
+            "input_tokens": 879,
+            "output_tokens": 669,
+            "latency_ms": 4193.05,
+            "cost_usd": 0.00122325,
+            "timestamp": "2026-03-14T20:48:11.258622"
+          }
+        ]
+      },
+      {
+        "iteration_number": 2,
+        "ad_copy": {
+          "primary_text": "What if your child misses their dream school by just 50 points?\n\nWe\u2019ve helped 50,000+ students replace test-day anxiety with the confidence of a 200+ point average score improvement. Unlike pre-recorded videos, our 1-on-1 expert tutors build a custom roadmap around your child\u2019s specific goals.\n\nGive them the expert guidance they need to turn applications into acceptances. Only 12 spots remain for this month's tutoring cohort.",
+          "headline": "Average 200-Point SAT Score Increase",
+          "description": "Claim your free diagnostic session before our monthly tutoring cohort reaches capacity.",
+          "cta_button": "Book a Free Session"
+        },
+        "evaluation": {
+          "scores": {
+            "clarity": {
+              "dimension": "clarity",
+              "score": 8.5,
+              "rationale": "The hook is a powerful 'what if' scenario that immediately frames the problem. The solution (1-on-1 tutoring) and the outcome (score improvement) are stated concisely.",
+              "confidence": 0.95,
+              "suggestions": [
+                "Ensure the visual creative (image/video) mirrors the 'dream school' theme to reinforce the text instantly.",
+                "Consider bolding the '200+ point' figure to make it pop for skimmers."
+              ]
+            },
+            "value_proposition": {
+              "dimension": "value_proposition",
+              "score": 8.2,
+              "rationale": "Strong use of social proof (50,000+ students) and a specific, quantifiable benefit (200+ point improvement). The differentiation from 'pre-recorded videos' is a smart tactical move against cheaper competitors.",
+              "confidence": 0.9,
+              "suggestions": [
+                "Add a brief mention of the 'diagnostic session' value\u2014e.g., 'Identify your child's exact knowledge gaps in 30 minutes.'",
+                "Highlight the 'custom roadmap' benefit more by explaining that it saves time/effort for the student."
+              ]
+            },
+            "cta_strength": {
+              "dimension": "cta_strength",
+              "score": 7.5,
+              "rationale": "The CTA is low-friction ('Free Session') and uses scarcity ('12 spots remain') to drive action. However, the scarcity feels slightly generic; it would be stronger if tied to a specific date or enrollment window.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Make the scarcity feel more authentic by adding a deadline, e.g., 'Only 12 spots remain for our October cohort.'",
+                "Test a more benefit-driven CTA like 'Claim My Free Roadmap' instead of just 'Book a Free Session'."
+              ]
+            },
+            "brand_voice": {
+              "dimension": "brand_voice",
+              "score": 7.0,
+              "rationale": "The tone is professional, results-oriented, and authoritative. It fits the Varsity Tutors brand well, though it leans slightly toward 'corporate' rather than 'approachable partner.'",
+              "confidence": 0.8,
+              "suggestions": [
+                "Inject a bit more warmth to balance the high-stakes pressure; perhaps acknowledge the student's hard work alongside the parent's ambition.",
+                "Use slightly more conversational language to bridge the gap between 'expert' and 'supportive guide'."
+              ]
+            },
+            "emotional_resonance": {
+              "dimension": "emotional_resonance",
+              "score": 7.8,
+              "rationale": "The opening hook hits a major pain point for parents: the fear of their child falling short of their potential. It effectively pivots from anxiety to confidence.",
+              "confidence": 0.85,
+              "suggestions": [
+                "Lean further into the 'dream school' aspiration\u2014parents are motivated by their child's future success, not just a test score.",
+                "Consider adding a line about reducing the 'stress' of the college application process, not just the test itself."
+              ]
+            }
+          },
+          "weighted_average": 7.86,
+          "weakest_dimension": "brand_voice",
+          "passes_threshold": true
+        },
+        "refinement_feedback": null,
+        "costs": [
+          {
+            "model": "google/gemini-3-flash-preview",
+            "step_name": "refine_copy",
+            "pipeline_stage": "copy_generation",
+            "iteration": 2,
+            "brief_id": "r39182_010",
+            "input_tokens": 2127,
+            "output_tokens": 158,
+            "latency_ms": 1833.71,
+            "cost_usd": 0.0015375,
+            "timestamp": "2026-03-14T20:48:13.092829"
+          },
+          {
+            "model": "google/gemini-3.1-flash-lite-preview",
+            "step_name": "score_all_dimensions",
+            "pipeline_stage": "evaluation",
+            "iteration": 2,
+            "brief_id": "r39182_010",
+            "input_tokens": 865,
+            "output_tokens": 707,
+            "latency_ms": 2989.57,
+            "cost_usd": 0.00127675,
+            "timestamp": "2026-03-14T20:48:16.082663"
+          }
+        ]
+      }
+    ],
+    "image_iterations": [],
+    "best_copy_index": 1,
+    "best_image_index": 0,
+    "total_cost_usd": 0.005333,
+    "quality_per_dollar": 1473.84,
+    "status": "compliance_pass",
+    "early_stopped": true,
+    "early_stop_reason": "Quality threshold met (7.9 >= 7.0)",
+    "compliance": {
+      "passes": true,
+      "violations": [
+        {
+          "severity": "warning",
+          "field": "description",
+          "rule": "description_over_recommended",
+          "message": "Description is 87 chars (recommended: 30)",
+          "suggestion": "Shorter descriptions show fully without truncation"
+        },
+        {
+          "severity": "warning",
+          "field": "cta_button",
+          "rule": "non_standard_cta",
+          "message": "CTA 'Book a Free Session' is not a standard Meta button option",
+          "suggestion": "Standard options: Apply Now, Book Now, Call Now, Contact Us, Download, Get Directions, Get Offer, Get Quote, Get Started, Learn More, Send Message, Shop Now, Sign Up, Subscribe, Watch More"
+        },
+        {
+          "severity": "warning",
+          "field": "headline",
+          "rule": "content_warning",
+          "message": "Contains pattern that may trigger review: 'score increase'",
+          "suggestion": "Consider specifying this is an average, not guaranteed"
+        }
+      ],
+      "score": 8.5
+    },
+    "diversity": null,
+    "variants": [],
+    "approved_by": null,
+    "approved_at": null,
+    "rejection_reason": null,
+    "approval_notes": null
+  }
+]

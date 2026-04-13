@@ -56,7 +56,7 @@ Claim your free trial session today.
 
 Generic prep books and pre-recorded videos can only take a score so far. Real improvement happens when the curriculum adapts to your student—not the other way around.
 
-Varsity Tutors provides 1-on-1 expert instruction that has helped over 50,000 students see an average 200-point score increase. It’s the personalized approach Khan Academy can't provide and the individual attention Kaplan can’t scale.
+Online Learning provides 1-on-1 expert instruction that has helped over 50,000 students see an average 200-point score increase. It’s the personalized approach Khan Academy can't provide and the individual attention Kaplan can’t scale.
 
 See the difference a tutor who 'gets' them can make with a risk-free trial.
 **Headline:** Average 200-Point SAT Score Improvement
@@ -86,7 +86,7 @@ See your child's potential.
 
 Stop drowning in 500-page prep books. Our certified 1-on-1 tutors help you crush test anxiety by focusing only on the high-scoring shortcuts you actually need.
 
-50,000+ students have used Varsity Tutors to jump an average of 200+ points. Spots for our elite SAT specialists are filling fast for the upcoming test date.
+50,000+ students have used Online Learning to jump an average of 200+ points. Spots for our elite SAT specialists are filling fast for the upcoming test date.
 
 Claim your diagnostic session today and see your score jump.
 **Headline:** Average 200-Point SAT Score Increase
